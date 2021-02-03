@@ -1,5 +1,3 @@
-# By Its Cover
-
 ## Goals
 
 ### What does it do?
