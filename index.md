@@ -21,12 +21,24 @@ For those people who go into the bookstore without a clear book in mind. This ap
 For choosing what to read next. A common struggle for avid book readers is conquering their ever-growing To-Be-Read piles. This would give them the information they need to decide what to read with a simple photo.
 
 ## Approach
+1. Set up base app
+
+2. Enable camera access, and capture ability
+
+3. Setup ability to extract data 
+
+4. Build code to access review information
+
+5. Consolidate and present review information
 
 ### Tools
+Tesseract 
 
 ### APIs
+Jsoup
 
 ### Framework
+Standard Android
 
 ### Experience Description
 
