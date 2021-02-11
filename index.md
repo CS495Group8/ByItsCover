@@ -32,13 +32,16 @@ For choosing what to read next. A common struggle for avid book readers is conqu
 5. Consolidate and present review information
 
 ### Tools
-Tesseract 
+* Java
+* Android Studio
+* Selenium
 
 ### APIs
-Jsoup
+* Jsoup
+* Selenium WebDriver
 
 ### Framework
-Standard Android
+* Standard Android
 
 ### Experience Description
 
