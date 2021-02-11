@@ -9,6 +9,8 @@
     <string name="enter_text">Search by Title</string>
     <string name="previous">Previous</string>
 
+    <string name="Title">Insert Book Title Here</string>
+
     <string name="hello_first_fragment">By Its Cover</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
