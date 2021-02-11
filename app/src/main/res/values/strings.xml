@@ -10,7 +10,19 @@
     <string name="previous">Previous</string>
 
     <string name="Title">Insert Book Title Here</string>
+    <string name="Author">Insert Author Here</string>
+    <string name="Rating">Avg. Rating Here</string>
 
     <string name="hello_first_fragment">By Its Cover</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <string name="CoverDes">Book Cover</string>
+
+    <string name="Sort">Sort By...</string>
+    <string-array name="ReviewOrder">
+        <item>By Website</item>
+        <item>Rating High to Low</item>
+        <item>Rating Low to High</item>
+    </string-array>
 </resources>

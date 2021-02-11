@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".SecondFragment">
 
-    <TextView
+    <!-- here after setting text -->
+
+    <!-- <TextView
         android:id="@+id/textview_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,26 +19,83 @@
         app:layout_constraintBottom_toTopOf="@id/textview_third"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" /> -->
 
     <TextView
         android:id="@+id/textview_third"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Title"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.82"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second"
-        />
+        app:layout_constraintTop_toTopOf="@id/textview_fourth"
+        app:layout_constraintVertical_bias="0.565" />
 
-   <!-- <Button
-        android:id="@+id/button_second"
+    <TextView
+        android:id="@+id/textview_fourth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/previous"
+        android:text="@string/Author"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" /> -->
+        app:layout_constraintTop_toBottomOf="@id/textview_third"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <TextView
+        android:id="@+id/textview_fifth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Rating"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.846"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview_fourth"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <!-- Will be book cover -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@id/textview_third"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"
+        android:contentDescription="@string/CoverDes" />
+
+    <Spinner
+        android:id="@+id/review_order_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Sort"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageView"
+        app:layout_constraintTop_toBottomOf="@id/textview_fifth"
+        />
+
+
+    <!-- <Button
+         android:id="@+id/button_second"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/previous"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@id/textview_second" /> -->
 </androidx.constraintlayout.widget.ConstraintLayout>
