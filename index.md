@@ -45,6 +45,16 @@ For choosing what to read next. A common struggle for avid book readers is conqu
 
 ### Experience Description
 
+1. User enters main page and can select to search by cover or by title/author
+
+2a. If they search by cover, as intended, they will take a picture of their cover and the app will extract the title/author information
+
+2b. If they choose to search by title/author, they will go to a page to enter that information
+
+3. Once the program has the necessary information, it will give it to the webscrapers to get the reviews from their respective websites
+
+4. Once we have all of the reviews, we will consolidate it on a review page for the user to see, containing the title, author, cover, average review, and the actual reviews found on the other sites
+
 ## Team Members
 
 Marc Tuthill
