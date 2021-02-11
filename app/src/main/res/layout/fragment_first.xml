@@ -31,12 +31,16 @@
         app:layout_constraintTop_toBottomOf="@id/textview_first" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_second"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/enter_text"
         android:textSize="20sp"
-        tools:layout_editor_absoluteX="93dp"
-        tools:layout_editor_absoluteY="530dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_first"
+        app:layout_constraintVertical_bias="0.143" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
