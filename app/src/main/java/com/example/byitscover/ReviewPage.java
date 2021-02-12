@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.byitscover.helpers.AsyncScrape;
+import com.example.byitscover.helpers.CurrentBook;
+
 public class ReviewPage extends Fragment {
 
     @Override

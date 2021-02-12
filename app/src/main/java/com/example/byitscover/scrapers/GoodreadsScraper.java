@@ -1,15 +1,15 @@
 package com.example.byitscover.scrapers;
 
-import com.example.byitscover.CurrentBook;
+import com.example.byitscover.helpers.CurrentBook;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.TextNode;
 
 import java.io.IOException;
 
 public class GoodreadsScraper {
-    static double avgReviewScore;
-
     public static double getAverageReviewScore() throws IOException {
         CurrentBook instance = CurrentBook.getInstance();
         String[] titleWords = instance.getTitle().split(" ");
@@ -27,13 +27,16 @@ public class GoodreadsScraper {
             }
         }
 
-        String searchingUrl = "https://www.goodreads.com/search?query=" + toAppendUrl;
-        //TODO: Fix this
+        String baseUrl = "https://www.goodreads.com";
+        String searchingUrl = baseUrl + "/search?query=" + toAppendUrl;
         Document document = Jsoup.connect(searchingUrl).get();
-        String titleWed = document.title();
-        System.out.println(titleWed);
+        Element link = document.select("a.bookTitle").first();
+        String bookUrl = link.attr("abs:href");
+        Document bookDocument = Jsoup.connect(bookUrl).get();
+        Element ratingValue = bookDocument.selectFirst("[itemprop=ratingValue]");
+        final String ratingValueString = ((TextNode) ratingValue.childNode(0)).getWholeText();
 
-        return 0.20;
+        return Double.parseDouble(ratingValueString);
     }
 }
 

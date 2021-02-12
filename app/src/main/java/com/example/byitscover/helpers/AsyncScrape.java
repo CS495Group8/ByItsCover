@@ -1,9 +1,6 @@
-package com.example.byitscover;
+package com.example.byitscover.helpers;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.TextView;
 
 import com.example.byitscover.scrapers.GoodreadsScraper;
 
@@ -32,9 +29,6 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, Double>> {
 
     @Override
     protected void onPostExecute(Map<String, Double> reviewValues) {
-        System.out.print("Goodreads output: ");
-        System.out.println(reviewValues.get("Goodreads"));
-
         return;
     }
 }

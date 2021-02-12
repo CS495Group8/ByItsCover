@@ -1,4 +1,4 @@
-package com.example.byitscover;
+package com.example.byitscover.helpers;
 
 import java.util.Map;
 
