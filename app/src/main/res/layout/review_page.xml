@@ -43,13 +43,12 @@
                 android:inputType="textPersonName"
                 android:text="@string/title" />
 
-            <EditText
+            <TextView
                 android:id="@+id/bookTitleResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -66,13 +65,12 @@
                 android:inputType="textPersonName"
                 android:text="@string/author" />
 
-            <EditText
+            <TextView
                 android:id="@+id/bookAuthorResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:layout_weight="1" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -90,11 +88,10 @@
                 android:text="@string/Goodreads" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/goodreadsScrapedValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_weight="1" />
 
         </LinearLayout>
 

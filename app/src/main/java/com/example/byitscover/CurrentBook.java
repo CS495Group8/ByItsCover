@@ -1,9 +1,13 @@
 package com.example.byitscover;
 
+import java.util.Map;
+
 //Singleton for global params
 public class CurrentBook {
     private String title;
     private String author;
+    private Map<String, Double> reviewValues;
+
     private static CurrentBook instance = new CurrentBook();
 
     private CurrentBook() {
@@ -22,11 +26,19 @@ public class CurrentBook {
         return author;
     }
 
+    public Map<String, Double> getReviewValues() {
+        return reviewValues;
+    }
+
     public void setTitle(String titleIn) {
         title = titleIn;
     }
 
     public void setAuthor(String authorIn) {
         author = authorIn;
+    }
+
+    public void setReviewValues(Map<String, Double> reviewValuesIn) {
+        reviewValues = reviewValuesIn;
     }
 }
