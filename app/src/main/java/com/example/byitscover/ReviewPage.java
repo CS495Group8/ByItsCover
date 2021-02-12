@@ -1,9 +1,11 @@
 package com.example.byitscover;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,6 +25,11 @@ public class ReviewPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //TODO: change values from hardcoded to ones from ML alg
+        CurrentBook info = CurrentBook.getInstance();
+        info.setAuthor("Emily St. John Mandel");
+        info.setTitle("The Glass Hotel");
+
         view.findViewById(R.id.backButtonFromReviewToMain).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -31,5 +38,5 @@ public class ReviewPage extends Fragment {
             }
         });
     }
-
 }
+
