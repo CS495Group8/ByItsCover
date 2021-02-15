@@ -65,7 +65,7 @@
 
     <!-- Will be book cover -->
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/cover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -84,9 +84,148 @@
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageView"
+        app:layout_constraintStart_toEndOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/textview_fifth"
         />
+
+    <ImageView
+        android:id="@+id/revImage1"
+        android:layout_width="46dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="@string/ReviewSite1Image"
+        app:layout_constraintEnd_toMiddleOf="@id/textview_third"
+        app:layout_constraintStart_toStartOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/cover"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textview_sixth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Rating1"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="@id/revImage1"
+        app:layout_constraintStart_toEndOf="@id/revImage1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <TextView
+        android:id="@+id/textview_seventh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Review1"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/revImage1"
+        app:layout_constraintStart_toStartOf="@id/revImage1"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/revImage2"
+        android:layout_width="46dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="@string/ReviewSite2Image"
+        app:layout_constraintEnd_toMiddleOf="@id/textview_third"
+        app:layout_constraintStart_toStartOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/textview_seventh"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textview_eigth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Rating2"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="@id/revImage2"
+        app:layout_constraintStart_toEndOf="@id/revImage2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <TextView
+        android:id="@+id/textview_ninth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Review1"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/revImage2"
+        app:layout_constraintStart_toStartOf="@id/revImage2"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/revImage3"
+        android:layout_width="46dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="@string/ReviewSite3Image"
+        app:layout_constraintEnd_toMiddleOf="@id/textview_third"
+        app:layout_constraintStart_toStartOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/textview_ninth"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textview_tenth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Rating3"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="@id/revImage3"
+        app:layout_constraintStart_toEndOf="@id/revImage3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <TextView
+        android:id="@+id/textview_eleventh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Review1"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/revImage3"
+        app:layout_constraintStart_toStartOf="@id/revImage3"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/revImage4"
+        android:layout_width="46dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="48dp"
+        android:contentDescription="@string/ReviewSite4Image"
+        app:layout_constraintEnd_toMiddleOf="@id/textview_third"
+        app:layout_constraintStart_toStartOf="@id/cover"
+        app:layout_constraintTop_toBottomOf="@id/textview_eleventh"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textview_twelve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Rating4"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="@id/revImage4"
+        app:layout_constraintStart_toEndOf="@id/revImage4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <TextView
+        android:id="@+id/textview_thirtheen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Review1"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/revImage4"
+        app:layout_constraintStart_toStartOf="@id/revImage4"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <!-- <Button

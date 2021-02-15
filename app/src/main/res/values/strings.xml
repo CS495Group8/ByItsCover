@@ -12,12 +12,24 @@
     <string name="Title">Insert Book Title Here</string>
     <string name="Author">Insert Author Here</string>
     <string name="Rating">Avg. Rating Here</string>
+    <string name="Rating1">Rating 1 Here</string>
+    <string name="Review1">"Review Text Goes Here"</string>
+
+    <string name="Rating2">Rating 2 Here</string>
+    <string name="ReviewSite2Image">Review Site 2</string>
+
+    <string name="Rating3">Rating 3 Here</string>
+    <string name="ReviewSite3Image">Review Site 3</string>
+
+    <string name="Rating4">Rating 4 Here</string>
+    <string name="ReviewSite4Image">Review Site 4</string>
 
     <string name="hello_first_fragment">By Its Cover</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 
     <string name="CoverDes">Book Cover</string>
+    <string name="ReviewSite1Image">Review Site 1</string>
 
     <string name="Sort">Sort By...</string>
     <string-array name="ReviewOrder">
