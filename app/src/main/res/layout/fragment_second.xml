@@ -21,6 +21,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" /> -->
 
+    <Button
+        android:id="@+id/button_second"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/previous"
+        app:layout_constraintBottom_toTopOf="@id/textview_third"
+        app:layout_constraintEnd_toEndOf="@id/cover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.069" />
+
     <TextView
         android:id="@+id/textview_third"
         android:layout_width="wrap_content"
@@ -28,12 +39,11 @@
         android:text="@string/Title"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/textview_fourth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.82"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textview_fourth"
-        app:layout_constraintVertical_bias="0.565" />
+        app:layout_constraintTop_toTopOf="@id/cover" />
 
     <TextView
         android:id="@+id/textview_fourth"
@@ -42,7 +52,7 @@
         android:text="@string/Author"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/textview_fifth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,12 +66,11 @@
         android:text="@string/Rating"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/cover"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_fourth"
-        app:layout_constraintVertical_bias="0.029" />
+        app:layout_constraintTop_toBottomOf="@id/textview_fourth" />
 
     <!-- Will be book cover -->
     <ImageView
@@ -72,7 +81,7 @@
         app:layout_constraintEnd_toStartOf="@id/textview_third"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_second"
         tools:src="@tools:sample/avatars"
         android:contentDescription="@string/CoverDes" />
 
