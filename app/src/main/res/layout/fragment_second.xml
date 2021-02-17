@@ -92,9 +92,10 @@
         android:id="@+id/revImage1"
         android:layout_width="46dp"
         android:layout_height="53dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="64dp"
         android:contentDescription="@string/ReviewSite1Image"
-        app:layout_constraintEnd_toMiddleOf="@id/textview_third"
+        app:layout_constraintEnd_toEndOf="@id/textview_third"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/cover"
         tools:src="@tools:sample/avatars" />
@@ -129,7 +130,8 @@
         android:layout_height="53dp"
         android:layout_marginTop="48dp"
         android:contentDescription="@string/ReviewSite2Image"
-        app:layout_constraintEnd_toMiddleOf="@id/textview_third"
+        app:layout_constraintEnd_toEndOf="@id/textview_third"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/textview_seventh"
         tools:src="@tools:sample/avatars" />
@@ -164,7 +166,8 @@
         android:layout_height="53dp"
         android:layout_marginTop="48dp"
         android:contentDescription="@string/ReviewSite3Image"
-        app:layout_constraintEnd_toMiddleOf="@id/textview_third"
+        app:layout_constraintEnd_toEndOf="@id/textview_third"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/textview_ninth"
         tools:src="@tools:sample/avatars" />
@@ -199,7 +202,8 @@
         android:layout_height="53dp"
         android:layout_marginTop="48dp"
         android:contentDescription="@string/ReviewSite4Image"
-        app:layout_constraintEnd_toMiddleOf="@id/textview_third"
+        app:layout_constraintEnd_toEndOf="@id/textview_third"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/textview_eleventh"
         tools:src="@tools:sample/avatars" />
