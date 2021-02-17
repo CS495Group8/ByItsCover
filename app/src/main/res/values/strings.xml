@@ -37,4 +37,9 @@
         <item>Rating High to Low</item>
         <item>Rating Low to High</item>
     </string-array>
+=======
+    <string name="Goodreads">Goodreads</string>
+    <string name="title">Title</string>
+    <string name="author">Author</string>
+>>>>>>> main
 </resources>

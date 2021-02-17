@@ -10,19 +10,16 @@
         android:name="com.example.byitscover.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
-
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_from_first_to_review"
+            app:destination="@id/reviewPage" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.byitscover.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/reviewPage"
+        android:name="com.example.byitscover.ReviewPage"
+        android:label="ReviewPage" >
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            android:id="@+id/action_from_review_to_first"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
