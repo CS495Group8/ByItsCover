@@ -17,7 +17,7 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, Map<String, S
         if (instance.getAuthor() != null && instance.getTitle() != null) {
             try {
                 //Add values to map here
-                values.put(ScraperConstants.GOODREADS_CAPITALIZED, GoodreadsScraper.getAverageReviewScore());
+                values.put(ScraperConstants.GOODREADS_CAPITALIZED, GoodreadsScraper.getInfo());
                 instance.setReviewValues(values);
             } catch (IOException e) {
                 e.printStackTrace();

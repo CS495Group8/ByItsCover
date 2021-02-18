@@ -31,7 +31,7 @@ public class ReviewPage extends Fragment {
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -46,12 +46,22 @@ public class ReviewPage extends Fragment {
         titleText.setText(instance.getTitle());
         //set goodreads rating
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
-        goodReadsResultRating.setText(instance.getReviewValues().get(ScraperConstants.GOODREADS_CAPITALIZED)
-                .get(ScraperConstants.GOODREADS_RATING_KEY));
+        try {
+            goodReadsResultRating.setText(instance.getReviewValues().get(ScraperConstants.GOODREADS_CAPITALIZED)
+                    .get(ScraperConstants.GOODREADS_RATING_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
         //set goodreads review
-        TextView goodReadsResultReview = (TextView) view.findViewById(R.id.goodreadsRating);
-        goodReadsResultReview.setText(instance.getReviewValues().get(ScraperConstants.GOODREADS_CAPITALIZED)
-                .get(ScraperConstants.GOODREADS_REVIEW_KEY));
+        /*TextView goodReadsResultReview = (TextView) view.findViewById(R.id.goodreadsRating);
+        try {
+            goodReadsResultReview.setText(instance.getReviewValues().get(ScraperConstants.GOODREADS_CAPITALIZED)
+                    .get(ScraperConstants.GOODREADS_REVIEW_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }*/
 
         // Inflate the layout for this fragment
         return view;

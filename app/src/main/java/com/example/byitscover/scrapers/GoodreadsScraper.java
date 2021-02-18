@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GoodreadsScraper {
-    public static Map<String, String> getAverageReviewScore() throws IOException {
+    public static Map<String, String> getInfo() throws IOException {
         CurrentBook instance = CurrentBook.getInstance();
         String[] titleWords = instance.getTitle().split(" ");
         String[] authorWords = instance.getAuthor().split(" ");
@@ -47,8 +47,8 @@ public class GoodreadsScraper {
         toReturn.put(ScraperConstants.GOODREADS_RATING_KEY ,((TextNode) ratingValue.childNode(0)).getWholeText());
 
         //get review text
-        Element reviewValue = bookDocument.selectFirst("div#description");
-        toReturn.put(ScraperConstants.GOODREADS_REVIEW_KEY, ((TextNode) reviewValue.childNode(0)).getWholeText());
+        //Element reviewValue = bookDocument.selectFirst("div#description");
+        //toReturn.put(ScraperConstants.GOODREADS_REVIEW_KEY, ((TextNode) reviewValue.childNode(0)).getWholeText());
 
         return toReturn;
     }
