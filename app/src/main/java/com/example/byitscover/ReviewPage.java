@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.byitscover.helpers.AsyncScrape;
 import com.example.byitscover.helpers.CurrentBook;
+import com.example.byitscover.helpers.ScraperConstants;
 
 public class ReviewPage extends Fragment {
 
@@ -38,14 +39,19 @@ public class ReviewPage extends Fragment {
 
         //populate UI
         //set author
-        TextView authorText = (TextView) view.findViewById(R.id.bookAuthorResult);
+        TextView authorText = (TextView) view.findViewById(R.id.authorText);
         authorText.setText(instance.getAuthor());
         //set title
-        TextView titleText = (TextView) view.findViewById(R.id.bookTitleResult);
+        TextView titleText = (TextView) view.findViewById(R.id.titleText);
         titleText.setText(instance.getTitle());
-        //set goodreads
-        TextView goodReadsResult = (TextView) view.findViewById(R.id.goodreadsScrapedValue);
-        goodReadsResult.setText(instance.getReviewValues().get("Goodreads").toString());
+        //set goodreads rating
+        TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
+        goodReadsResultRating.setText(instance.getReviewValues().get(ScraperConstants.GOODREADS_CAPITALIZED)
+                .get(ScraperConstants.GOODREADS_RATING_KEY));
+        //set goodreads review
+        TextView goodReadsResultReview = (TextView) view.findViewById(R.id.goodreadsRating);
+        goodReadsResultReview.setText(instance.getReviewValues().get(ScraperConstants.GOODREADS_CAPITALIZED)
+                .get(ScraperConstants.GOODREADS_REVIEW_KEY));
 
         // Inflate the layout for this fragment
         return view;
@@ -54,7 +60,7 @@ public class ReviewPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.backButtonFromReviewToMain).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(ReviewPage.this)

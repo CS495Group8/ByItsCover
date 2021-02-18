@@ -6,7 +6,7 @@ import java.util.Map;
 public class CurrentBook {
     private String title;
     private String author;
-    private Map<String, Double> reviewValues;
+    private Map<String, Map<String, String>> reviewValues;
 
     private static CurrentBook instance = new CurrentBook();
 
@@ -26,7 +26,7 @@ public class CurrentBook {
         return author;
     }
 
-    public Map<String, Double> getReviewValues() {
+    public Map<String, Map<String, String>> getReviewValues() {
         return reviewValues;
     }
 
@@ -38,7 +38,7 @@ public class CurrentBook {
         author = authorIn;
     }
 
-    public void setReviewValues(Map<String, Double> reviewValuesIn) {
+    public void setReviewValues(Map<String, Map<String, String>> reviewValuesIn) {
         reviewValues = reviewValuesIn;
     }
 }

@@ -2,14 +2,46 @@
     <string name="app_name">ByItsCover</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="first_fragment_label">Main Page</string>
+    <string name="second_fragment_label">Review Page</string>
     <string name="next">Next</string>
+    <string name="go_to_camera">Search by Cover</string>
+    <string name="enter_text">Search by Title</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="Title">Insert Book Title Here</string>
+    <string name="Author">Insert Author Here</string>
+    <string name="Rating">Avg. Rating Here</string>
+    <string name="Rating1">Rating 1 Here</string>
+    <string name="Review1">"Review Text Goes Here"</string>
+
+    <string name="Rating2">Rating 2 Here</string>
+    <string name="ReviewSite2Image">Review Site 2</string>
+
+    <string name="Rating3">Rating 3 Here</string>
+    <string name="ReviewSite3Image">Review Site 3</string>
+
+    <string name="Rating4">Rating 4 Here</string>
+    <string name="ReviewSite4Image">Review Site 4</string>
+
+    <string name="hello_first_fragment">By Its Cover</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <string name="CoverDes">Book Cover</string>
+    <string name="ReviewSite1Image">Review Site 1</string>
+
+    <string name="Sort">Sort By...</string>
+    <string-array name="ReviewOrder">
+        <item>By Website</item>
+        <item>Rating High to Low</item>
+        <item>Rating Low to High</item>
+    </string-array>
     <string name="Goodreads">Goodreads</string>
     <string name="title">Title</string>
     <string name="author">Author</string>
+
+    <string name="goodreadsRating">goodreadsRating</string>
+    <string name="goodreadsReview">goodreadsReview</string>
+
 </resources>
