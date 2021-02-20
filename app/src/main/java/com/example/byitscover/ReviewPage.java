@@ -1,19 +1,22 @@
 package com.example.byitscover;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.byitscover.helpers.AsyncScrape;
 import com.example.byitscover.helpers.CurrentBook;
 import com.example.byitscover.helpers.ScraperConstants;
+
+import java.util.stream.DoubleStream;
 
 public class ReviewPage extends Fragment {
 
@@ -44,7 +47,7 @@ public class ReviewPage extends Fragment {
         //populate UI
         setAuthorAndTitle(view, instance);
         setGoodreadsInfo(view, instance);
-        setImageIcons(view);
+        setAverageRatingValue(view);
 
         // Inflate the layout for this fragment
         return view;
@@ -92,8 +95,17 @@ public class ReviewPage extends Fragment {
         }
     }
 
-    public void setImageIcons(View view) {
+    public void setAverageRatingValue(View view) {
+        TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
+        TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
+        //Update these once other scrapers in place
+        Double average = (Double.valueOf(goodReadsResultRating.getText().toString())
+                + Double.valueOf(goodReadsResultRating.getText().toString())
+                + Double.valueOf(goodReadsResultRating.getText().toString())
+                + Double.valueOf(goodReadsResultRating.getText().toString())) / 4.0;
+
+        averageRating.setText(average.toString());
     }
 }
 

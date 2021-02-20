@@ -53,7 +53,6 @@ public class GoodreadsScraper {
         Element reviewValue = bookDocument.selectFirst("div#description").selectFirst("span");
         toReturn.put(ScraperConstants.GOODREADS_REVIEW_KEY,
                 Jsoup.clean(reviewValue.childNode(0).toString(), Whitelist.none()));
-        System.out.println(toReturn.get(ScraperConstants.GOODREADS_REVIEW_KEY));
 
         return toReturn;
     }
