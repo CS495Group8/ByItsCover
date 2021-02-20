@@ -34,7 +34,8 @@ public class ReviewPage extends Fragment {
         }
 
         View view = inflater.inflate(R.layout.review_page, container, false);
-        new AsyncScrape().execute();
+        new AsyncScrape(ScraperConstants.GOODREADS).execute();
+        //Add other scraper calls here when ready
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
         try {
@@ -100,10 +101,16 @@ public class ReviewPage extends Fragment {
         TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
         //Update these once other scrapers in place
-        Double average = (Double.valueOf(goodReadsResultRating.getText().toString())
-                + Double.valueOf(goodReadsResultRating.getText().toString())
-                + Double.valueOf(goodReadsResultRating.getText().toString())
-                + Double.valueOf(goodReadsResultRating.getText().toString())) / 4.0;
+        Double average = 0.0;
+        try {
+            average = (Double.valueOf(goodReadsResultRating.getText().toString())
+                    + Double.valueOf(goodReadsResultRating.getText().toString())
+                    + Double.valueOf(goodReadsResultRating.getText().toString())
+                    + Double.valueOf(goodReadsResultRating.getText().toString())) / 4.0;
+        } catch (Exception E) {
+            System.out.println(E.toString());
+        }
+
 
         averageRating.setText(average.toString());
     }
