@@ -47,21 +47,21 @@ public class ReviewPage extends Fragment {
         //set goodreads rating
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
         try {
-            goodReadsResultRating.setText(instance.getReviewValues().get(ScraperConstants.GOODREADS_CAPITALIZED)
+            goodReadsResultRating.setText(instance.getReviewRatingValues()
                     .get(ScraperConstants.GOODREADS_RATING_KEY));
         }
         catch (Exception e) {
             System.out.println(e.toString());
         }
         //set goodreads review
-        /*TextView goodReadsResultReview = (TextView) view.findViewById(R.id.goodreadsRating);
+        TextView goodReadsResultReview = (TextView) view.findViewById(R.id.goodreadsReview);
         try {
-            goodReadsResultReview.setText(instance.getReviewValues().get(ScraperConstants.GOODREADS_CAPITALIZED)
+            goodReadsResultReview.setText(instance.getReviewRatingValues()
                     .get(ScraperConstants.GOODREADS_REVIEW_KEY));
         }
         catch (Exception e) {
             System.out.println(e.toString());
-        }*/
+        }
 
         // Inflate the layout for this fragment
         return view;
@@ -70,7 +70,7 @@ public class ReviewPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.buttonFromReviewToMain).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(ReviewPage.this)

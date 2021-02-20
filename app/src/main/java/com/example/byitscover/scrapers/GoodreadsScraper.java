@@ -7,6 +7,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
+import org.jsoup.safety.Whitelist;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,11 +46,14 @@ public class GoodreadsScraper {
 
         //get rating value
         Element ratingValue = bookDocument.selectFirst("[itemprop=ratingValue]");
-        toReturn.put(ScraperConstants.GOODREADS_RATING_KEY ,((TextNode) ratingValue.childNode(0)).getWholeText());
+        toReturn.put(ScraperConstants.GOODREADS_RATING_KEY ,
+                ((TextNode) ratingValue.childNode(0)).getWholeText());
 
         //get review text
-        //Element reviewValue = bookDocument.selectFirst("div#description");
-        //toReturn.put(ScraperConstants.GOODREADS_REVIEW_KEY, ((TextNode) reviewValue.childNode(0)).getWholeText());
+        Element reviewValue = bookDocument.selectFirst("div#description").selectFirst("span");
+        toReturn.put(ScraperConstants.GOODREADS_REVIEW_KEY,
+                Jsoup.clean(reviewValue.childNode(0).toString(), Whitelist.none()));
+        System.out.println(toReturn.get(ScraperConstants.GOODREADS_REVIEW_KEY));
 
         return toReturn;
     }
