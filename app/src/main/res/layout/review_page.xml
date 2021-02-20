@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" /> -->
 
     <Button
-        android:id="@+id/buttonFromReviewToMain"
+        android:id="@+id/searchByTitleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/previous"
@@ -83,7 +83,7 @@
         app:layout_constraintEnd_toStartOf="@id/titleText"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonFromReviewToMain"
+        app:layout_constraintTop_toBottomOf="@id/searchByTitleButton"
         app:srcCompat="@drawable/the_glass_hotel"
         tools:src="@tools:sample/avatars" />
 

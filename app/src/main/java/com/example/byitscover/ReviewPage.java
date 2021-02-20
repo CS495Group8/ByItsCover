@@ -1,6 +1,5 @@
 package com.example.byitscover;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -16,9 +14,11 @@ import com.example.byitscover.helpers.AsyncScrape;
 import com.example.byitscover.helpers.CurrentBook;
 import com.example.byitscover.helpers.ScraperConstants;
 
-import java.util.stream.DoubleStream;
-
 public class ReviewPage extends Fragment {
+
+    public ReviewPage() {
+        //required empty constructor
+    }
 
     @Override
     public View onCreateView(
@@ -57,7 +57,7 @@ public class ReviewPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.buttonFromReviewToMain).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.searchByTitleButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(ReviewPage.this)
