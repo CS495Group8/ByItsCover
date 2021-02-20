@@ -1,4 +1,4 @@
 package com.example.byitscover.helpers;
 
-public class AsyncScraperTest {
+public class AsyncScrapeTest {
 }

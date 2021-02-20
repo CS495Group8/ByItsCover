@@ -8,7 +8,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.safety.Whitelist;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.HashMap;
