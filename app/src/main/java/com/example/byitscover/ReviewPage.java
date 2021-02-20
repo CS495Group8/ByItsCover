@@ -157,7 +157,7 @@ public class ReviewPage extends Fragment {
         } catch (Exception E) {
             System.out.println(E.toString());
         }
-        
+
         averageRating.setText(average.toString());
     }
 }
