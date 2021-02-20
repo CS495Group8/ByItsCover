@@ -13,7 +13,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * As the name implies, this is the scraper to get information from goodreads.com. Consists of only
+ * the one method that gets the info from the website
+ *
+ * @author Marc
+ * @version 1.0
+ * @see <a href="goodreads.com">goodreads.com</a>
+ */
 public class GoodreadsScraper {
+    /**
+     * This class is the main driver of the class. Starts by getting the author and title info
+     * from the singleton and then forms the url that needs to be scraped. Once the title and author
+     * are searched for, the scraper then gets the link to the top search result and then connects
+     * to that link to get the rating and review information.
+     *
+     * @return the information from the website
+     * @throws IOException if the text is not found to be returned from the site
+     */
     public static Map<String, String> getInfo() throws IOException {
         CurrentBook instance = CurrentBook.getInstance();
         String[] titleWords = instance.getTitle().split(" ");
