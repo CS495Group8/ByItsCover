@@ -95,6 +95,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/cover"
+        app:srcCompat="@drawable/goodreadsicon"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -115,6 +116,7 @@
         android:layout_height="wrap_content"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:text="@string/Review1"
         android:textColor="#000000"
         android:textSize="20sp"
         app:autoSizeTextType="uniform"
@@ -133,6 +135,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/goodreadsReview"
+        app:srcCompat="@drawable/amazonicon"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -169,6 +172,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/textview_ninth"
+        app:srcCompat="@drawable/barnesandnobleicon"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -205,6 +209,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/cover"
         app:layout_constraintTop_toBottomOf="@id/textview_eleventh"
+        app:srcCompat="@drawable/googlebooksicon"
         tools:src="@tools:sample/avatars" />
 
     <TextView

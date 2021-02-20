@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,10 +22,13 @@ public class ReviewPage extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        //TODO: change values from hardcoded to ones from ML alg
+        //TODO: change values from hardcoded to ones from ML alg or the search by title page
         CurrentBook info = CurrentBook.getInstance();
-        info.setAuthor("Emily St. John Mandel");
-        info.setTitle("The Glass Hotel");
+
+        if (info.getAuthor() == null && info.getTitle() == null) {
+            info.setAuthor(ScraperConstants.TEMP_HARDCODED_AUTHOR);
+            info.setTitle(ScraperConstants.TEMP_HARDCODED_TITLE);
+        }
 
         View view = inflater.inflate(R.layout.review_page, container, false);
         new AsyncScrape().execute();
@@ -38,12 +42,36 @@ public class ReviewPage extends Fragment {
         CurrentBook instance = CurrentBook.getInstance();
 
         //populate UI
+        setAuthorAndTitle(view, instance);
+        setGoodreadsInfo(view, instance);
+        setImageIcons(view);
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        view.findViewById(R.id.buttonFromReviewToMain).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(ReviewPage.this)
+                        .navigate(R.id.action_from_review_to_first);
+            }
+        });
+    }
+
+    private void setAuthorAndTitle(View view, CurrentBook instance) {
         //set author
         TextView authorText = (TextView) view.findViewById(R.id.authorText);
         authorText.setText(instance.getAuthor());
         //set title
         TextView titleText = (TextView) view.findViewById(R.id.titleText);
         titleText.setText(instance.getTitle());
+    }
+
+    private void setGoodreadsInfo(View view, CurrentBook instance) {
         //set goodreads rating
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
         try {
@@ -62,21 +90,10 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
-
-        // Inflate the layout for this fragment
-        return view;
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void setImageIcons(View view) {
 
-        view.findViewById(R.id.buttonFromReviewToMain).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(ReviewPage.this)
-                        .navigate(R.id.action_from_review_to_first);
-            }
-        });
     }
 }
 
