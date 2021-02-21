@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
 }
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 30
@@ -26,6 +27,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 dependencies {
@@ -38,6 +43,17 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
+    testImplementation 'androidx.test.ext:junit:1.1.0'
+    testImplementation 'org.robolectric:robolectric:4.4'
+    testImplementation "org.robolectric:shadows-supportv4:3.8"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    def fragment_version = "1.2.5"
+
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+}
+repositories {
+    mavenCentral()
 }
