@@ -12,13 +12,21 @@ import androidx.navigation.fragment.NavHostFragment;
 
 public class InfoPage extends Fragment {
 
+    EditText eTitle;
+    EditText eAuthor;
+
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.enter_book_info, container, false);
+
+        View view = inflater.inflate(R.layout.enter_book_info, container, false);
+        eTitle = (EditText) view.findViewById(R.id.enter_title); //text field to enter title
+        eAuthor = (EditText) view.findViewById(R.id.enter_author); //text field to enter author
+        return view;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -35,8 +43,8 @@ public class InfoPage extends Fragment {
         view.findViewById(R.id.Search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText eTitle = (EditText) view.findViewById(R.id.enter_title);   //returns NULL
-                EditText eAuthor = (EditText) view.findViewById(R.id.enter_author); //returns NULL
+                String title = eTitle.getText().toString(); //saves title on click
+                String author = eAuthor.getText().toString(); //saves author on click
                 NavHostFragment.findNavController(InfoPage.this)
                         .navigate(R.id.action_from_info_to_review);
             }
