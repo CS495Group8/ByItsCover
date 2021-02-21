@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.byitscover.helpers.CurrentBook;
+
 public class InfoPage extends Fragment {
 
     EditText eTitle;
@@ -43,8 +45,9 @@ public class InfoPage extends Fragment {
         view.findViewById(R.id.Search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String title = eTitle.getText().toString(); //saves title on click
-                String author = eAuthor.getText().toString(); //saves author on click
+                CurrentBook instance = CurrentBook.getInstance();
+                instance.setTitle(eTitle.getText().toString()); //saves title on click
+                instance.setAuthor(eAuthor.getText().toString()); //saves author on click
                 NavHostFragment.findNavController(InfoPage.this)
                         .navigate(R.id.action_from_info_to_review);
             }

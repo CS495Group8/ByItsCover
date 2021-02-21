@@ -51,7 +51,9 @@ public class GoodreadsScraper {
         //search goodreads for book
         String baseUrl = "https://www.goodreads.com";
         String searchingUrl = baseUrl + "/search?query=" + toAppendUrl;
+        searchingUrl.replaceAll("[\\n]", "");
         Document document = Jsoup.connect(searchingUrl).get();
+        System.out.println(searchingUrl);
 
         //go to first search result link
         Element link = document.select("a.bookTitle").first();
@@ -69,6 +71,14 @@ public class GoodreadsScraper {
         Element reviewValue = bookDocument.selectFirst("div#description").selectFirst("span");
         toReturn.put(ScraperConstants.GOODREADS_REVIEW_KEY,
                 Jsoup.clean(reviewValue.childNode(0).toString(), Whitelist.none()));
+
+        //get author of book from Goodreads
+        Element authorValue = bookDocument.selectFirst("div#bookAuthors");
+        instance.setAuthor(authorValue.childNode(3).childNode(1).childNode(1).childNode(0).childNode(0).toString());
+
+        //get title of book from Goodreads
+        Element titleValue = bookDocument.selectFirst("h1#bookTitle");
+        instance.setTitle(titleValue.childNode(0).toString());
 
         return toReturn;
     }

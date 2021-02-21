@@ -45,7 +45,7 @@ public class ReviewPage extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        //TODO: change values from hardcoded to ones from ML alg or the search by title page
+        //TODO: change values from hardcoded to ones from ML alg once integrated
         CurrentBook info = CurrentBook.getInstance();
 
         if (info.getAuthor() == null && info.getTitle() == null) {
@@ -85,7 +85,7 @@ public class ReviewPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.searchByTitleButton).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.buttonFromReviewToMain).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(ReviewPage.this)
