@@ -21,221 +21,246 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" /> -->
 
-    <Button
-        android:id="@+id/searchByTitleButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/topMainLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/previous"
-        app:layout_constraintBottom_toTopOf="@id/titleText"
-        app:layout_constraintEnd_toEndOf="@id/cover"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069" />
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/vertReviewScroller">
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Title"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/authorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.82"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/cover" />
+        <LinearLayout
+            android:layout_width="197dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/authorText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Author"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/averageRatingText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
-        app:layout_constraintVertical_bias="0.029" />
+            <Button
+                android:id="@+id/buttonFromReviewToMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/previous" />
 
-    <TextView
-        android:id="@+id/averageRatingText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Rating"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/cover"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.846"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/authorText" />
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="75dp"
+                android:layout_height="125dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/CoverDes"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/the_glass_hotel"
+                tools:src="@tools:sample/avatars" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="70dp">
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Title"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/authorText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Author"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/averageRatingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Rating"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <!-- Will be book cover -->
-    <ImageView
-        android:id="@+id/cover"
-        android:layout_width="75dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/CoverDes"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toStartOf="@id/titleText"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchByTitleButton"
-        app:srcCompat="@drawable/the_glass_hotel"
-        tools:src="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/revImage1"
-        android:layout_width="46dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="64dp"
-        android:contentDescription="@string/ReviewSite1Image"
-        app:layout_constraintEnd_toEndOf="@id/titleText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/cover"
-        app:layout_constraintTop_toBottomOf="@id/cover"
-        app:srcCompat="@drawable/goodreadsicon"
-        tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/goodreadsRating"
-        android:layout_width="wrap_content"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/vertReviewScroller"
+        android:layout_width="408dp"
         android:layout_height="wrap_content"
-        android:text="@string/Rating1"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/revImage1"
-        app:layout_constraintTop_toTopOf="@id/revImage1"
-        app:layout_constraintVertical_bias="0.029" />
+        android:fillViewport="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="50dp"
+        android:scrollbars="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topMainLayout">
 
-    <TextView
-        android:id="@+id/goodreadsReview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scrollbarAlwaysDrawHorizontalTrack="true"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:text="@string/Review1"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/revImage1"
-        app:layout_constraintTop_toBottomOf="@id/revImage1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="200dp"
+            android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/revImage1"
+                android:layout_width="46dp"
+                android:layout_height="53dp"
+                android:contentDescription="@string/ReviewSite1Image"
+                app:layout_constraintEnd_toEndOf="@id/titleText"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/cover"
+                app:srcCompat="@drawable/goodreadsicon"
+                tools:src="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/revImage2"
-        android:layout_width="46dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="48dp"
-        android:contentDescription="@string/ReviewSite2Image"
-        app:layout_constraintEnd_toEndOf="@id/titleText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/cover"
-        app:layout_constraintTop_toBottomOf="@id/goodreadsReview"
-        app:srcCompat="@drawable/amazonicon"
-        tools:src="@tools:sample/avatars" />
+            <TextView
+                android:id="@+id/goodreadsRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Rating1"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/revImage1"
+                app:layout_constraintTop_toTopOf="@id/revImage1"
+                app:layout_constraintVertical_bias="0.029" />
 
-    <TextView
-        android:id="@+id/textview_eigth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Rating2"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/revImage2"
-        app:layout_constraintTop_toTopOf="@id/revImage2"
-        app:layout_constraintVertical_bias="0.029" />
-
-    <TextView
-        android:id="@+id/textview_ninth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Review1"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/revImage2"
-        app:layout_constraintTop_toBottomOf="@id/revImage2" />
+            <TextView
+                android:id="@+id/goodreadsReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="25dp"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:text="@string/Review1"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/revImage1"
+                app:layout_constraintTop_toBottomOf="@id/revImage1" />
 
 
-    <ImageView
-        android:id="@+id/revImage3"
-        android:layout_width="46dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="48dp"
-        android:contentDescription="@string/ReviewSite3Image"
-        app:layout_constraintEnd_toEndOf="@id/titleText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/cover"
-        app:layout_constraintTop_toBottomOf="@id/textview_ninth"
-        app:srcCompat="@drawable/barnesandnobleicon"
-        tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/revImage2"
+                android:layout_width="46dp"
+                android:layout_height="53dp"
+                android:contentDescription="@string/ReviewSite2Image"
+                app:layout_constraintEnd_toEndOf="@id/titleText"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/goodreadsReview"
+                app:srcCompat="@drawable/amazonicon"
+                tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/textview_tenth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Rating3"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/revImage3"
-        app:layout_constraintTop_toTopOf="@id/revImage3"
-        app:layout_constraintVertical_bias="0.029" />
+            <TextView
+                android:id="@+id/textview_eigth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Rating2"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/revImage2"
+                app:layout_constraintTop_toTopOf="@id/revImage2"
+                app:layout_constraintVertical_bias="0.029" />
 
-    <TextView
-        android:id="@+id/textview_eleventh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Review1"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/revImage3"
-        app:layout_constraintTop_toBottomOf="@id/revImage3" />
+            <TextView
+                android:id="@+id/textview_ninth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="25dp"
+                android:text="@string/Review1"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/revImage2"
+                app:layout_constraintTop_toBottomOf="@id/revImage2" />
 
 
-    <ImageView
-        android:id="@+id/revImage4"
-        android:layout_width="46dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="48dp"
-        android:contentDescription="@string/ReviewSite4Image"
-        app:layout_constraintEnd_toEndOf="@id/titleText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/cover"
-        app:layout_constraintTop_toBottomOf="@id/textview_eleventh"
-        app:srcCompat="@drawable/googlebooksicon"
-        tools:src="@tools:sample/avatars" />
+            <ImageView
+                android:id="@+id/revImage3"
+                android:layout_width="46dp"
+                android:layout_height="53dp"
+                android:contentDescription="@string/ReviewSite3Image"
+                app:layout_constraintEnd_toEndOf="@id/titleText"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/textview_ninth"
+                app:srcCompat="@drawable/barnesandnobleicon"
+                tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/textview_twelve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Rating4"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/revImage4"
-        app:layout_constraintTop_toTopOf="@id/revImage4"
-        app:layout_constraintVertical_bias="0.029" />
+            <TextView
+                android:id="@+id/textview_tenth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Rating3"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/revImage3"
+                app:layout_constraintTop_toTopOf="@id/revImage3"
+                app:layout_constraintVertical_bias="0.029" />
 
-    <TextView
-        android:id="@+id/textview_thirtheen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Review1"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/revImage4"
-        app:layout_constraintTop_toBottomOf="@id/revImage4" />
+            <TextView
+                android:id="@+id/textview_eleventh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="25dp"
+                android:text="@string/Review1"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/revImage3"
+                app:layout_constraintTop_toBottomOf="@id/revImage3" />
+
+
+            <ImageView
+                android:id="@+id/revImage4"
+                android:layout_width="46dp"
+                android:layout_height="53dp"
+                android:contentDescription="@string/ReviewSite4Image"
+                app:layout_constraintEnd_toEndOf="@id/titleText"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/cover"
+                app:layout_constraintTop_toBottomOf="@id/textview_eleventh"
+                app:srcCompat="@drawable/googlebooksicon"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/textview_twelve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Rating4"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/revImage4"
+                app:layout_constraintTop_toTopOf="@id/revImage4"
+                app:layout_constraintVertical_bias="0.029" />
+
+            <TextView
+                android:id="@+id/textview_thirtheen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="25dp"
+                android:text="@string/Review1"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/revImage4"
+                app:layout_constraintTop_toBottomOf="@id/revImage4" />
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
     <!-- <Button
