@@ -13,6 +13,20 @@
         <action
             android:id="@+id/action_from_first_to_review"
             app:destination="@id/reviewPage" />
+        <action
+            android:id="@+id/action_from_first_to_info"
+            app:destination="@id/InfoPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/InfoPage"
+        android:name="com.example.byitscover.InfoPage"
+        android:label="InfoPage" >
+        <action
+            android:id="@+id/action_from_info_to_first"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_from_info_to_review"
+            app:destination="@id/reviewPage" />
     </fragment>
     <fragment
         android:id="@+id/reviewPage"
