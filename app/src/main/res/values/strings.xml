@@ -41,4 +41,7 @@
     <string name="title">Title</string>
     <string name="author">Author</string>
 
+    <string name="goodreadsRating">goodreadsRating</string>
+    <string name="goodreadsReview">goodreadsReview</string>
+
 </resources>
