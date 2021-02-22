@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.3"
 
     lintOptions {
-        abortOnError false
+            abortOnError false
     }
 
     defaultConfig {
