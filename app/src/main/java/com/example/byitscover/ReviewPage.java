@@ -11,7 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.byitscover.helpers.AsyncScrape;
-import com.example.byitscover.helpers.CurrentBook;
+import com.example.byitscover.helpers.Book;
+import com.example.byitscover.helpers.Isbn;
 import com.example.byitscover.helpers.ScraperConstants;
 
 /**
@@ -46,12 +47,10 @@ public class ReviewPage extends Fragment {
             Bundle savedInstanceState
     ) {
         //TODO: change values from hardcoded to ones from ML alg or the search by title page
-        CurrentBook info = CurrentBook.getInstance();
-
-        if (info.getAuthor() == null && info.getTitle() == null) {
-            info.setAuthor(ScraperConstants.TEMP_HARDCODED_AUTHOR);
-            info.setTitle(ScraperConstants.TEMP_HARDCODED_TITLE);
-        }
+        Book book = new Book("A Pickle For The Knowing Ones Or Plain Truths In A Homespun Dress",
+                "Lord Timothy Dexter",
+                "Kessinger Publishing, LLC",
+                new Isbn("978-1162744308"));
 
         //Create view and call scrapers
         View view = inflater.inflate(R.layout.review_page, container, false);
@@ -65,11 +64,10 @@ public class ReviewPage extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        CurrentBook instance = CurrentBook.getInstance();
 
         //populate UI
-        setAuthorAndTitle(view, instance);
-        setGoodreadsInfo(view, instance);
+        setAuthorAndTitle(view, book);
+        setGoodreadsInfo(view, book);
         setAverageRatingValue(view);
 
         // Inflate the layout for this fragment
@@ -85,13 +83,13 @@ public class ReviewPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.searchByTitleButton).setOnClickListener(new View.OnClickListener() {
+        /*view.findViewById(R.id.searchByTitleButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(ReviewPage.this)
                         .navigate(R.id.action_from_review_to_first);
             }
-        });
+        });*/
     }
 
     /**
@@ -100,7 +98,7 @@ public class ReviewPage extends Fragment {
      * @param view is the UI with all of the connecting logic
      * @param instance is the singleton with the information about the current book
      */
-    private void setAuthorAndTitle(View view, CurrentBook instance) {
+    private void setAuthorAndTitle(View view, Book instance) {
         //set author
         TextView authorText = (TextView) view.findViewById(R.id.authorText);
         authorText.setText(instance.getAuthor());
@@ -117,12 +115,11 @@ public class ReviewPage extends Fragment {
      * @param view is the UI with all of the connecting logic
      * @param instance is the singleton with the information about the current book
      */
-    private void setGoodreadsInfo(View view, CurrentBook instance) {
+    private void setGoodreadsInfo(View view, Book instance) {
         //set goodreads rating
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
         try {
-            goodReadsResultRating.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.GOODREADS_RATING_KEY));
+            goodReadsResultRating.setText("This needs to be filled in");
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -130,8 +127,7 @@ public class ReviewPage extends Fragment {
         //set goodreads review
         TextView goodReadsResultReview = (TextView) view.findViewById(R.id.goodreadsReview);
         try {
-            goodReadsResultReview.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.GOODREADS_REVIEW_KEY));
+            goodReadsResultReview.setText("This also needs to be filled in");
         }
         catch (Exception e) {
             System.out.println(e.toString());

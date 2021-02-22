@@ -1,6 +1,6 @@
 package com.example.byitscover.scrapers;
 
-import com.example.byitscover.helpers.CurrentBook;
+import com.example.byitscover.helpers.Book;
 import com.example.byitscover.helpers.ScraperConstants;
 
 import org.jsoup.Jsoup;
@@ -32,7 +32,7 @@ public class GoodreadsScraper {
      * @throws IOException if the text is not found to be returned from the site
      */
     public static Map<String, String> getInfo() throws IOException {
-        CurrentBook instance = CurrentBook.getInstance();
+        Book instance = new Book(null, null, null, null);
         String[] titleWords = instance.getTitle().split(" ");
         String[] authorWords = instance.getAuthor().split(" ");
 

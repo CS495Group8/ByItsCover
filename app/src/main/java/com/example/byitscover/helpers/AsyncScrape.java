@@ -7,8 +7,6 @@ import com.example.byitscover.scrapers.GoodreadsScraper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * This class asynchronously calls the functions to scrape data and collects it once returned.
@@ -45,8 +43,7 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
      */
     @Override
     protected Map<String, String> doInBackground(Void... params) {
-        CurrentBook instance = CurrentBook.getInstance();
-        Map<String, String> valuesfromInstance = new HashMap<>();
+        /*Map<String, String> valuesfromInstance = new HashMap<>();
         if (instance.getAuthor() != null && instance.getTitle() != null) {
             try {
                 switch(scrapeSite) {
@@ -73,7 +70,8 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
                 e.printStackTrace();
             }
         }
-        return instance.getReviewRatingValues();
+        return instance.getReviewRatingValues();*/
+        return null;
     }
 
 

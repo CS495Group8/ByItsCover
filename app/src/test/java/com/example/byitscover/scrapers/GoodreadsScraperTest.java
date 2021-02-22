@@ -1,6 +1,6 @@
 package com.example.byitscover.scrapers;
 
-import com.example.byitscover.helpers.CurrentBook;
+import com.example.byitscover.helpers.Book;
 import com.example.byitscover.helpers.ScraperConstants;
 
 import org.junit.Before;
@@ -18,14 +18,14 @@ public class GoodreadsScraperTest {
 
     @Before
     public void setUp() {
-        CurrentBook instance = CurrentBook.getInstance();
+        Book instance = Book.getInstance();
         instance.setTitle(null);
         instance.setAuthor(null);
     }
 
     @Test
     public void testGetInfo() throws IOException {
-        CurrentBook insance = CurrentBook.getInstance();
+        Book insance = Book.getInstance();
         insance.setAuthor(ScraperConstants.TEMP_HARDCODED_AUTHOR);
         insance.setTitle(ScraperConstants.TEMP_HARDCODED_TITLE);
         Map<String, String> results = GoodreadsScraper.getInfo();
