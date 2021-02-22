@@ -15,6 +15,7 @@ import java.util.Map;
 public class CurrentBook {
     private String title;
     private String author;
+    private String bookCoverUrl;
     private Map<String, String> reviewRatingValues;
 
     private static CurrentBook instance = new CurrentBook();
@@ -60,6 +61,12 @@ public class CurrentBook {
     }
 
     /**
+     * Getter for the url where the book cover is hosted
+     * @return the url
+     */
+    public String getBookCoverUrl() { return bookCoverUrl; }
+
+    /**
      * Setter for the title
      * @param titleIn is the title you want to set it to
      */
@@ -81,5 +88,13 @@ public class CurrentBook {
      */
     public void setReviewRatingValues(Map<String, String> reviewValuesIn) {
         reviewRatingValues = reviewValuesIn;
+    }
+
+    /**
+     * Setter for book cover url. Comes from goodreads.com
+     * @param url website url where image is hosted
+     */
+    public void setBookCoverUrl(String url) {
+        bookCoverUrl = url;
     }
 }
