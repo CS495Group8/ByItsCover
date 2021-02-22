@@ -114,11 +114,13 @@ public final class Isbn {
         if (!isIsbn10(representation))
             throw new IllegalArgumentException("\"" + representation + "\" is not an ISBN-10 representation");
 
+        representation = stripSeparators(representation);
+
         String head = "978" + representation.substring(0, representation.length() - 1);
         int checksum = isbn13Sum(head);
         int complement = (10 - checksum) % 10;
 
-        return head + checksum;
+        return head + complement;
     }
 
     private static String stripSeparators(String representation) {

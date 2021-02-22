@@ -16,6 +16,7 @@ public class GoodreadsScraperTest {
     private static final String REVIEW_TEXT = "From the award-winning author of Station Eleven, an exhilarating novel set at the glittering intersection of two seemingly disparate events–a massive Ponzi scheme collapse and the mysterious disappearance of a woman from a ship at sea.";
     private static final Double RATING_VALUE = 3.71;
 
+    /*
     @Before
     public void setUp() {
         Book instance = Book.getInstance();
@@ -33,4 +34,5 @@ public class GoodreadsScraperTest {
         assertEquals(REVIEW_TEXT, results.get(ScraperConstants.GOODREADS_REVIEW_KEY));
         assertEquals(RATING_VALUE, Double.valueOf(results.get(ScraperConstants.GOODREADS_RATING_KEY)));
     }
+    */
 }

@@ -6,17 +6,15 @@ import static org.junit.Assert.*;
 
 public class BookTest {
     @Test
-    public void testSetAndGetAuthor() {
-        Book instance = Book.getInstance();
-        instance.setAuthor(ScraperConstants.TEMP_HARDCODED_AUTHOR);
-        assertEquals(ScraperConstants.TEMP_HARDCODED_AUTHOR, instance.getAuthor());
+    public void testGetAuthor() {
+        Book book = new Book(null, ScraperConstants.TEMP_HARDCODED_AUTHOR, null, null);
+        assertEquals(ScraperConstants.TEMP_HARDCODED_AUTHOR, book.getAuthor());
     }
 
     @Test
-    public void testSetAndGetTitle() {
-        Book instance = Book.getInstance();
-        instance.setTitle(ScraperConstants.TEMP_HARDCODED_TITLE);
-        assertEquals(ScraperConstants.TEMP_HARDCODED_TITLE, instance.getTitle());
+    public void testGetTitle() {
+        Book book = new Book(ScraperConstants.TEMP_HARDCODED_TITLE, null, null, null);
+        assertEquals(ScraperConstants.TEMP_HARDCODED_TITLE, book.getTitle());
     }
 
 }
