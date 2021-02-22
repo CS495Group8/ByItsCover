@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.byitscover.helpers.AsyncScrape;
 import com.example.byitscover.helpers.CurrentBook;
 import com.example.byitscover.helpers.ScraperConstants;
+import com.squareup.picasso.Picasso;
 
 /**
  * This class is the logic behind the page that shows all the review and rating information to
@@ -68,6 +70,7 @@ public class ReviewPage extends Fragment {
         CurrentBook instance = CurrentBook.getInstance();
 
         //populate UI
+        setCoverImage(view, instance);
         setAuthorAndTitle(view, instance);
         setGoodreadsInfo(view, instance);
         setAverageRatingValue(view);
@@ -92,6 +95,23 @@ public class ReviewPage extends Fragment {
                         .navigate(R.id.action_from_review_to_first);
             }
         });
+    }
+
+    /**
+     * This sets the image of the book cover on the review page to be the picutre taken from the
+     * camera (once implemented), the cover from the goodreads website, or a hardcoded stand in
+     * @param view the UI with all the connecting logic
+     * @param instance the singleton with all the information about the current book
+     */
+    public void setCoverImage(View view, CurrentBook instance) {
+        ImageView bookCover = (ImageView) view.findViewById(R.id.cover);
+        if (instance.getBookCoverUrl() != null) {
+            Picasso.get().load(instance.getBookCoverUrl()).into(bookCover);
+        }
+        else {
+            //if no internet link to get book cover image
+            bookCover.setImageResource(R.drawable.the_glass_hotel);
+        }
     }
 
     /**
