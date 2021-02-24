@@ -2,6 +2,7 @@ package com.example.byitscover.helpers;
 
 import android.os.AsyncTask;
 
+import com.example.byitscover.scrapers.AmazonScraper;
 import com.example.byitscover.scrapers.GoodreadsScraper;
 
 import java.io.IOException;
@@ -59,10 +60,18 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
                         if (valuesfromInstance != null) {
                             result.putAll(valuesfromInstance);
                         }
-
-                        instance.setReviewRatingValues(result);
                         break;
                     case ScraperConstants.AMAZON:
+                        Map<String, String> valuesFromAmazon = AmazonScraper.getInfo();
+                        valuesfromInstance = instance.getReviewRatingValues();
+
+                        Map<String, String> resultAmz = new HashMap<>();
+                        resultAmz.putAll(valuesFromAmazon);
+                        if (valuesfromInstance != null) {
+                            resultAmz.putAll(valuesfromInstance);
+                        }
+
+                        instance.setReviewRatingValues(resultAmz);
                         break;
                     case ScraperConstants.BARNES_AND_NOBLE:
                         break;

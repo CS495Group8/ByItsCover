@@ -35,15 +35,7 @@ public class GoodreadsScraper {
     public static Map<String, String> getInfo() throws IOException {
         //Get google url, make sure there are no newlines, and connect to it
         String searchingUrl = ScraperHelper.getGoogleUrl(ScraperConstants.GOODREADS);
-        searchingUrl.replaceAll("[\\n]", "");
-        Document document = Jsoup.connect(searchingUrl).get();
-        System.out.println(searchingUrl);
-
-        //go to first search result link
-        Element link = (Element) document.select("div.g").first()
-                .childNode(1).childNode(0).childNode(0).childNode(0);
-        String bookUrl = link.attr("abs:href");
-        Document bookDocument = Jsoup.connect(bookUrl).get();
+        Document bookDocument = ScraperHelper.getSite(searchingUrl);
 
         Map<String, String> toReturn = new HashMap<String, String>();
 

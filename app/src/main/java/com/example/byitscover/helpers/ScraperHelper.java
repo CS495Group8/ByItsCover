@@ -1,5 +1,11 @@
 package com.example.byitscover.helpers;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.io.IOException;
+
 /**
  * This class contains useful methods for all scrapers
  *
@@ -33,5 +39,18 @@ public class ScraperHelper {
         String searchingUrl =  "https://www.google.com/search?q=" + toAppendUrl + "+" + site;
 
         return searchingUrl;
+    }
+
+    public static Document getSite(String searchingUrl) throws IOException {
+        searchingUrl.replaceAll("[\\n]", "");
+        Document document = Jsoup.connect(searchingUrl).get();
+        System.out.println(searchingUrl);
+
+        //go to first search result link
+        Element link = (Element) document.select("div.g").first()
+                .childNode(1).childNode(0).childNode(0).childNode(0);
+        String bookUrl = link.attr("abs:href");
+        Document bookDocument = Jsoup.connect(bookUrl).get();
+        return bookDocument;
     }
 }
