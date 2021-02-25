@@ -28,10 +28,6 @@ public class FirstFragment extends Fragment {
      * @param savedInstanceState
      * @return
      */
-
-     this is a syntax error;
-
-
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
