@@ -17,10 +17,7 @@ import java.util.Map;
 public class AmazonScraper {
 
     public static Map<String, String> getInfo() throws IOException {
-        //Get google url, make sure there are no newlines, and connect to it
-        String searchingUrl = ScraperHelper.getGoogleUrl(ScraperConstants.AMAZON);
-        Document amazonPage = ScraperHelper.getSite(searchingUrl);
-
+        Document amazonPage = ScraperHelper.getPage(ScraperConstants.AMAZON);
         Map<String, String> toReturn = new HashMap<String, String>();
 
         //get rating value

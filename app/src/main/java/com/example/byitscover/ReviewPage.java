@@ -59,7 +59,7 @@ public class ReviewPage extends Fragment {
         View view = inflater.inflate(R.layout.review_page, container, false);
         new AsyncScrape(ScraperConstants.GOODREADS).execute();
         //Add other scraper calls here when ready
-        new AsyncScrape(ScraperConstants.AMAZON).execute();
+        //new AsyncScrape(ScraperConstants.AMAZON).execute();
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
         try {

@@ -34,8 +34,7 @@ public class GoodreadsScraper {
      */
     public static Map<String, String> getInfo() throws IOException {
         //Get google url, make sure there are no newlines, and connect to it
-        String searchingUrl = ScraperHelper.getGoogleUrl(ScraperConstants.GOODREADS);
-        Document bookDocument = ScraperHelper.getSite(searchingUrl);
+        Document bookDocument = ScraperHelper.getPage(ScraperConstants.GOODREADS);
 
         Map<String, String> toReturn = new HashMap<String, String>();
 
