@@ -59,12 +59,12 @@ public class ReviewPage extends Fragment {
         View view = inflater.inflate(R.layout.review_page, container, false);
         new AsyncScrape(ScraperConstants.GOODREADS).execute();
         //Add other scraper calls here when ready
-        //new AsyncScrape(ScraperConstants.AMAZON).execute();
+        new AsyncScrape(ScraperConstants.AMAZON).execute();
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
         try {
             //This controls how long the app waits for the scraping to be done
-            Thread.sleep(10000);
+            Thread.sleep(30000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -74,6 +74,7 @@ public class ReviewPage extends Fragment {
         setCoverImage(view, instance);
         setAuthorAndTitle(view, instance);
         setGoodreadsInfo(view, instance);
+        setAmazonInfo(view, instance);
         setAverageRatingValue(view);
 
         // Inflate the layout for this fragment
@@ -153,6 +154,35 @@ public class ReviewPage extends Fragment {
         try {
             goodReadsResultReview.setText(instance.getReviewRatingValues()
                     .get(ScraperConstants.GOODREADS_REVIEW_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
+     * Sets the rating and review information from the Amazon website. The review is taken to be
+     * the paragraph in bold just underneath the rating. The rating taken is the average across all
+     * Amazon users.
+     *
+     * @param view is the UI with all of the connecting logic
+     * @param instance is the singleton with the information about the current book
+     */
+    private void setAmazonInfo(View view, CurrentBook instance) {
+        //set amazon rating
+        TextView amazonResultRating = (TextView) view.findViewById(R.id.amazonRating);
+        try {
+            amazonResultRating.setText(instance.getReviewRatingValues()
+                    .get(ScraperConstants.AMAZON_RATING_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        //set amazon review
+        TextView amazonResultReview = (TextView) view.findViewById(R.id.amazonReview);
+        try {
+            amazonResultReview.setText(instance.getReviewRatingValues()
+                    .get(ScraperConstants.AMAZON_REVIEW_KEY));
         }
         catch (Exception e) {
             System.out.println(e.toString());

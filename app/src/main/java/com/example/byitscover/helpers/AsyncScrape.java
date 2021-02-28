@@ -60,6 +60,7 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
                         if (valuesfromInstance != null) {
                             result.putAll(valuesfromInstance);
                         }
+                        instance.setReviewRatingValues(result);
                         break;
                     case ScraperConstants.AMAZON:
                         Map<String, String> valuesFromAmazon = AmazonScraper.getInfo();

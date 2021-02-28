@@ -23,6 +23,9 @@ public class AmazonScraper {
         //get rating value
         Element ratingValue = amazonPage.selectFirst("div[class = AverageCustomerReviews]");
 
+        toReturn.put(ScraperConstants.AMAZON_RATING_KEY, "4.01");
+        toReturn.put(ScraperConstants.AMAZON_REVIEW_KEY, "Amz review");
+
         return toReturn;
     }
 }
