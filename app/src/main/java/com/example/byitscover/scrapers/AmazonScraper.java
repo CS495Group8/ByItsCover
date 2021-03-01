@@ -18,10 +18,10 @@ public class AmazonScraper {
 
     public static Map<String, String> getInfo() throws IOException {
         Document amazonPage = ScraperHelper.getPage(ScraperConstants.AMAZON);
+        amazonPage = Jsoup.connect("https://amazon-asin.com/asincheck/?product_id=0439023483").get();
         Map<String, String> toReturn = new HashMap<String, String>();
 
-        //get rating value
-        Element ratingValue = amazonPage.selectFirst("div[class = AverageCustomerReviews]");
+        Element content = amazonPage.selectFirst("span.ng-binding");
 
         toReturn.put(ScraperConstants.AMAZON_RATING_KEY, "4.01");
         toReturn.put(ScraperConstants.AMAZON_REVIEW_KEY, "Amz review");
