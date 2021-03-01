@@ -1,5 +1,6 @@
 package com.example.byitscover.helpers;
 
+import com.example.byitscover.BuildConfig;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -22,7 +23,6 @@ public class ScraperHelper {
 
     private static final int HTTP_REQUEST_TIMEOUT = 3 * 600000;
     private static final String SEARCH_ENGINE_ID = "055daec8cea1afc9a";
-    private static final String GOOGLE_API_KEY = "AIzaSyCAd4lxnyS7qrFRZI338b6G3X8eOn-NZRA";
 
     public static List<Result> googleAPISearch(String site){
         String toSearch = getGoogleQuery(site);
@@ -48,7 +48,7 @@ public class ScraperHelper {
         List<Result> resultList=null;
         try {
             Customsearch.Cse.List list=customsearch.cse().list(toSearch);
-            list.setKey(GOOGLE_API_KEY);
+            list.setKey(BuildConfig.API_KEY);
             list.setCx(SEARCH_ENGINE_ID);
             Search results=list.execute();
             resultList=results.getItems();
