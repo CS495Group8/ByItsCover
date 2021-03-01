@@ -3,6 +3,7 @@ package com.example.byitscover.scrapers;
 import com.example.byitscover.helpers.CurrentBook;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.helpers.ScraperHelper;
+import com.google.api.services.customsearch.model.Result;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,6 +13,7 @@ import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,7 +36,8 @@ public class GoodreadsScraper {
      */
     public static Map<String, String> getInfo() throws IOException {
         //Get google url, make sure there are no newlines, and connect to it
-        String searchingUrl = ScraperHelper.getGoogleUrl(ScraperConstants.GOODREADS);
+        List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.GOODREADS);
+        String searchingUrl = ScraperHelper.getTopResultUrl(results);
         searchingUrl.replaceAll("[\\n]", "");
         Document document = Jsoup.connect(searchingUrl).get();
         System.out.println(searchingUrl);

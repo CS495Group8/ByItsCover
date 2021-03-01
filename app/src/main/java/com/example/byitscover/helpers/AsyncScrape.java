@@ -2,6 +2,7 @@ package com.example.byitscover.helpers;
 
 import android.os.AsyncTask;
 
+import com.example.byitscover.scrapers.BarnesAndNobleScraper;
 import com.example.byitscover.scrapers.GoodreadsScraper;
 
 import java.io.IOException;
@@ -46,25 +47,17 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
     @Override
     protected Map<String, String> doInBackground(Void... params) {
         CurrentBook instance = CurrentBook.getInstance();
-        Map<String, String> valuesfromInstance = new HashMap<>();
+        Map<String, String> valuesFromSite = new HashMap<>();
         if (instance.getAuthor() != null && instance.getTitle() != null) {
             try {
                 switch(scrapeSite) {
                     case ScraperConstants.GOODREADS:
-                        Map<String, String> valuesFromGoodreads = GoodreadsScraper.getInfo();
-                        valuesfromInstance = instance.getReviewRatingValues();
-
-                        Map<String, String> result = new HashMap<>();
-                        result.putAll(valuesFromGoodreads);
-                        if (valuesfromInstance != null) {
-                            result.putAll(valuesfromInstance);
-                        }
-
-                        instance.setReviewRatingValues(result);
+                        valuesFromSite = GoodreadsScraper.getInfo();
                         break;
                     case ScraperConstants.AMAZON:
                         break;
                     case ScraperConstants.BARNES_AND_NOBLE:
+                        valuesFromSite = BarnesAndNobleScraper.getInfo();
                         break;
                     case ScraperConstants.GOOGLE_BOOKS:
                         break;
@@ -72,6 +65,15 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Map<String, String> valuesfromInstance = instance.getReviewRatingValues();
+
+            Map<String, String> result = new HashMap<>();
+            result.putAll(valuesFromSite);
+            if (valuesfromInstance != null) {
+                result.putAll(valuesfromInstance);
+            }
+
+            instance.setReviewRatingValues(result);
         }
         return instance.getReviewRatingValues();
     }

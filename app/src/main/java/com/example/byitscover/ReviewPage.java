@@ -59,6 +59,7 @@ public class ReviewPage extends Fragment {
         View view = inflater.inflate(R.layout.review_page, container, false);
         new AsyncScrape(ScraperConstants.GOODREADS).execute();
         //Add other scraper calls here when ready
+        new AsyncScrape(ScraperConstants.BARNES_AND_NOBLE).execute();
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
         try {
@@ -73,6 +74,7 @@ public class ReviewPage extends Fragment {
         setCoverImage(view, instance);
         setAuthorAndTitle(view, instance);
         setGoodreadsInfo(view, instance);
+        setBarnesAndNobleInfo(view, instance);
         setAverageRatingValue(view);
 
         // Inflate the layout for this fragment
@@ -159,20 +161,49 @@ public class ReviewPage extends Fragment {
     }
 
     /**
+     * Sets the rating and review information from the Barnes and Noble website. The review
+     * is from the overview and the rating it the average across all ratings.
+     *
+     * @param view is the UI with all of the connecting logic
+     * @param instance is the singleton with the information about the current book
+     */
+    private void setBarnesAndNobleInfo(View view, CurrentBook instance) {
+        //set BaN rating
+        TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
+        try {
+            banResultRating.setText(instance.getReviewRatingValues()
+                    .get(ScraperConstants.BAN_RATING_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        //set BaN review
+        TextView banResultReview = (TextView) view.findViewById(R.id.banReview);
+        try {
+            banResultReview.setText(instance.getReviewRatingValues()
+                    .get(ScraperConstants.BAN_REVIEW_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
      * Takes the four ratings from the different sites and then averages them. Once calculated,
      * it sets the value to be displayed just under the Title and Author.
      * @param view is the view created with the UI and logic
      */
     public void setAverageRatingValue(View view) {
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
+        TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
         TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
         //Update these once other scrapers in place
         Double average = 0.0;
         try {
             average = (Double.valueOf(goodReadsResultRating.getText().toString())
-                    + Double.valueOf(goodReadsResultRating.getText().toString())
-                    + Double.valueOf(goodReadsResultRating.getText().toString())
+                    + Double.valueOf(banResultRating.getText().toString())
+                    + Double.valueOf(banResultRating.getText().toString())
                     + Double.valueOf(goodReadsResultRating.getText().toString())) / 4.0;
         } catch (Exception E) {
             System.out.println(E.toString());
