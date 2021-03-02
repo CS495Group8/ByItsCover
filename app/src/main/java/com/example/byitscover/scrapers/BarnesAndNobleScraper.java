@@ -17,8 +17,8 @@ import java.util.Map;
 
 public class BarnesAndNobleScraper {
     public static Map<String, String> getInfo() throws IOException {
-        List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.GOODREADS);
-        String searchingUrl = "https://www.barnesandnoble.com/w/hunger-games-suzanne-collins/1100171585?ean=9780439023528";
+        List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.BARNES_AND_NOBLE);
+        String searchingUrl = getActualBookResult(results);
         Document document = Jsoup.connect(searchingUrl).get();
         System.out.println(searchingUrl);
 
@@ -45,6 +45,7 @@ public class BarnesAndNobleScraper {
         for (int i = 0; i < results.size(); i++) {
             if (results.get(i).getFormattedUrl().contains("/w/")) {
                 toReturn = results.get(i).getFormattedUrl();
+                break;
             }
         }
         return toReturn;

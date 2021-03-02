@@ -59,9 +59,9 @@ public class ReviewPage extends Fragment {
 
         //Create view and call scrapers
         View view = inflater.inflate(R.layout.review_page, container, false);
-        new AsyncScrape(ScraperConstants.GOODREADS).execute();
+        //new AsyncScrape(ScraperConstants.GOODREADS).execute();
         //Add other scraper calls here when ready
-        new AsyncScrape(ScraperConstants.BARNES_AND_NOBLE).execute();
+        //new AsyncScrape(ScraperConstants.BARNES_AND_NOBLE).execute();
         new AsyncScrape(ScraperConstants.GOOGLE_BOOKS).execute();
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
@@ -203,7 +203,7 @@ public class ReviewPage extends Fragment {
         TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
         try {
             googleResultRating.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.GOODREADS_RATING_KEY));
+                    .get(ScraperConstants.GOOGLE_RATING_KEY));
         }
         catch (Exception e) {
             System.out.println(e.toString());

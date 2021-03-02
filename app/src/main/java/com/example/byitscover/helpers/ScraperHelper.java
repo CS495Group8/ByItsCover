@@ -84,4 +84,33 @@ public class ScraperHelper {
 
         return toSearch + " " + site;
     }
+
+    public static String getGoogleUrlNoAPI(String site) {
+        CurrentBook instance = CurrentBook.getInstance();
+        String[] titleWords = instance.getTitle().split(" ");
+        String[] authorWords = instance.getAuthor().split(" ");
+        String[] siteWords = site.split(" ");
+
+        String toAppendUrl = new String();
+        for (String word : titleWords) {
+            toAppendUrl = toAppendUrl + word + "+";
+        }
+        for (String word : authorWords) {
+                toAppendUrl = toAppendUrl + word + "+";
+        }
+        if (siteWords.length > 1) {
+            for (String word : siteWords) {
+                if (word == siteWords[siteWords.length - 1]) {
+                    toAppendUrl = toAppendUrl + word;
+                } else {
+                    toAppendUrl = toAppendUrl + word + "+";
+                }
+            }
+        }
+
+        //search goodreads for book
+        String searchingUrl =  "https://www.google.com/search?q=" + toAppendUrl;
+
+        return searchingUrl;
+    }
 }
