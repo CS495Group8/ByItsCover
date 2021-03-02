@@ -2,7 +2,6 @@ package com.example.byitscover.scrapers;
 
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.helpers.ScraperHelper;
-import com.google.api.services.customsearch.model.Result;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,10 +11,24 @@ import org.jsoup.safety.Whitelist;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class scrapes the Google books website to get the rating and review from their website
+ *
+ * @version 1.0
+ * @author Marc
+ */
 public class GoogleScraper {
+    /**
+     * Standard method to get the rating and review from the website. This rating one was annoying
+     * as the Google Books site does not present the rating in a decimal form, it just shows the
+     * stars and a histogram of the number of ratings for each star. So had to get the values
+     * for each row of the histogram and calculate the rating manually.
+     *
+     * @return map of info with the rating and review text
+     * @throws IOException
+     */
     public static Map<String, String> getInfo() throws IOException {
         String searchingUrl = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.GOOGLE_BOOKS);
         searchingUrl.replaceAll("[\\n]", "");
@@ -30,6 +43,7 @@ public class GoogleScraper {
 
         Map<String, String> toReturn = new HashMap<String, String>();
 
+        //find rating info and calculate
         Element rating5stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
                 .childNode(0).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
         Element rating4stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)

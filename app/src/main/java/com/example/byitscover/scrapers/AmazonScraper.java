@@ -15,9 +15,18 @@ import java.util.Map;
 
 /**
  * This class is designed to get rating and review information from Amazon.com
+ *
+ * @author Marc
+ * @version 1.0
  */
 public class AmazonScraper {
 
+    /**
+     * Standard get info method. Gets the rating and review value from Amazon for the book
+     *
+     * @return map of the keys and strings for the info gotten from Amazon
+     * @throws IOException
+     */
     public static Map<String, String> getInfo() throws IOException {
         List<Result> list = ScraperHelper.googleAPISearch(ScraperConstants.AMAZON);
         String amazonUrl = ScraperHelper.getTopResultUrl(list);
