@@ -42,37 +42,31 @@ public class GoodreadsScraper {
         Document document = Jsoup.connect(searchingUrl).get();
         System.out.println(searchingUrl);
 
-        //go to first search result link
-        Element link = (Element) document.select("div.g").first()
-                .childNode(1).childNode(0).childNode(0).childNode(0);
-        String bookUrl = link.attr("abs:href");
-        Document bookDocument = Jsoup.connect(bookUrl).get();
-
         Map<String, String> toReturn = new HashMap<String, String>();
 
         //get rating value
-        Element ratingValue = bookDocument.selectFirst("[itemprop=ratingValue]");
+        Element ratingValue = document.selectFirst("[itemprop=ratingValue]");
         toReturn.put(ScraperConstants.GOODREADS_RATING_KEY ,
                 ((TextNode) ratingValue.childNode(0)).getWholeText());
 
         //get review text
-        Element reviewValue = bookDocument.selectFirst("div#description").selectFirst("span");
+        Element reviewValue = document.selectFirst("div#description").selectFirst("span");
         toReturn.put(ScraperConstants.GOODREADS_REVIEW_KEY,
                 Jsoup.clean(reviewValue.childNode(0).toString(), Whitelist.none()));
 
         CurrentBook instance = CurrentBook.getInstance();
 
         //get author of book from Goodreads
-        Element authorValue = bookDocument.selectFirst("div#bookAuthors");
+        Element authorValue = document.selectFirst("div#bookAuthors");
         instance.setAuthor(authorValue
                 .childNode(3).childNode(1).childNode(1).childNode(0).childNode(0).toString());
 
         //get title of book from Goodreads
-        Element titleValue = bookDocument.selectFirst("h1#bookTitle");
+        Element titleValue = document.selectFirst("h1#bookTitle");
         instance.setTitle(titleValue.childNode(0).toString());
 
         //get picture url
-        Element coverUrl = (Element) bookDocument.selectFirst("div.bookCoverPrimary")
+        Element coverUrl = (Element) document.selectFirst("div.bookCoverPrimary")
                 .childNode(1).childNode(0);
         instance.setBookCoverUrl(coverUrl.absUrl("src"));
 

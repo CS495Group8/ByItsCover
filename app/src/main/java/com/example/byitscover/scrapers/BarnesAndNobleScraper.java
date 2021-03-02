@@ -28,6 +28,7 @@ public class BarnesAndNobleScraper {
         String htmlString = document.html();
         String subString = htmlString.substring(htmlString.indexOf(",\"rating\":")+10,
                 htmlString.indexOf(",\"rating\":")+13);
+        subString = subString.replaceAll("[^\\d.]", ""); //get rid of non-numeric
         toReturn.put(ScraperConstants.BAN_RATING_KEY, subString);
 
         //get review

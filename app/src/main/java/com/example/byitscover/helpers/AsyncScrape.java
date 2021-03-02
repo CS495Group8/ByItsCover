@@ -2,6 +2,7 @@ package com.example.byitscover.helpers;
 
 import android.os.AsyncTask;
 
+import com.example.byitscover.scrapers.AmazonScraper;
 import com.example.byitscover.scrapers.BarnesAndNobleScraper;
 import com.example.byitscover.scrapers.GoodreadsScraper;
 import com.example.byitscover.scrapers.GoogleScraper;
@@ -9,8 +10,6 @@ import com.example.byitscover.scrapers.GoogleScraper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * This class asynchronously calls the functions to scrape data and collects it once returned.
@@ -56,6 +55,7 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
                         valuesFromSite = GoodreadsScraper.getInfo();
                         break;
                     case ScraperConstants.AMAZON:
+                        valuesFromSite = AmazonScraper.getInfo();
                         break;
                     case ScraperConstants.BARNES_AND_NOBLE:
                         valuesFromSite = BarnesAndNobleScraper.getInfo();

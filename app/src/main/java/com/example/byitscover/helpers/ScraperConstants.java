@@ -24,4 +24,7 @@ public class ScraperConstants {
 
     public final static String GOOGLE_RATING_KEY = "googleRating";
     public final static String GOOGLE_REVIEW_KEY = "googleReview";
+
+    public final static String AMAZON_RATING_KEY = "amazonRating";
+    public final static String AMAZON_REVIEW_KEY = "amazonReview";
 }

@@ -1,6 +1,7 @@
 package com.example.byitscover.helpers;
 
 import com.example.byitscover.BuildConfig;
+
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -11,6 +12,9 @@ import com.google.api.services.customsearch.model.Search;
 
 import org.jsoup.nodes.Document;
 
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -113,4 +117,5 @@ public class ScraperHelper {
 
         return searchingUrl;
     }
+
 }

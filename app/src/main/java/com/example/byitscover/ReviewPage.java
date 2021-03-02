@@ -59,10 +59,11 @@ public class ReviewPage extends Fragment {
 
         //Create view and call scrapers
         View view = inflater.inflate(R.layout.review_page, container, false);
-        //new AsyncScrape(ScraperConstants.GOODREADS).execute();
-        //Add other scraper calls here when ready
+        //TODO: Uncomment all once able to after updating singleton issues
+        new AsyncScrape(ScraperConstants.GOODREADS).execute();
         //new AsyncScrape(ScraperConstants.BARNES_AND_NOBLE).execute();
-        new AsyncScrape(ScraperConstants.GOOGLE_BOOKS).execute();
+        //new AsyncScrape(ScraperConstants.GOOGLE_BOOKS).execute();
+        //new AsyncScrape(ScraperConstants.AMAZON).execute();
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
         try {
@@ -79,6 +80,7 @@ public class ReviewPage extends Fragment {
         setGoodreadsInfo(view, instance);
         setBarnesAndNobleInfo(view, instance);
         setGoogleBooksInfo(view, instance);
+        setAmazonInfo(view, instance);
         setAverageRatingValue(view);
 
         // Inflate the layout for this fragment
@@ -167,6 +169,9 @@ public class ReviewPage extends Fragment {
     /**
      * Sets the rating and review information from the Barnes and Noble website. The review
      * is from the overview and the rating it the average across all ratings.
+     * Sets the rating and review information from the Amazon website. The review is taken to be
+     * the paragraph in bold just underneath the rating. The rating taken is the average across all
+     * Amazon users.
      *
      * @param view is the UI with all of the connecting logic
      * @param instance is the singleton with the information about the current book
@@ -177,8 +182,7 @@ public class ReviewPage extends Fragment {
         try {
             banResultRating.setText(instance.getReviewRatingValues()
                     .get(ScraperConstants.BAN_RATING_KEY));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.toString());
         }
         //set BaN review
@@ -186,6 +190,35 @@ public class ReviewPage extends Fragment {
         try {
             banResultReview.setText(instance.getReviewRatingValues()
                     .get(ScraperConstants.BAN_REVIEW_KEY));
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+        return;
+    }
+
+     /** Sets the rating and review information from the Amazon website. The review is taken to be
+     * the paragraph in bold just underneath the rating. The rating taken is the average across all
+     * Amazon users.
+     *
+     * @param view is the UI with all of the connecting logic
+     * @param instance is the singleton with the information about the current book
+     */
+    private void setAmazonInfo(View view, CurrentBook instance) {
+        //set amazon rating
+        TextView amazonResultRating = (TextView) view.findViewById(R.id.amazonRating);
+        try {
+            amazonResultRating.setText(instance.getReviewRatingValues()
+                    .get(ScraperConstants.AMAZON_RATING_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        //set amazon review
+        TextView amazonResultReview = (TextView) view.findViewById(R.id.amazonReview);
+        try {
+            amazonResultReview.setText(instance.getReviewRatingValues()
+                    .get(ScraperConstants.AMAZON_REVIEW_KEY));
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -228,13 +261,14 @@ public class ReviewPage extends Fragment {
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
         TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
         TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
+        TextView amazonResultRating = (TextView) view.findViewById(R.id.amazonRating);
         TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
         //Update these once other scrapers in place
         Double average = 0.0;
         try {
             average = (Double.valueOf(goodReadsResultRating.getText().toString())
-                    + Double.valueOf(banResultRating.getText().toString())
+                    + Double.valueOf(amazonResultRating.getText().toString())
                     + Double.valueOf(banResultRating.getText().toString())
                     + Double.valueOf(googleResultRating.getText().toString())) / 4.0;
         } catch (Exception E) {

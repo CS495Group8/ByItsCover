@@ -160,7 +160,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/textview_eigth"
+                android:id="@+id/amazonRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Rating2"
@@ -172,7 +172,7 @@
                 app:layout_constraintVertical_bias="0.029" />
 
             <TextView
-                android:id="@+id/textview_ninth"
+                android:id="@+id/amazonReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="25dp"
@@ -192,7 +192,7 @@
                 app:layout_constraintEnd_toEndOf="@id/titleText"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/cover"
-                app:layout_constraintTop_toBottomOf="@id/textview_ninth"
+                app:layout_constraintTop_toBottomOf="@id/amazonReview"
                 app:srcCompat="@drawable/barnesandnobleicon"
                 tools:src="@tools:sample/avatars" />
 
