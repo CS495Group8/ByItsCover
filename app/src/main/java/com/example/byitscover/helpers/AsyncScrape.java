@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.byitscover.scrapers.BarnesAndNobleScraper;
 import com.example.byitscover.scrapers.GoodreadsScraper;
+import com.example.byitscover.scrapers.GoogleScraper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -60,6 +61,7 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
                         valuesFromSite = BarnesAndNobleScraper.getInfo();
                         break;
                     case ScraperConstants.GOOGLE_BOOKS:
+                        valuesFromSite = GoogleScraper.getInfo();
                         break;
                 }
             } catch (IOException e) {

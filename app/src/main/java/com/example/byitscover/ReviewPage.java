@@ -16,6 +16,8 @@ import com.example.byitscover.helpers.CurrentBook;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 /**
  * This class is the logic behind the page that shows all the review and rating information to
  * the user. An accompanying .xml can be found in src/res/layout which holds all the front end, UI
@@ -60,6 +62,7 @@ public class ReviewPage extends Fragment {
         new AsyncScrape(ScraperConstants.GOODREADS).execute();
         //Add other scraper calls here when ready
         new AsyncScrape(ScraperConstants.BARNES_AND_NOBLE).execute();
+        new AsyncScrape(ScraperConstants.GOOGLE_BOOKS).execute();
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
         try {
@@ -75,6 +78,7 @@ public class ReviewPage extends Fragment {
         setAuthorAndTitle(view, instance);
         setGoodreadsInfo(view, instance);
         setBarnesAndNobleInfo(view, instance);
+        setGoogleBooksInfo(view, instance);
         setAverageRatingValue(view);
 
         // Inflate the layout for this fragment
@@ -189,6 +193,33 @@ public class ReviewPage extends Fragment {
     }
 
     /**
+     * Sets the rating and review information from the Google website. 
+     *
+     * @param view is the UI with all of the connecting logic
+     * @param instance is the singleton with the information about the current book
+     */
+    private void setGoogleBooksInfo(View view, CurrentBook instance) {
+        //set google rating
+        TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
+        try {
+            googleResultRating.setText(instance.getReviewRatingValues()
+                    .get(ScraperConstants.GOODREADS_RATING_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        //set google review
+        TextView googleResultReview = (TextView) view.findViewById(R.id.googleReview);
+        try {
+            googleResultReview.setText(instance.getReviewRatingValues()
+                    .get(ScraperConstants.GOOGLE_REVIEW_KEY));
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
      * Takes the four ratings from the different sites and then averages them. Once calculated,
      * it sets the value to be displayed just under the Title and Author.
      * @param view is the view created with the UI and logic
@@ -196,6 +227,7 @@ public class ReviewPage extends Fragment {
     public void setAverageRatingValue(View view) {
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
         TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
+        TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
         TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
         //Update these once other scrapers in place
@@ -204,7 +236,7 @@ public class ReviewPage extends Fragment {
             average = (Double.valueOf(goodReadsResultRating.getText().toString())
                     + Double.valueOf(banResultRating.getText().toString())
                     + Double.valueOf(banResultRating.getText().toString())
-                    + Double.valueOf(goodReadsResultRating.getText().toString())) / 4.0;
+                    + Double.valueOf(googleResultRating.getText().toString())) / 4.0;
         } catch (Exception E) {
             System.out.println(E.toString());
         }
