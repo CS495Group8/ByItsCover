@@ -37,8 +37,14 @@ public class BarnesAndNobleScraper implements Scraper {
 
         //get rating by parsing json js var
         String htmlString = document.html();
-        double rating = Double.parseDouble(htmlString.substring(htmlString.indexOf(",\"rating\":") + 10,
-                htmlString.indexOf(",\"rating\":") + 13));
+        Double rating = null;
+
+        try {
+            rating = Double.parseDouble(htmlString.substring(htmlString.indexOf(",\"rating\":") + 10,
+                    htmlString.indexOf(",\"rating\":") + 13));
+        } catch (NumberFormatException ex) {
+
+        }
 
         //get review
         Element reviewValue = (Element) document.getElementById("overviewSection").childNode(1).childNode(1)
@@ -50,7 +56,7 @@ public class BarnesAndNobleScraper implements Scraper {
 
         BookListing listing = new BookListing(new URL(ScraperHelper.getTopResultUrl(results)),
                 ScraperConstants.BARNES_AND_NOBLE,
-                new Book(null, null, null, null),
+                new Book(query.getTitle(), query.getAuthor(), null, null),
                 rating,
                 null,
                 reviews,

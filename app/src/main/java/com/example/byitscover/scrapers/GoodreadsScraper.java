@@ -60,7 +60,13 @@ public class GoodreadsScraper implements Scraper {
 
         //get rating value
         Element ratingElement = bookDocument.selectFirst("[itemprop=ratingValue]");
-        double rating = Double.parseDouble(((TextNode) ratingElement.childNode(0)).getWholeText());
+        Double rating = null;
+
+        try {
+            rating = Double.parseDouble(((TextNode) ratingElement.childNode(0)).getWholeText());
+        } catch (NumberFormatException ex) {
+
+        }
 
         //get review text
         Element reviewElement = bookDocument.selectFirst("div#description").selectFirst("span");
@@ -84,7 +90,7 @@ public class GoodreadsScraper implements Scraper {
 
         BookListing listing = new BookListing(new URL(ScraperHelper.getTopResultUrl(results)),
                 ScraperConstants.GOODREADS,
-                new Book(null, author, null, null),
+                new Book(query.getTitle(), query.getAuthor(), null, null),
                 rating,
                 null,
                 reviews,

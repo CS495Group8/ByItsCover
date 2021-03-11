@@ -19,8 +19,7 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "API_KEY", "\"FAKE API KEY\"" //localProperties['apiKey']
-        // TODO: fix build issues arising from no API key
+        buildConfigField "String", "API_KEY", localProperties['apiKey']
     }
 
     buildTypes {
