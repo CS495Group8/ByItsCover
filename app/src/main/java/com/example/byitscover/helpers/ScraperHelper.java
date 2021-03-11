@@ -132,6 +132,9 @@ public class ScraperHelper {
                 }
             }
         }
+        else {
+            toAppendUrl = toAppendUrl + site;
+        }
 
         //search goodreads for book
         String searchingUrl =  "https://www.google.com/search?q=" + toAppendUrl;
