@@ -27,6 +27,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -79,7 +81,7 @@ public class ReviewPage extends Fragment {
             listings = scraperOperation.get();
 
             for (BookListing listing : listings) {
-                if (listing.getWebsite().equals(ScraperConstants.BARNES_AND_NOBLE)) {
+                if (listing.getWebsite().equals(ScraperConstants.GOODREADS)) {
                     setAuthorAndTitle(view, listing.getBook());
                     setCoverImage(view, listing);
                     setGoodreadsInfo(view, listing);
@@ -88,14 +90,16 @@ public class ReviewPage extends Fragment {
                 }
             }
 
-            /*for (BookListing listing : listings) {
+            for (BookListing listing : listings) {
                 if (listing.getWebsite().equals(ScraperConstants.BARNES_AND_NOBLE)) {
                     setBarnesAndNobleInfo(view, listing);
                     break;
                 }
-            }*/
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            }
+        } catch (ExecutionException ex) {
+            throw (RuntimeException)ex.getCause();
+        } catch (CancellationException | InterruptedException ex) {
+            // Display
         }
     }
 
@@ -127,14 +131,14 @@ public class ReviewPage extends Fragment {
                                 null);
                         Scraper barnesAndNoble = new BarnesAndNobleScraper();
                         // Goodreads isn't scraping correctly
-                        //Scraper goodreads = new GoodreadsScraper();
+                        Scraper goodreads = new GoodreadsScraper();
 
                         List<BookListing> barnesAndNobleResult = barnesAndNoble.scrape(query);
-                        //List<BookListing> goodreadsResult = goodreads.scrape(query);
+                        List<BookListing> goodreadsResult = goodreads.scrape(query);
 
                         List<BookListing> aggregate = new ArrayList<BookListing>();
                         aggregate.addAll(barnesAndNobleResult);
-                        //aggregate.addAll(goodreadsResult);
+                        aggregate.addAll(goodreadsResult);
 
                         return aggregate;
                     }
