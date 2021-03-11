@@ -44,7 +44,7 @@ public class BarnesAndNobleScraper implements Scraper {
         Element reviewValue = (Element) document.getElementById("overviewSection").childNode(1).childNode(1)
                 .childNode(3).childNode(1).childNode(1).childNode(1);
 
-        Review review = new Review(null, Jsoup.clean(reviewValue.toString(), Whitelist.none()), -1.0);
+        Review review = new Review(null, Jsoup.clean(reviewValue.toString(), Whitelist.none()), null);
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 
@@ -53,7 +53,8 @@ public class BarnesAndNobleScraper implements Scraper {
                 new Book(null, null, null, null),
                 rating,
                 null,
-                reviews);
+                reviews,
+                null);
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);

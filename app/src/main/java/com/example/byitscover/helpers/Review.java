@@ -12,9 +12,9 @@ public class Review {
     // TODO: Discuss group preferences on immutability
     private final String reviewer;
     private final String comment;
-    private final double rating;
+    private final Double rating;
 
-    public Review(String reviewer, String comment, double rating) {
+    public Review(String reviewer, String comment, Double rating) {
         this.reviewer = reviewer;
         this.comment = comment;
         this.rating = rating;
@@ -40,7 +40,7 @@ public class Review {
      * Getter for rating
      * @return rating
      */
-    public double getRating() {
+    public Double getRating() {
         return rating;
     }
 

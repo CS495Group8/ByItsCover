@@ -19,8 +19,10 @@ public class BookListing {
     private final Double aggregateRating;
     private final Integer ratingCount;
     private final List<Review> reviews;
+    private final URL coverUrl;
 
-    public BookListing(URL url, String website, Book book, Double aggregateRating, Integer ratingCount, List<Review> reviews) {
+    public BookListing(URL url, String website, Book book, Double aggregateRating,
+                       Integer ratingCount, List<Review> reviews, URL coverUrl) {
         if (url == null || website == null || book == null)
             throw new IllegalArgumentException("BookListing requires non-null URL, website, and Book for initialization");
 
@@ -30,9 +32,10 @@ public class BookListing {
         this.aggregateRating = aggregateRating;
         this.ratingCount = ratingCount;
         this.reviews = reviews;
+        this.coverUrl = coverUrl;
     }
 
     public BookListing clone() {
-        return new BookListing(url, website, book, aggregateRating, ratingCount, reviews);
+        return new BookListing(url, website, book, aggregateRating, ratingCount, reviews, coverUrl);
     }
 }
