@@ -35,6 +35,62 @@ public class BookListing {
         this.coverUrl = coverUrl;
     }
 
+    /**
+     * Getter for the url
+     * @return url
+     */
+    public URL getUrl() {
+        return url;
+    }
+
+    /**
+     * Getter for website
+     * @return website
+     */
+    public String getWebsite() {
+        return website;
+    }
+
+    /**
+     * Getter for book
+     * @return book
+     */
+    public Book getBook() {
+        return book;
+    }
+
+    /**
+     * Getter for aggregate rating
+     * @return aggregate rating
+     */
+    public Double getAggregateRating() {
+        return aggregateRating;
+    }
+
+    /**
+     * Getter for rating count
+     * @return rating count
+     */
+    public Integer getRatingCount() {
+        return ratingCount;
+    }
+
+    /**
+     * Getter for reviews
+     * @return reviews
+     */
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    /**
+     * Getter for cover URL
+     * @return cover URL
+     */
+    public URL getCoverUrl() {
+        return coverUrl;
+    }
+
     public BookListing clone() {
         return new BookListing(url, website, book, aggregateRating, ratingCount, reviews, coverUrl);
     }
