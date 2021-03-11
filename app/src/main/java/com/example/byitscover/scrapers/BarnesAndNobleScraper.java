@@ -32,7 +32,6 @@ public class BarnesAndNobleScraper {
         List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.BARNES_AND_NOBLE);
         String searchingUrl = getActualBookResult(results);
         Document document = Jsoup.connect(searchingUrl).get();
-        System.out.println(searchingUrl);
 
         Map<String, String> toReturn = new HashMap<String, String>();
 

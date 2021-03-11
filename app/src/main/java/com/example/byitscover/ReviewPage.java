@@ -16,8 +16,6 @@ import com.example.byitscover.helpers.CurrentBook;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 /**
  * This class is the logic behind the page that shows all the review and rating information to
  * the user. An accompanying .xml can be found in src/res/layout which holds all the front end, UI
@@ -60,10 +58,10 @@ public class ReviewPage extends Fragment {
         //Create view and call scrapers
         View view = inflater.inflate(R.layout.review_page, container, false);
         //TODO: Uncomment all once able to after updating singleton issues
-        new AsyncScrape(ScraperConstants.GOODREADS).execute();
+        //new AsyncScrape(ScraperConstants.GOODREADS).execute();
         //new AsyncScrape(ScraperConstants.BARNES_AND_NOBLE).execute();
         //new AsyncScrape(ScraperConstants.GOOGLE_BOOKS).execute();
-        //new AsyncScrape(ScraperConstants.AMAZON).execute();
+        new AsyncScrape(ScraperConstants.STORYGRAPH).execute();
 
         //TODO: Make a fancy loading screen for this while waiting for scraping to happen
         try {
@@ -197,28 +195,28 @@ public class ReviewPage extends Fragment {
         return;
     }
 
-     /** Sets the rating and review information from the Amazon website. The review is taken to be
+     /** Sets the rating and review information from the Story Graph website. The review is taken to be
      * the paragraph in bold just underneath the rating. The rating taken is the average across all
-     * Amazon users.
+     *  users.
      *
      * @param view is the UI with all of the connecting logic
      * @param instance is the singleton with the information about the current book
      */
     private void setAmazonInfo(View view, CurrentBook instance) {
         //set amazon rating
-        TextView amazonResultRating = (TextView) view.findViewById(R.id.amazonRating);
+        TextView amazonResultRating = (TextView) view.findViewById(R.id.storygraphRating);
         try {
             amazonResultRating.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.AMAZON_RATING_KEY));
+                    .get(ScraperConstants.STORYGRAPH_RATING_KEY));
         }
         catch (Exception e) {
             System.out.println(e.toString());
         }
         //set amazon review
-        TextView amazonResultReview = (TextView) view.findViewById(R.id.amazonReview);
+        TextView amazonResultReview = (TextView) view.findViewById(R.id.storygraphReview);
         try {
             amazonResultReview.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.AMAZON_REVIEW_KEY));
+                    .get(ScraperConstants.STORYGRAPH_REVIEW_KEY));
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -261,7 +259,7 @@ public class ReviewPage extends Fragment {
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
         TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
         TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
-        TextView amazonResultRating = (TextView) view.findViewById(R.id.amazonRating);
+        TextView amazonResultRating = (TextView) view.findViewById(R.id.storygraphRating);
         TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
         //Update these once other scrapers in place

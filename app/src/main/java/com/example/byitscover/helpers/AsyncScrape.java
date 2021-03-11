@@ -2,7 +2,7 @@ package com.example.byitscover.helpers;
 
 import android.os.AsyncTask;
 
-import com.example.byitscover.scrapers.AmazonScraper;
+import com.example.byitscover.scrapers.StorygraphScraper;
 import com.example.byitscover.scrapers.BarnesAndNobleScraper;
 import com.example.byitscover.scrapers.GoodreadsScraper;
 import com.example.byitscover.scrapers.GoogleScraper;
@@ -54,8 +54,8 @@ public class AsyncScrape extends AsyncTask<Void, Void, Map<String, String>> {
                     case ScraperConstants.GOODREADS:
                         valuesFromSite = GoodreadsScraper.getInfo();
                         break;
-                    case ScraperConstants.AMAZON:
-                        valuesFromSite = AmazonScraper.getInfo();
+                    case ScraperConstants.STORYGRAPH:
+                        valuesFromSite = StorygraphScraper.getInfo();
                         break;
                     case ScraperConstants.BARNES_AND_NOBLE:
                         valuesFromSite = BarnesAndNobleScraper.getInfo();

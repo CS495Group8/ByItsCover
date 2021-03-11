@@ -13,7 +13,7 @@ public class ScraperConstants {
 
     public final static String GOODREADS = "Goodreads";
     public final static String BARNES_AND_NOBLE = "Barnes and Noble";
-    public final static String AMAZON = "Amazon";
+    public final static String STORYGRAPH = "Storygraph";
     public final static String GOOGLE_BOOKS = "Google Books";
 
     public final static String GOODREADS_RATING_KEY = "goodreadsRating";
@@ -25,6 +25,6 @@ public class ScraperConstants {
     public final static String GOOGLE_RATING_KEY = "googleRating";
     public final static String GOOGLE_REVIEW_KEY = "googleReview";
 
-    public final static String AMAZON_RATING_KEY = "amazonRating";
-    public final static String AMAZON_REVIEW_KEY = "amazonReview";
+    public final static String STORYGRAPH_RATING_KEY = "storyRating";
+    public final static String STORYGRAPH_REVIEW_KEY = "storyReview";
 }
