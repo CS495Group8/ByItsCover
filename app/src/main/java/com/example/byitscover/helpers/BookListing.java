@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.List;
 
 /**
- * This class is represents a listing of a book on a website.
+ * This class represents a listing of a book on a website.
  * It includes information specific to a book listing such as reviews, the website, and aggregate ratings.
  * The scraper should return one of these for each relevant listing it finds in a search.
  *
@@ -30,5 +30,9 @@ public class BookListing {
         this.aggregateRating = aggregateRating;
         this.ratingCount = ratingCount;
         this.reviews = reviews;
+    }
+
+    public BookListing clone() {
+        return new BookListing(url, website, book, aggregateRating, ratingCount, reviews);
     }
 }

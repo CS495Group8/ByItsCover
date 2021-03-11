@@ -1,7 +1,7 @@
 package com.example.byitscover.helpers;
 
 /**
- * This class is represents a review.
+ * This class represents a review.
  * If a field is null, the corresponding property of the review is unknown.
  *
  * @author Jack
@@ -42,5 +42,9 @@ public class Review {
      */
     public double getRating() {
         return rating;
+    }
+
+    public Review clone() {
+        return new Review(reviewer, comment, rating);
     }
 }

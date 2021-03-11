@@ -1,25 +1,25 @@
 package com.example.byitscover.helpers;
 
-import com.example.byitscover.helpers.Isbn;
-
 /**
- * This class represents a book.
- * If a field is null, then the corresponding property of the book is unknown
+ * This class is used to represent queries from the image processor to scrapers
+ * Null elements indicate that the scraper cannot determine what the element should be
  *
- * @author Marc
+ * Note: this class will likely change as we determine what information we can extract from images
+ * For example, instead of fitting data to a schema as in this first version,
+ * we may decide to only treat text from images as keywords for search queries.
+ *
  * @author Jack
  * @version 1.1
  */
-public class Book {
+
+public class Query {
     private final String title;
     private final String author;
-    private final String publisher;
     private final Isbn isbn;
 
-    public Book(String title, String author, String publisher, Isbn isbn) {
+    public Query(String title, String author, Isbn isbn) {
         this.title = title;
         this.author = author;
-        this.publisher = publisher;
         this.isbn = isbn;
     }
 
@@ -40,14 +40,6 @@ public class Book {
     }
 
     /**
-     * Getter for publisher
-     * @return publisher
-     */
-    public String getPublisher() {
-        return publisher;
-    }
-
-    /**
      * Getter for ISBN
      * @return ISBN
      */
@@ -55,7 +47,7 @@ public class Book {
         return isbn;
     }
 
-    public Book clone() {
-        return new Book(title, author, publisher, isbn);
+    public Query clone() {
+        return new Query(title, author, isbn);
     }
 }
