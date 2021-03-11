@@ -51,21 +51,4 @@ public class StorygraphScraper {
         return toReturn;
     }
 
-
-    /**
-     * This method looks for the first search result from the list from Google's API that is an
-     * actual book on the Storygraph website
-     *
-     * @param list list of results from Google's API
-     * @return url of the first book result
-     * @throws Resources.NotFoundException thrown if no url is a book link
-     */
-    private static String getTopBookResultUrl(List<Result> list) throws Resources.NotFoundException {
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getFormattedUrl().contains("/books/")) {
-                return list.get(i).getFormattedUrl();
-            }
-        }
-        throw new Resources.NotFoundException();
-    }
 }
