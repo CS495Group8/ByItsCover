@@ -49,14 +49,8 @@ public class GoodreadsScraper implements Scraper {
         List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.GOODREADS, query);
         String searchingUrl = ScraperHelper.getTopResultUrl(results);
         searchingUrl.replaceAll("[\\n]", "");
-        Document document = Jsoup.connect(searchingUrl).get();
+        Document bookDocument = Jsoup.connect(searchingUrl).get();
         System.out.println(searchingUrl);
-
-        //go to first search result link
-        Element link = (Element) document.select("div.g").first()
-                .childNode(1).childNode(0).childNode(0).childNode(0);
-        String bookUrl = link.attr("abs:href");
-        Document bookDocument = Jsoup.connect(bookUrl).get();
 
         //get rating value
         Element ratingElement = bookDocument.selectFirst("[itemprop=ratingValue]");
