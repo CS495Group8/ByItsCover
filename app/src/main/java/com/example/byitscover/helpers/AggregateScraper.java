@@ -9,6 +9,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * This class allows multiple scrapers to be treated as a single scraper.
+ * All scrapers are executed concurrently in order to minimize latency, but
+ * this requires that all scrapers must be able to safely execute concurrently.
+ */
 public class AggregateScraper implements Scraper {
     private static final ExecutorService executor = Executors.newCachedThreadPool(Executors.defaultThreadFactory());
     List<Scraper> scrapers;
@@ -35,7 +40,7 @@ public class AggregateScraper implements Scraper {
             try {
                 aggregate.addAll(future.get());
             } catch (ExecutionException e) {
-                e.printStackTrace();
+                throw (RuntimeException)e.getCause();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
