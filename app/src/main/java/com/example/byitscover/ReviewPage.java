@@ -86,7 +86,9 @@ public class ReviewPage extends Fragment {
                     setCoverImage(view, listing);
                     setGoodreadsInfo(view, listing);
                     setAverageRatingValue(view);
-                    break;
+                }
+                else if (listing.getWebsite().equals(ScraperConstants.BARNES_AND_NOBLE)) {
+                    setBarnesAndNobleInfo(view, listing);
                 }
             }
 
@@ -240,7 +242,7 @@ public class ReviewPage extends Fragment {
      */
     private void setBarnesAndNobleInfo(View view, BookListing listing) {
         // TODO: Fix this, possibly unify with Goodreads
-        /*//set goodreads rating
+        //set goodreads rating
         TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
         try {
             goodReadsResultRating.setText(listing.getAggregateRating().toString());
@@ -255,7 +257,7 @@ public class ReviewPage extends Fragment {
         }
         catch (Exception e) {
             System.out.println(e.toString());
-        }*/
+        }
     }
 
     /**
