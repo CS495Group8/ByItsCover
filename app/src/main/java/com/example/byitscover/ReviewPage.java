@@ -245,15 +245,15 @@ public class ReviewPage extends Fragment {
         //set goodreads rating
         TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
         try {
-            goodReadsResultRating.setText(listing.getAggregateRating().toString());
+            banResultRating.setText(listing.getAggregateRating().toString());
         }
         catch (Exception e) {
             System.out.println(e.toString());
         }
         //set goodreads review
-        TextView goodReadsResultReview = (TextView) view.findViewById(R.id.goodreadsReview);
+        TextView banResultReview = (TextView) view.findViewById(R.id.banReview);
         try {
-            goodReadsResultReview.setText(listing.getReviews().get(0).getComment());
+            banResultReview.setText(listing.getReviews().get(0).getComment());
         }
         catch (Exception e) {
             System.out.println(e.toString());

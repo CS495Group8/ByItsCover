@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@id/vertReviewScroller">
 
         <LinearLayout
-            android:layout_width="197dp"
+            android:layout_width="118dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -51,7 +51,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="286dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="70dp">
@@ -161,7 +161,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/textview_eigth"
+                android:id="@+id/textview_eighth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Rating2"
@@ -198,7 +198,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/textview_tenth"
+                android:id="@+id/banRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Rating3"
@@ -210,7 +210,7 @@
                 app:layout_constraintVertical_bias="0.029" />
 
             <TextView
-                android:id="@+id/textview_eleventh"
+                android:id="@+id/banReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="25dp"
@@ -230,7 +230,7 @@
                 app:layout_constraintEnd_toEndOf="@id/titleText"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/cover"
-                app:layout_constraintTop_toBottomOf="@id/textview_eleventh"
+                app:layout_constraintTop_toBottomOf="@id/banReview"
                 app:srcCompat="@drawable/googlebooksicon"
                 tools:src="@tools:sample/avatars" />
 
