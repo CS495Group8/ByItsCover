@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.byitscover.helpers.AggregateScraper;
 import com.example.byitscover.helpers.AsynchronousOperation;
 import com.example.byitscover.helpers.Book;
 import com.example.byitscover.helpers.BookListing;
@@ -131,18 +132,13 @@ public class ReviewPage extends Fragment {
                         Query query = new Query(ScraperConstants.TEMP_HARDCODED_TITLE,
                                 ScraperConstants.TEMP_HARDCODED_AUTHOR,
                                 null);
-                        Scraper barnesAndNoble = new BarnesAndNobleScraper();
-                        // Goodreads isn't scraping correctly
-                        Scraper goodreads = new GoodreadsScraper();
 
-                        List<BookListing> barnesAndNobleResult = barnesAndNoble.scrape(query);
-                        List<BookListing> goodreadsResult = goodreads.scrape(query);
+                        List<Scraper> scrapers = new ArrayList<Scraper>();
+                        scrapers.add(new BarnesAndNobleScraper());
+                        scrapers.add(new GoodreadsScraper());
+                        Scraper aggregate = new AggregateScraper(scrapers);
 
-                        List<BookListing> aggregate = new ArrayList<BookListing>();
-                        aggregate.addAll(barnesAndNobleResult);
-                        aggregate.addAll(goodreadsResult);
-
-                        return aggregate;
+                        return aggregate.scrape(query);
                     }
                 },
         this::onScraperCompletion);
