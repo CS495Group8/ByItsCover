@@ -7,7 +7,8 @@
 * [Testing ISBN Class](https://github.com/CS495Group8/ByItsCover/blob/CurrentBook-refactor/app/src/test/java/com/example/byitscover/helpers/IsbnTest.java)
 * [Testing Book Class](https://github.com/CS495Group8/ByItsCover/blob/CurrentBook-refactor/app/src/test/java/com/example/byitscover/helpers/BookTest.java)  
 ### Other tests
-* Camera - 
+* Camera Start - Click the "Search by Cover" Button. This brings up the camera. Clicking the button at the bottom of the camera page results in an image capture request. 
+* Camera Access Request - If you click the "Search by Cover" button and it doesn't already have access to write to external storage and open the camera, it will pop up a request to access those. Once allowed, the camera will open like normal.
 * OCR - 
 
 ## Branches
