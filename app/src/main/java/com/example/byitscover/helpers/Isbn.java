@@ -14,8 +14,6 @@ package com.example.byitscover.helpers;
  * @version 1.0
  */
 
-// TODO: Add unit tests
-
 public final class Isbn {
     // The canonical representation for the purposes of this class is ISBN-13
     private final String canonicalRepresentation;

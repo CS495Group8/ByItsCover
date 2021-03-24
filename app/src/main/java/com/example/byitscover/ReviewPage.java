@@ -21,6 +21,7 @@ import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.scrapers.BarnesAndNobleScraper;
 import com.example.byitscover.scrapers.GoodreadsScraper;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
@@ -43,8 +44,6 @@ import java.util.concurrent.ExecutionException;
 public class ReviewPage extends Fragment {
     private View view;
     private AsynchronousOperation<List<BookListing>> scraperOperation;
-    private BookListing barnesAndNobleResult;
-    private BookListing goodreadsResult;
 
     static BookListing defaultListing;
 
@@ -94,8 +93,10 @@ public class ReviewPage extends Fragment {
             }
         } catch (ExecutionException ex) {
             throw (RuntimeException)ex.getCause();
-        } catch (CancellationException | InterruptedException ex) {
-            // TODO:
+        } catch (CancellationException ex) {
+            throw new AssertionError("onScraperComplete should never be called if the operation is cancelled");
+        } catch (InterruptedException ex) {
+            throw new AssertionError("The current thread should never be interrupted while getting the result from the scraper");
         }
     }
 
@@ -113,8 +114,6 @@ public class ReviewPage extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        barnesAndNobleResult = defaultListing;
-        goodreadsResult = defaultListing;
 
         //Create view and call scrapers
         view = inflater.inflate(R.layout.review_page, container, false);
@@ -169,14 +168,6 @@ public class ReviewPage extends Fragment {
      */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        /*view.findViewById(R.id.searchByTitleButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(ReviewPage.this)
-                        .navigate(R.id.action_from_review_to_first);
-            }
-        });*/
     }
 
     /**
