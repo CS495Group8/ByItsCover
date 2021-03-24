@@ -32,14 +32,6 @@ public class InfoPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_prev).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(InfoPage.this)
-                        .navigate(R.id.action_from_info_to_first);
-            }
-        });
-
         view.findViewById(R.id.Search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
