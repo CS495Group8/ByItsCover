@@ -1,7 +1,7 @@
 # ByItsCover 
 
 # Sprint 2 Notes:
-
+* The first version of our book cover recognition software was created during this sprint and is working as intended, but some changes will need to be made to the repository as a whole before it can be integrated. It is currently not in the repository, Ripley was testing several different programs and methods for it, so he did not add it to avoid polluting the codebase with things that were going to be discarded. Integration work is expected to begin during week one of sprint 3 (week of 3/29) and the OCR software will be added to the repo then after minor refactors to ensure it can be added as smoothly as possible.
 ## Testing  
 ### Unit testing
 * [Testing ISBN Class](https://github.com/CS495Group8/ByItsCover/blob/CurrentBook-refactor/app/src/test/java/com/example/byitscover/helpers/IsbnTest.java)
