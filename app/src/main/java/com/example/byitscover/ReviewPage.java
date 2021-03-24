@@ -92,17 +92,10 @@ public class ReviewPage extends Fragment {
                     setBarnesAndNobleInfo(view, listing);
                 }
             }
-
-            for (BookListing listing : listings) {
-                if (listing.getWebsite().equals(ScraperConstants.BARNES_AND_NOBLE)) {
-                    setBarnesAndNobleInfo(view, listing);
-                    break;
-                }
-            }
         } catch (ExecutionException ex) {
             throw (RuntimeException)ex.getCause();
         } catch (CancellationException | InterruptedException ex) {
-            // Display
+            // TODO:
         }
     }
 
@@ -143,8 +136,8 @@ public class ReviewPage extends Fragment {
                 },
         this::onScraperCompletion);
 
-        setAuthorAndTitle(view, goodreadsResult.getBook());
-        setGoodreadsInfo(view, goodreadsResult);
+        setAuthorAndTitle(view, defaultListing.getBook());
+        setGoodreadsInfo(view, defaultListing);
         setAverageRatingValue(view);
 
         // Inflate the layout for this fragment

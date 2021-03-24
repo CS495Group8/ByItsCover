@@ -84,7 +84,7 @@ public class GoodreadsScraper implements Scraper {
 
         BookListing listing = new BookListing(new URL(ScraperHelper.getTopResultUrl(results)),
                 ScraperConstants.GOODREADS,
-                new Book(query.getTitle(), query.getAuthor(), null, null),
+                new Book(title, author, null, null),
                 rating,
                 null,
                 reviews,
