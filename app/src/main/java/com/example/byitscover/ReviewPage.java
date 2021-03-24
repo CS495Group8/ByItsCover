@@ -92,6 +92,7 @@ public class ReviewPage extends Fragment {
                 }
             }
         } catch (ExecutionException ex) {
+            ex.printStackTrace();
             throw (RuntimeException)ex.getCause();
         } catch (CancellationException ex) {
             throw new AssertionError("onScraperComplete should never be called if the operation is cancelled");
@@ -114,6 +115,25 @@ public class ReviewPage extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        Bundle arguments = getArguments();
+
+        String title = null;
+        String author = null;
+
+        if (arguments == null) {
+            title = ScraperConstants.TEMP_HARDCODED_TITLE;
+            author = ScraperConstants.TEMP_HARDCODED_AUTHOR;
+        }
+
+        else {
+            title = arguments.getString("title");
+            author = arguments.getString("author");
+
+            title = title == null ? "" : title;
+            author =  author == null ? "" : author;
+        }
+
+        final Query query = new Query(title, author, null);
 
         //Create view and call scrapers
         view = inflater.inflate(R.layout.review_page, container, false);
@@ -121,11 +141,8 @@ public class ReviewPage extends Fragment {
                 new Callable<List<BookListing>>() {
                     @Override
                     public List<BookListing> call() throws Exception {
-                        Query query = new Query(ScraperConstants.TEMP_HARDCODED_TITLE,
-                                ScraperConstants.TEMP_HARDCODED_AUTHOR,
-                                null);
-
                         List<Scraper> scrapers = new ArrayList<Scraper>();
+                        
                         scrapers.add(new BarnesAndNobleScraper());
                         scrapers.add(new GoodreadsScraper());
                         Scraper aggregate = new AggregateScraper(scrapers);
@@ -149,7 +166,7 @@ public class ReviewPage extends Fragment {
      * @param view the UI with all the connecting logic
      * @param listing listing containing image
      */
-    public void setCoverImage(View view, BookListing listing) {
+    private void setCoverImage(View view, BookListing listing) {
         ImageView bookCover = (ImageView) view.findViewById(R.id.cover);
         if (listing.getCoverUrl() != null) {
             Picasso.get().load(listing.getCoverUrl().toString()).into(bookCover);
@@ -245,7 +262,7 @@ public class ReviewPage extends Fragment {
      * it sets the value to be displayed just under the Title and Author.
      * @param view is the view created with the UI and logic
      */
-    public void setAverageRatingValue(View view) {
+    private void setAverageRatingValue(View view) {
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
         TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
