@@ -9,8 +9,6 @@ import com.google.api.services.customsearch.Customsearch;
 import com.google.api.services.customsearch.model.Result;
 import com.google.api.services.customsearch.model.Search;
 
-import org.jsoup.nodes.Document;
-
 import java.util.List;
 
 /**
@@ -24,6 +22,13 @@ public class ScraperHelper {
     private static final int HTTP_REQUEST_TIMEOUT = 3 * 600000;
     private static final String SEARCH_ENGINE_ID = "055daec8cea1afc9a";
 
+    /**
+     * This function calls the Google Custom Search API to search for the book
+     *
+     * @param site This is the site that is being searched, such as Goodreads
+     * @param query This is the object that contains information about the book to be searched
+     * @return a list of search results returned from the API
+     */
     public static List<Result> googleAPISearch(String site, Query query){
         String toSearch = getGoogleQuery(site, query);
 
@@ -61,10 +66,23 @@ public class ScraperHelper {
 
     }
 
+    /**
+     * This method just returns the Url of the top search result returned by the API
+     * @param results this is the list of results
+     * @return String of the Url of the first result
+     */
     public static String getTopResultUrl(List<Result> results) {
         return results.get(0).getFormattedUrl();
     }
 
+    /**
+     * This method is used to generate what query is used to search Google based on the title and
+     * author coming from the Query object and the site being searched
+     *
+     * @param site This is the site that is being searched, such as Goodreads
+     * @param query This is the object that contains information about the book to be searched
+     * @return String of the query to be searched: "<title> + <author> + <site>"
+     */
     private static String getGoogleQuery(String site, Query query) {
         String[] titleWords = new String[0];
         if (query.getTitle() != null) {

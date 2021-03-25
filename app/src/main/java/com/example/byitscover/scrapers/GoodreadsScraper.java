@@ -18,9 +18,7 @@ import org.jsoup.safety.Whitelist;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * As the name implies, this is the scraper to get information from goodreads.com. Consists of only
@@ -37,11 +35,11 @@ public class GoodreadsScraper implements Scraper {
 
     /**
      * This class is the main driver of the class. Starts by getting the author and title info
-     * from the singleton and then forms the url that needs to be scraped. Once the title and author
+     * from the query and then forms the url that needs to be scraped. Once the title and author
      * are searched for, the scraper then gets the link to the top search result and then connects
      * to that link to get the rating and review information.
      *
-     * @return the information from the website
+     * @return the information from the website in the form of BookListings
      * @throws IOException if the text is not found to be returned from the site
      */
     public List<BookListing> scrape(Query query) throws IOException {

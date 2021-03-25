@@ -40,7 +40,8 @@ public class GoogleScraper implements Scraper {
      * stars and a histogram of the number of ratings for each star. So had to get the values
      * for each row of the histogram and calculate the rating manually.
      *
-     * @return map of info with the rating and review text
+     * @param query Object that holds information about the book being searched for
+     * @return Information from the Google Books website in BookListing form
      * @throws IOException
      */
     public List<BookListing> scrape(Query query) throws IOException {
@@ -113,7 +114,5 @@ public class GoogleScraper implements Scraper {
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
         return listings;
-
-
     }
 }

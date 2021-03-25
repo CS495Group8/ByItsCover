@@ -22,11 +22,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class scrapes the Barnes and Noble website to get the rating and review from their website
+ *
+ * @version 1.0
+ * @author Marc
+ */
 public class BarnesAndNobleScraper implements Scraper {
     public BarnesAndNobleScraper() {
 
     }
 
+    /**
+     * Standard method to scrape the data and return it to reviewPage. This one is finicky as to
+     * get the rating you have to search a string of json to get it
+     *
+     * @param query this contains the book information that is being looked for on the website
+     * @return list of the book listings info found on the Barnes and Noble website
+     * @throws IOException
+     */
     public List<BookListing> scrape(Query query) throws IOException {
         List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.BARNES_AND_NOBLE, query);
         String searchingUrl = getActualBookResult(results);
@@ -74,6 +88,15 @@ public class BarnesAndNobleScraper implements Scraper {
         return listings;
     }
 
+    /**
+     * Google had some weird behavior where the first result wasn't always the actual book that
+     * was searched for. This function allows the app to get the first result that is actually a
+     * book from Barnes and Noble rather than just the first result. The "/w" is only in URLs with
+     * products on their site
+     *
+     * @param results top 10 results from the Google API
+     * @return Url of the first result in the 10 that is a book
+     */
     @VisibleForTesting
     static String getActualBookResult(List<Result> results) {
         String toReturn = "";
