@@ -10,13 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.byitscover.helpers.CurrentBook;
+
+import java.util.ArrayList;
 
 public class InfoPage extends Fragment {
-
-    EditText eTitle;
-    EditText eAuthor;
-
+    private EditText eTitle;
+    private EditText eAuthor;
 
     @Override
     public View onCreateView(
@@ -34,22 +33,18 @@ public class InfoPage extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_prev).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(InfoPage.this)
-                        .navigate(R.id.action_from_info_to_first);
-            }
-        });
-
         view.findViewById(R.id.Search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CurrentBook instance = CurrentBook.getInstance();
-                instance.setTitle(eTitle.getText().toString()); //saves title on click
-                instance.setAuthor(eAuthor.getText().toString()); //saves author on click
+                String title = eTitle.getText().toString();
+                String author = eAuthor.getText().toString();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("title", title);
+                bundle.putString("author", author);
+
                 NavHostFragment.findNavController(InfoPage.this)
-                        .navigate(R.id.action_from_info_to_review);
+                        .navigate(R.id.action_from_info_to_review, bundle);
             }
         });
     }

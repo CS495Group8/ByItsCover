@@ -34,6 +34,15 @@
         android:label="ReviewPage" >
         <action
             android:id="@+id/action_from_review_to_first"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/FirstFragment">
+            <argument
+                android:name="title"
+                app:argType="string"
+                app:nullable="true" />
+            <argument
+                android:name="author"
+                app:argType="string"
+                app:nullable="true" />
+        </action>
     </fragment>
 </navigation>
