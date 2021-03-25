@@ -21,12 +21,19 @@ android {
         buildConfigField "String", "API_KEY",localProperties['apiKey']
     }
 
+    /*
+    This may be needed later for building in release mode.
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
+     */
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -35,6 +42,11 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
