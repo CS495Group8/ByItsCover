@@ -38,19 +38,26 @@ public class BarnesAndNobleScraper implements Scraper {
         //get rating by parsing json js var
         String htmlString = document.html();
         Double rating = null;
+        String reviewValueString;
 
         try {
             rating = Double.parseDouble(htmlString.substring(htmlString.indexOf(",\"rating\":") + 10,
                     htmlString.indexOf(",\"rating\":") + 13));
-        } catch (NumberFormatException ex) {
-
+        } catch (Exception ex) {
+            rating = 0.0;
         }
 
-        //get review
-        Element reviewValue = (Element) document.getElementById("overviewSection").childNode(1).childNode(1)
-                .childNode(3).childNode(1).childNode(1).childNode(1);
 
-        Review review = new Review(null, Jsoup.clean(reviewValue.toString(), Whitelist.none()), null);
+        try {
+            //get review
+            Element reviewValue = (Element) document.getElementById("overviewSection").childNode(1).childNode(1)
+                    .childNode(3).childNode(1).childNode(1).childNode(1);
+            reviewValueString = Jsoup.clean(reviewValue.toString(), Whitelist.none());
+        } catch (Exception ex) {
+            reviewValueString = "";
+        }
+
+        Review review = new Review(null, reviewValueString, null);
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 

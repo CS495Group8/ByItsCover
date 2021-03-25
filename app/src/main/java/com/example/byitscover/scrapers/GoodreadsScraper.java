@@ -55,29 +55,51 @@ public class GoodreadsScraper implements Scraper {
         //get rating value
         Element ratingElement = bookDocument.selectFirst("[itemprop=ratingValue]");
         Double rating = null;
+        String reviewString;
+        String author;
+        String title;
+        URL coverUrl = null;
 
         try {
             rating = Double.parseDouble(((TextNode) ratingElement.childNode(0)).getWholeText());
-        } catch (NumberFormatException ex) {
-
+        } catch (Exception ex) {
+            rating = 0.0;
         }
 
         //get review text
-        Element reviewElement = bookDocument.selectFirst("div#description").selectFirst("span");
-        Review review = new Review(null, Jsoup.clean(reviewElement.childNode(0).toString(), Whitelist.none()), null);
+        try {
+            Element reviewElement = bookDocument.selectFirst("div#description").selectFirst("span");
+            reviewString = Jsoup.clean(reviewElement.childNode(0).toString(), Whitelist.none());
+        } catch (Exception ex) {
+            reviewString = "";
+        }
+
+        Review review = new Review(null, reviewString, null);
 
         //get author of book from Goodreads
-        Element authorElement = bookDocument.selectFirst("div#bookAuthors");
-        String author = authorElement.childNode(3).childNode(1).childNode(1).childNode(0).childNode(0).toString();
+        try {
+            Element authorElement = bookDocument.selectFirst("div#bookAuthors");
+            author = authorElement.childNode(3).childNode(1).childNode(1).childNode(0).childNode(0).toString();
+        } catch (Exception ex) {
+            author = "";
+        }
 
         //get title of book from Goodreads
-        Element titleElement = bookDocument.selectFirst("h1#bookTitle");
-        String title = titleElement.childNode(0).toString();
+        try {
+            Element titleElement = bookDocument.selectFirst("h1#bookTitle");
+            title = titleElement.childNode(0).toString();
+        } catch (Exception ex) {
+            title = "";
+        }
 
         //get picture url
-        Element coverUrlElement = (Element) bookDocument.selectFirst("div.bookCoverPrimary")
-                .childNode(1).childNode(0);
-        URL coverUrl = new URL(coverUrlElement.absUrl("src"));
+        try {
+            Element coverUrlElement = (Element) bookDocument.selectFirst("div.bookCoverPrimary")
+                    .childNode(1).childNode(0);
+            coverUrl = new URL(coverUrlElement.absUrl("src"));
+        } catch (Exception ex) {
+
+        }
 
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
