@@ -5,8 +5,13 @@
 * Feel free to check out our pull requests to see the process we use for merging
 ## Testing  
 ### Unit testing
-* [Testing ISBN Class](https://github.com/CS495Group8/ByItsCover/blob/CurrentBook-refactor/app/src/test/java/com/example/byitscover/helpers/IsbnTest.java)
-* [Testing Book Class](https://github.com/CS495Group8/ByItsCover/blob/CurrentBook-refactor/app/src/test/java/com/example/byitscover/helpers/BookTest.java)  
+- [Testing ISBN Class](https://github.com/CS495Group8/ByItsCover/blob/CurrentBook-refactor/app/src/test/java/com/example/byitscover/helpers/IsbnTest.java)
+- [Testing Book Class](https://github.com/CS495Group8/ByItsCover/blob/CurrentBook-refactor/app/src/test/java/com/example/byitscover/helpers/BookTest.java)
+- [Testing Barnes and Noble Scraper Class](https://github.com/CS495Group8/ByItsCover/blob/scrapersTestsAndComments/app/src/test/java/com/example/byitscover/scrapers/BarnesAndNobleScraperTest.java)
+- [Testing Goodreads Scraper Class](https://github.com/CS495Group8/ByItsCover/blob/scrapersTestsAndComments/app/src/test/java/com/example/byitscover/scrapers/GoodreadsScraperTest.java)
+  - When testing found a bug where if only title or author are searched, unpredictable results can occur. Have a current fix that works somewhat decently, but we plan on improving
+- [Testing Google Books Scraper Class](https://github.com/CS495Group8/ByItsCover/blob/scrapersTestsAndComments/app/src/test/java/com/example/byitscover/scrapers/GoogleScraperTest.java)
+- [Testing Storygraph Scraper Class](https://github.com/CS495Group8/ByItsCover/blob/scrapersTestsAndComments/app/src/test/java/com/example/byitscover/scrapers/StorygraphScraperTest.java)
 ### Other tests
 * Camera Start - Click the "Search by Cover" Button. This brings up the camera. Clicking the button at the bottom of the camera page results in an image capture request. 
 * Camera Access Request - If you click the "Search by Cover" button and it doesn't already have access to write to external storage and open the camera, it will pop up a request to access those. Once allowed, the camera will open like normal.
@@ -19,6 +24,7 @@
 * [allScrapers](https://github.com/CS495Group8/ByItsCover/tree/allScrapers) - This was Marc's main branch during this sprint as he worked to implement and integrate the remaining scrapers we wanted to have. We also hope to have this merged by the Demo for Sprint 2 but it needs to have some integration happening once the CurrentBook-refactor branch is merged before it can be. 
 * [gh-pages](https://github.com/CS495Group8/ByItsCover/tree/gh-pages) - This branch just holds our website info and related items.
 * [goodreads-fix](https://github.com/CS495Group8/ByItsCover/tree/goodreads-fix) - This branch was one of Marc's where he helped Jack debug something that was going on with the Goodreads scraper on his refactoring branch 
-* [marc/BaNScraper](https://github.com/CS495Group8/ByItsCover/tree/marc/BaNScraper) - This branch was initially seperated from the other scrapers as it was a bit bug filled when implementing. Not really used and will eventually be deleted not merged.
-* [marc/amzScraper](https://github.com/CS495Group8/ByItsCover/tree/marc/amzScraper) - Same as the BaN scraper except that Amazon was left out purposefully as they make it pretty much impossible to scrape and the only way to get access to their API is through a paid account so the decision was made to switch sites for the fourth scraper. Will eventually be deleted.
-* [tempRefactorBranch](https://github.com/CS495Group8/ByItsCover/tree/tempRefactorBranch) - This was another of Marc's branches where he branched off of the refactoring branch and changed the code to get off the Google Search API in order to test some things as it was giving some errors. Will be deleted eventually once the issues are nailed down.
+* [marc/BaNScraper](https://github.com/CS495Group8/ByItsCover/tree/marc/BaNScraper) - This branch was initially seperated from the other scrapers as it was a bit bug filled when implementing. Not really used and will eventually be deleted not merged. BaN stands for Barnes and Noble.
+* [marc/amzScraper](https://github.com/CS495Group8/ByItsCover/tree/marc/amzScraper) - Same as the BaN scraper except that Amazon was left out of allScrapers purposefully as they make it pretty much impossible to scrape and the only way to get access to their API is through a paid account so the decision was made to switch sites for the fourth scraper. Will eventually be deleted.
+* [tempRefactorBranch](https://github.com/CS495Group8/ByItsCover/tree/tempRefactorBranch) - This was another one of Marc's branches where he branched off of the refactoring branch and changed the code to get off the Google Search API in order to test some things as it was giving some errors. Will be deleted eventually once the issues are nailed down.
+* [scrapersTestsAndComments](https://github.com/CS495Group8/ByItsCover/tree/scrapersTestsAndComments) - This was another Marc branch where he added unit tests for each of the scrapers and added some missing comments. Also should be merged by Demo time.
