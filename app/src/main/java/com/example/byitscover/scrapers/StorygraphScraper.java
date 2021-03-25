@@ -1,11 +1,12 @@
 package com.example.byitscover.scrapers;
 
-import android.content.res.Resources;
-import android.webkit.WebView;
-
+import com.example.byitscover.helpers.Book;
+import com.example.byitscover.helpers.BookListing;
+import com.example.byitscover.helpers.Query;
+import com.example.byitscover.helpers.Review;
+import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.helpers.ScraperHelper;
-import com.google.api.services.customsearch.model.Result;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,10 +16,9 @@ import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This class is designed to get rating and review information from Amazon.com
@@ -26,7 +26,11 @@ import java.util.Map;
  * @author Marc
  * @version 1.0
  */
-public class StorygraphScraper {
+public class StorygraphScraper implements Scraper {
+
+    public StorygraphScraper() {
+
+    }
 
     /**
      * Standard get info method. Gets the rating and review value from Amazon for the book
@@ -34,8 +38,8 @@ public class StorygraphScraper {
      * @return map of the keys and strings for the info gotten from Amazon
      * @throws IOException
      */
-    public static Map<String, String> getInfo() throws IOException {
-        String url = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.STORYGRAPH);
+    public List<BookListing> scrape(Query query) throws IOException {
+        String url = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.STORYGRAPH, query);
         Document googlePage = Jsoup.connect(url).get();
 
         //go to first search result link
@@ -54,16 +58,38 @@ public class StorygraphScraper {
 
         Document bookDocument = Jsoup.connect(bookUrl).get();
 
-        Map<String, String> toReturn = new HashMap<String, String>();
+        Double rating;
+        String reviewValueString;
 
-        Node ratingValue = bookDocument.selectFirst("span.average-star-rating").childNode(0);
-        toReturn.put(ScraperConstants.STORYGRAPH_RATING_KEY, ratingValue.toString());
+        try {
+            Node ratingValue = bookDocument.selectFirst("span.average-star-rating").childNode(0);
+            rating = Double.valueOf(ratingValue.toString());
+        } catch (Exception e) {
+            rating = 0.0;
+        }
 
-        Node reviewValue = bookDocument.selectFirst("div.blurb-pane");
-        toReturn.put(ScraperConstants.STORYGRAPH_REVIEW_KEY,
-                Jsoup.clean(Jsoup.parse(reviewValue.toString()).text(), Whitelist.simpleText()));
+        try {
+            Node reviewValue = bookDocument.selectFirst("div.blurb-pane");
+            reviewValueString = Jsoup.clean(Jsoup.parse(reviewValue.toString()).text(), Whitelist.simpleText());
+        } catch (Exception e) {
+            reviewValueString = "";
+        }
 
-        return toReturn;
+        Review review = new Review(null, reviewValueString, null);
+        List<Review> reviews = new ArrayList<Review>();
+        reviews.add(review);
+
+        BookListing listing = new BookListing(new URL(bookUrl),
+                ScraperConstants.STORYGRAPH,
+                new Book(query.getTitle(), query.getAuthor(), null, null),
+                rating,
+                null,
+                reviews,
+                null);
+
+        List<BookListing> listings = new ArrayList<BookListing>();
+        listings.add(listing);
+        return listings;
     }
 
     private static String getTopBookLink(List<Element> links) {

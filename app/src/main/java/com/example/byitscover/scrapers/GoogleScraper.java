@@ -1,5 +1,10 @@
 package com.example.byitscover.scrapers;
 
+import com.example.byitscover.helpers.Book;
+import com.example.byitscover.helpers.BookListing;
+import com.example.byitscover.helpers.Query;
+import com.example.byitscover.helpers.Review;
+import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.helpers.ScraperHelper;
 
@@ -9,8 +14,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +27,13 @@ import java.util.Map;
  * @version 1.0
  * @author Marc
  */
-public class GoogleScraper {
+public class GoogleScraper implements Scraper {
+
+    //Empty constructor needed
+    public GoogleScraper() {
+
+    }
+
     /**
      * Standard method to get the rating and review from the website. This rating one was annoying
      * as the Google Books site does not present the rating in a decimal form, it just shows the
@@ -29,8 +43,8 @@ public class GoogleScraper {
      * @return map of info with the rating and review text
      * @throws IOException
      */
-    public static Map<String, String> getInfo() throws IOException {
-        String searchingUrl = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.GOOGLE_BOOKS);
+    public List<BookListing> scrape(Query query) throws IOException {
+        String searchingUrl = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.GOOGLE_BOOKS, query);
         searchingUrl.replaceAll("[\\n]", "");
         Document document = Jsoup.connect(searchingUrl).get();
         System.out.println(searchingUrl);
@@ -43,35 +57,63 @@ public class GoogleScraper {
 
         Map<String, String> toReturn = new HashMap<String, String>();
 
-        //find rating info and calculate
-        Element rating5stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
-                .childNode(0).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
-        Element rating4stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
-                .childNode(1).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
-        Element rating3stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
-                .childNode(2).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
-        Element rating2stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
-                .childNode(3).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
-        Element rating1stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
-                .childNode(4).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
+        Double rating;
+        String reviewValueString;
 
-        Double fiveStars = Double.valueOf(Jsoup.clean(rating5stars.toString(), Whitelist.none()));
-        Double fourStars = Double.valueOf(Jsoup.clean(rating4stars.toString(), Whitelist.none()));
-        Double threeStars = Double.valueOf(Jsoup.clean(rating3stars.toString(), Whitelist.none()));
-        Double twoStars = Double.valueOf(Jsoup.clean(rating2stars.toString(), Whitelist.none()));
-        Double oneStars = Double.valueOf(Jsoup.clean(rating1stars.toString(), Whitelist.none()));
+        try {
+            //find rating info and calculate
+            Element rating5stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
+                    .childNode(0).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
+            Element rating4stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
+                    .childNode(1).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
+            Element rating3stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
+                    .childNode(2).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
+            Element rating2stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
+                    .childNode(3).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
+            Element rating1stars = (Element) bookDocument.getElementById("histogram-container").childNode(1).childNode(0)
+                    .childNode(4).childNode(1).childNode(0).childNode(0).childNode(0).childNode(1);
 
-        //calculate rating
-        Double rating = (((fiveStars * 5) + (fourStars * 4) + (threeStars * 3) + (twoStars * 2) +
-                (oneStars * 1)) / (fiveStars + fourStars + threeStars + twoStars + oneStars));
+            Double fiveStars = Double.valueOf(Jsoup.clean(rating5stars.toString(), Whitelist.none()));
+            Double fourStars = Double.valueOf(Jsoup.clean(rating4stars.toString(), Whitelist.none()));
+            Double threeStars = Double.valueOf(Jsoup.clean(rating3stars.toString(), Whitelist.none()));
+            Double twoStars = Double.valueOf(Jsoup.clean(rating2stars.toString(), Whitelist.none()));
+            Double oneStars = Double.valueOf(Jsoup.clean(rating1stars.toString(), Whitelist.none()));
+
+            //calculate rating
+            rating = (((fiveStars * 5) + (fourStars * 4) + (threeStars * 3) + (twoStars * 2) +
+                    (oneStars * 1)) / (fiveStars + fourStars + threeStars + twoStars + oneStars));
+        }
+        catch (Exception e) {
+            rating = 0.0;
+        }
+
         DecimalFormat df = new DecimalFormat("#.##");
-        toReturn.put(ScraperConstants.GOOGLE_RATING_KEY, df.format(rating));
 
         //get review value
-        Element reviewValue = (Element) bookDocument.getElementById("synopsistext").childNode(0);
-        toReturn.put(ScraperConstants.GOOGLE_REVIEW_KEY,
-                Jsoup.clean(reviewValue.toString(), Whitelist.none()));
+        try {
+            //get review
+            Element reviewValue = (Element) bookDocument.getElementById("synopsistext").childNode(0);
+            reviewValueString = Jsoup.clean(reviewValue.toString(), Whitelist.none());
+        } catch (Exception ex) {
+            reviewValueString = "";
+        }
 
-        return toReturn;
+        Review review = new Review(null, reviewValueString, null);
+        List<Review> reviews = new ArrayList<Review>();
+        reviews.add(review);
+
+        BookListing listing = new BookListing(new URL(bookUrl),
+                ScraperConstants.GOOGLE_BOOKS,
+                new Book(query.getTitle(), query.getAuthor(), null, null),
+                Double.valueOf(df.format(rating)),
+                null,
+                reviews,
+                null);
+
+        List<BookListing> listings = new ArrayList<BookListing>();
+        listings.add(listing);
+        return listings;
+
+
     }
 }

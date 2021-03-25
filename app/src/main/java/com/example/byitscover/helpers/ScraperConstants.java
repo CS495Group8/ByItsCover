@@ -15,16 +15,4 @@ public class ScraperConstants {
     public final static String BARNES_AND_NOBLE = "Barnes and Noble";
     public final static String STORYGRAPH = "Storygraph";
     public final static String GOOGLE_BOOKS = "Google Books";
-
-    public final static String GOODREADS_RATING_KEY = "goodreadsRating";
-    public final static String GOODREADS_REVIEW_KEY = "goodreadsReview";
-
-    public final static String BAN_RATING_KEY = "banRating";
-    public final static String BAN_REVIEW_KEY = "banReview";
-
-    public final static String GOOGLE_RATING_KEY = "googleRating";
-    public final static String GOOGLE_REVIEW_KEY = "googleReview";
-
-    public final static String STORYGRAPH_RATING_KEY = "storyRating";
-    public final static String STORYGRAPH_REVIEW_KEY = "storyReview";
 }
