@@ -33,12 +33,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/buttonFromReviewToMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/previous" />
-
             <ImageView
                 android:id="@+id/cover"
                 android:layout_width="75dp"
@@ -156,11 +150,11 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/cover"
                 app:layout_constraintTop_toBottomOf="@id/goodreadsReview"
-                app:srcCompat="@drawable/storygraphicon"
+                app:srcCompat="@drawable/amazonicon"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/storygraphRating"
+                android:id="@+id/textview_eighth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Rating2"
@@ -172,7 +166,7 @@
                 app:layout_constraintVertical_bias="0.029" />
 
             <TextView
-                android:id="@+id/storygraphReview"
+                android:id="@+id/textview_ninth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="25dp"
@@ -192,7 +186,7 @@
                 app:layout_constraintEnd_toEndOf="@id/titleText"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/cover"
-                app:layout_constraintTop_toBottomOf="@id/storygraphReview"
+                app:layout_constraintTop_toBottomOf="@id/textview_ninth"
                 app:srcCompat="@drawable/barnesandnobleicon"
                 tools:src="@tools:sample/avatars" />
 
@@ -234,7 +228,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/googleRating"
+                android:id="@+id/textview_twelve"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Rating4"
@@ -246,7 +240,7 @@
                 app:layout_constraintVertical_bias="0.029" />
 
             <TextView
-                android:id="@+id/googleReview"
+                android:id="@+id/textview_thirtheen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="25dp"

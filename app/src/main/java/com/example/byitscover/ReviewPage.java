@@ -11,10 +11,27 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.byitscover.helpers.AsyncScrape;
-import com.example.byitscover.helpers.CurrentBook;
+import com.example.byitscover.helpers.AggregateScraper;
+import com.example.byitscover.helpers.AsynchronousOperation;
+import com.example.byitscover.helpers.Book;
+import com.example.byitscover.helpers.BookListing;
+import com.example.byitscover.helpers.Isbn;
+import com.example.byitscover.helpers.Query;
+import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
+import com.example.byitscover.scrapers.BarnesAndNobleScraper;
+import com.example.byitscover.scrapers.GoodreadsScraper;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+
 
 /**
  * This class is the logic behind the page that shows all the review and rating information to
@@ -25,12 +42,63 @@ import com.squareup.picasso.Picasso;
  * @version 1.0
  */
 public class ReviewPage extends Fragment {
+    private View view;
+    private AsynchronousOperation<List<BookListing>> scraperOperation;
+
+    static BookListing defaultListing;
+
+    static {
+        try {
+            defaultListing = new BookListing(new URL("https://www.example.com"),
+                    "IDK Books",
+                    new Book("A Pickle For The Knowing Ones Or Plain Truths In A Homespun Dress",
+                            "Lord Timothy Dexter",
+                            "Kessinger Publishing, LLC",
+                            new Isbn("978-1162744308")),
+                    1e10,
+                    0,
+                    null,
+                    null);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Constructor. Empty because it is only really used in testing due to Android organization.
      */
     public ReviewPage() {
         //required empty constructor
+    }
+
+    private void onScraperCompletion() {
+        if (scraperOperation.isCancelled())
+            return;
+
+        List<BookListing> listings;
+
+        try {
+            listings = scraperOperation.get();
+
+            for (BookListing listing : listings) {
+                if (listing.getWebsite().equals(ScraperConstants.GOODREADS)) {
+                    setAuthorAndTitle(view, listing.getBook());
+                    setCoverImage(view, listing);
+                    setGoodreadsInfo(view, listing);
+                    setAverageRatingValue(view);
+                }
+                else if (listing.getWebsite().equals(ScraperConstants.BARNES_AND_NOBLE)) {
+                    setBarnesAndNobleInfo(view, listing);
+                }
+            }
+        } catch (ExecutionException ex) {
+            ex.printStackTrace();
+            throw (RuntimeException)ex.getCause();
+        } catch (CancellationException ex) {
+            throw new AssertionError("onScraperComplete should never be called if the operation is cancelled");
+        } catch (InterruptedException ex) {
+            throw new AssertionError("The current thread should never be interrupted while getting the result from the scraper");
+        }
     }
 
     /**
@@ -47,42 +115,66 @@ public class ReviewPage extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        //TODO: change values from hardcoded to ones from ML alg once integrated
-        CurrentBook info = CurrentBook.getInstance();
+        Bundle arguments = getArguments();
 
-        if (info.getAuthor() == null && info.getTitle() == null) {
-            info.setAuthor(ScraperConstants.TEMP_HARDCODED_AUTHOR);
-            info.setTitle(ScraperConstants.TEMP_HARDCODED_TITLE);
+        String title = null;
+        String author = null;
+
+        if (arguments == null) {
+            title = ScraperConstants.TEMP_HARDCODED_TITLE;
+            author = ScraperConstants.TEMP_HARDCODED_AUTHOR;
         }
+
+        else {
+            title = arguments.getString("title");
+            author = arguments.getString("author");
+
+            title = title == null ? "" : title;
+            author =  author == null ? "" : author;
+        }
+
+        final Query query = new Query(title, author, null);
 
         //Create view and call scrapers
-        View view = inflater.inflate(R.layout.review_page, container, false);
-        //TODO: Uncomment all once able to after updating singleton issues
-        //new AsyncScrape(ScraperConstants.GOODREADS).execute();
-        //new AsyncScrape(ScraperConstants.BARNES_AND_NOBLE).execute();
-        //new AsyncScrape(ScraperConstants.GOOGLE_BOOKS).execute();
-        new AsyncScrape(ScraperConstants.STORYGRAPH).execute();
+        view = inflater.inflate(R.layout.review_page, container, false);
+        scraperOperation = new AsynchronousOperation<List<BookListing>>(
+                new Callable<List<BookListing>>() {
+                    @Override
+                    public List<BookListing> call() throws Exception {
+                        List<Scraper> scrapers = new ArrayList<Scraper>();
 
-        //TODO: Make a fancy loading screen for this while waiting for scraping to happen
-        try {
-            //This controls how long the app waits for the scraping to be done
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        CurrentBook instance = CurrentBook.getInstance();
+                        scrapers.add(new BarnesAndNobleScraper());
+                        scrapers.add(new GoodreadsScraper());
+                        Scraper aggregate = new AggregateScraper(scrapers);
 
-        //populate UI
-        setCoverImage(view, instance);
-        setAuthorAndTitle(view, instance);
-        setGoodreadsInfo(view, instance);
-        setBarnesAndNobleInfo(view, instance);
-        setGoogleBooksInfo(view, instance);
-        setAmazonInfo(view, instance);
+                        return aggregate.scrape(query);
+                    }
+                },
+                this::onScraperCompletion);
+
+        setAuthorAndTitle(view, defaultListing.getBook());
+        setGoodreadsInfo(view, defaultListing);
         setAverageRatingValue(view);
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    /**
+     * This sets the image of the book cover on the review page to be the picutre taken from the
+     * camera (once implemented), the cover from the goodreads website, or a hardcoded stand in
+     * @param view the UI with all the connecting logic
+     * @param listing listing containing image
+     */
+    private void setCoverImage(View view, BookListing listing) {
+        ImageView bookCover = (ImageView) view.findViewById(R.id.cover);
+        if (listing.getCoverUrl() != null) {
+            Picasso.get().load(listing.getCoverUrl().toString()).into(bookCover);
+        }
+        else {
+            //if no internet link to get book cover image
+            bookCover.setImageResource(R.drawable.the_glass_hotel);
+        }
     }
 
     /**
@@ -93,31 +185,6 @@ public class ReviewPage extends Fragment {
      */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        view.findViewById(R.id.buttonFromReviewToMain).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(ReviewPage.this)
-                        .navigate(R.id.action_from_review_to_first);
-            }
-        });
-    }
-
-    /**
-     * This sets the image of the book cover on the review page to be the picutre taken from the
-     * camera (once implemented), the cover from the goodreads website, or a hardcoded stand in
-     * @param view the UI with all the connecting logic
-     * @param instance the singleton with all the information about the current book
-     */
-    public void setCoverImage(View view, CurrentBook instance) {
-        ImageView bookCover = (ImageView) view.findViewById(R.id.cover);
-        if (instance.getBookCoverUrl() != null) {
-            Picasso.get().load(instance.getBookCoverUrl()).into(bookCover);
-        }
-        else {
-            //if no internet link to get book cover image
-            bookCover.setImageResource(R.drawable.the_glass_hotel);
-        }
     }
 
     /**
@@ -126,7 +193,7 @@ public class ReviewPage extends Fragment {
      * @param view is the UI with all of the connecting logic
      * @param instance is the singleton with the information about the current book
      */
-    private void setAuthorAndTitle(View view, CurrentBook instance) {
+    private void setAuthorAndTitle(View view, Book instance) {
         //set author
         TextView authorText = (TextView) view.findViewById(R.id.authorText);
         authorText.setText(instance.getAuthor());
@@ -141,14 +208,13 @@ public class ReviewPage extends Fragment {
      * Goodreads users.
      *
      * @param view is the UI with all of the connecting logic
-     * @param instance is the singleton with the information about the current book
+     * @param listing is the listing from Goodreads
      */
-    private void setGoodreadsInfo(View view, CurrentBook instance) {
+    private void setGoodreadsInfo(View view, BookListing listing) {
         //set goodreads rating
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
         try {
-            goodReadsResultRating.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.GOODREADS_RATING_KEY));
+            goodReadsResultRating.setText(listing.getAggregateRating().toString());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -156,8 +222,7 @@ public class ReviewPage extends Fragment {
         //set goodreads review
         TextView goodReadsResultReview = (TextView) view.findViewById(R.id.goodreadsReview);
         try {
-            goodReadsResultReview.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.GOODREADS_REVIEW_KEY));
+            goodReadsResultReview.setText(listing.getReviews().get(0).getComment());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -165,85 +230,27 @@ public class ReviewPage extends Fragment {
     }
 
     /**
-     * Sets the rating and review information from the Barnes and Noble website. The review
-     * is from the overview and the rating it the average across all ratings.
-     * Sets the rating and review information from the Amazon website. The review is taken to be
+     * Sets the rating and review information from the Barnes and Noble website. The review is taken to be
      * the paragraph in bold just underneath the rating. The rating taken is the average across all
-     * Amazon users.
+     * Goodreads users.
      *
      * @param view is the UI with all of the connecting logic
-     * @param instance is the singleton with the information about the current book
+     * @param listing is the listing from Goodreads
      */
-    private void setBarnesAndNobleInfo(View view, CurrentBook instance) {
-        //set BaN rating
+    private void setBarnesAndNobleInfo(View view, BookListing listing) {
+        // TODO: Fix this, possibly unify with Goodreads
+        //set goodreads rating
         TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
         try {
-            banResultRating.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.BAN_RATING_KEY));
-        } catch (Exception e) {
+            banResultRating.setText(listing.getAggregateRating().toString());
+        }
+        catch (Exception e) {
             System.out.println(e.toString());
         }
-        //set BaN review
+        //set goodreads review
         TextView banResultReview = (TextView) view.findViewById(R.id.banReview);
         try {
-            banResultReview.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.BAN_REVIEW_KEY));
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-
-        return;
-    }
-
-     /** Sets the rating and review information from the Story Graph website. The review is taken to be
-     * the paragraph in bold just underneath the rating. The rating taken is the average across all
-     *  users.
-     *
-     * @param view is the UI with all of the connecting logic
-     * @param instance is the singleton with the information about the current book
-     */
-    private void setAmazonInfo(View view, CurrentBook instance) {
-        //set amazon rating
-        TextView amazonResultRating = (TextView) view.findViewById(R.id.storygraphRating);
-        try {
-            amazonResultRating.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.STORYGRAPH_RATING_KEY));
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
-        //set amazon review
-        TextView amazonResultReview = (TextView) view.findViewById(R.id.storygraphReview);
-        try {
-            amazonResultReview.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.STORYGRAPH_REVIEW_KEY));
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
-    }
-
-    /**
-     * Sets the rating and review information from the Google website. 
-     *
-     * @param view is the UI with all of the connecting logic
-     * @param instance is the singleton with the information about the current book
-     */
-    private void setGoogleBooksInfo(View view, CurrentBook instance) {
-        //set google rating
-        TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
-        try {
-            googleResultRating.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.GOOGLE_RATING_KEY));
-        }
-        catch (Exception e) {
-            System.out.println(e.toString());
-        }
-        //set google review
-        TextView googleResultReview = (TextView) view.findViewById(R.id.googleReview);
-        try {
-            googleResultReview.setText(instance.getReviewRatingValues()
-                    .get(ScraperConstants.GOOGLE_REVIEW_KEY));
+            banResultReview.setText(listing.getReviews().get(0).getComment());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -255,20 +262,17 @@ public class ReviewPage extends Fragment {
      * it sets the value to be displayed just under the Title and Author.
      * @param view is the view created with the UI and logic
      */
-    public void setAverageRatingValue(View view) {
+    private void setAverageRatingValue(View view) {
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
-        TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
-        TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
-        TextView amazonResultRating = (TextView) view.findViewById(R.id.storygraphRating);
         TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
         //Update these once other scrapers in place
         Double average = 0.0;
         try {
             average = (Double.valueOf(goodReadsResultRating.getText().toString())
-                    + Double.valueOf(amazonResultRating.getText().toString())
-                    + Double.valueOf(banResultRating.getText().toString())
-                    + Double.valueOf(googleResultRating.getText().toString())) / 4.0;
+                    + Double.valueOf(goodReadsResultRating.getText().toString())
+                    + Double.valueOf(goodReadsResultRating.getText().toString())
+                    + Double.valueOf(goodReadsResultRating.getText().toString())) / 4.0;
         } catch (Exception E) {
             System.out.println(E.toString());
         }
@@ -276,4 +280,3 @@ public class ReviewPage extends Fragment {
         averageRating.setText(average.toString());
     }
 }
-
