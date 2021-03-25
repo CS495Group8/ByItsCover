@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -85,7 +86,6 @@ public class ReviewPage extends Fragment {
                     setAuthorAndTitle(view, listing.getBook());
                     setCoverImage(view, listing);
                     setGoodreadsInfo(view, listing);
-                    setAverageRatingValue(view);
                 }
                 else if (listing.getWebsite().equals(ScraperConstants.BARNES_AND_NOBLE)) {
                     setBarnesAndNobleInfo(view, listing);
@@ -97,6 +97,7 @@ public class ReviewPage extends Fragment {
                     setStorygraphInfo(view, listing);
                 }
             }
+            setAverageRatingValue(view);
         } catch (ExecutionException ex) {
             ex.printStackTrace();
             throw (RuntimeException)ex.getCause();
@@ -340,7 +341,8 @@ public class ReviewPage extends Fragment {
         } catch (Exception E) {
             System.out.println(E.toString());
         }
-
-        averageRating.setText(average.toString());
+        
+        DecimalFormat df = new DecimalFormat("#.##");
+        averageRating.setText(Double.valueOf(df.format(average)).toString());
     }
 }

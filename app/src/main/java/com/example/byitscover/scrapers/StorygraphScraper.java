@@ -45,18 +45,31 @@ public class StorygraphScraper implements Scraper {
         //go to first search result link
         Elements searchResults = googlePage.select("div.g");
         List<Element> links = new ArrayList<Element>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < searchResults.size(); i++) {
             if (i == 0) {
                 links.add((Element) searchResults.get(i).childNode(1).childNode(0).childNode(0));
             }
             else {
-                links.add((Element) searchResults.get(i).childNode(0).childNode(0).childNode(0));
+                try {
+                    links.add((Element) searchResults.get(i).childNode(0).childNode(0).childNode(0));
+                } catch (Exception e) {
+                    System.out.println("Not found one search result");
+                }
+
             }
         }
 
         String bookUrl = getTopBookLink(links);
+        System.out.println(bookUrl);
 
-        Document bookDocument = Jsoup.connect(bookUrl).get();
+        Document bookDocument = null;
+        try {
+            bookDocument = Jsoup.connect(bookUrl).get();
+        } catch (Exception ex) {
+            System.out.println("Book not found by Storygraph");
+            bookDocument = Jsoup.connect("google.com").get();
+        }
+
 
         Double rating;
         String reviewValueString;

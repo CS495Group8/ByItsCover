@@ -47,12 +47,12 @@ public class GoogleScraper implements Scraper {
         String searchingUrl = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.GOOGLE_BOOKS, query);
         searchingUrl.replaceAll("[\\n]", "");
         Document document = Jsoup.connect(searchingUrl).get();
-        System.out.println(searchingUrl);
 
         //go to first search result link
         Element link = (Element) document.select("div.g").first().childNode(1)
                 .childNode(0).childNode(0);
         String bookUrl = link.attr("abs:href");
+        System.out.println(bookUrl);
         Document bookDocument = Jsoup.connect(bookUrl).get();
 
         Map<String, String> toReturn = new HashMap<String, String>();
