@@ -66,19 +66,21 @@ public class ScraperHelper {
     }
 
     private static String getGoogleQuery(String site, Query query) {
-        String[] titleWords = query.getTitle().split(" ");
-        String[] authorWords = query.getAuthor().split(" ");
+        String[] titleWords = new String[0];
+        if (query.getTitle() != null) {
+            titleWords = query.getTitle().split(" ");
+        }
+        String[] authorWords = new String[0];
+        if (query.getAuthor() != null) {
+            authorWords = query.getAuthor().split(" ");
+        }
 
         String toSearch = new String();
         for (String word : titleWords) {
             toSearch = toSearch + word + " ";
         }
         for (String word : authorWords) {
-            if (word == authorWords[authorWords.length - 1]) {
-                toSearch = toSearch + word;
-            } else {
-                toSearch = toSearch + word + " ";
-            }
+            toSearch = toSearch + word + " ";
         }
 
         return toSearch + " " + site;

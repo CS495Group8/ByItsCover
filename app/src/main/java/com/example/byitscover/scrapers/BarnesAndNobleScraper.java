@@ -8,11 +8,11 @@ import com.example.byitscover.helpers.ScraperHelper;
 import com.example.byitscover.helpers.Review;
 import com.example.byitscover.helpers.Query;
 import com.google.api.services.customsearch.model.Result;
+import com.google.common.annotations.VisibleForTesting;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.TextNode;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
@@ -74,7 +74,8 @@ public class BarnesAndNobleScraper implements Scraper {
         return listings;
     }
 
-    private static String getActualBookResult(List<Result> results) {
+    @VisibleForTesting
+    static String getActualBookResult(List<Result> results) {
         String toReturn = "";
         for (int i = 0; i < results.size(); i++) {
             if (results.get(i).getFormattedUrl().contains("/w/")) {
