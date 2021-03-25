@@ -1,7 +1,9 @@
 package com.example.byitscover;
 
+import android.app.PendingIntent;
 import android.os.Bundle;
 
+import com.example.byitscover.helpers.AsynchronousOperation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -12,6 +14,10 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Main Activity behind the entire app. This creates the app on startup and calls the first page

@@ -1,8 +1,13 @@
 package com.example.byitscover.scrapers;
 
-import com.example.byitscover.helpers.CurrentBook;
+import com.example.byitscover.helpers.Book;
+import com.example.byitscover.helpers.BookListing;
+import com.example.byitscover.helpers.Query;
+import com.example.byitscover.helpers.Review;
+import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.helpers.ScraperHelper;
+import com.google.api.services.customsearch.model.Result;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,7 +16,10 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +30,11 @@ import java.util.Map;
  * @version 1.0
  * @see <a href="goodreads.com">goodreads.com</a>
  */
-public class GoodreadsScraper {
+public class GoodreadsScraper implements Scraper {
+    public GoodreadsScraper() {
+
+    }
+
     /**
      * This class is the main driver of the class. Starts by getting the author and title info
      * from the singleton and then forms the url that needs to be scraped. Once the title and author
@@ -32,49 +44,76 @@ public class GoodreadsScraper {
      * @return the information from the website
      * @throws IOException if the text is not found to be returned from the site
      */
-    public static Map<String, String> getInfo() throws IOException {
+    public List<BookListing> scrape(Query query) throws IOException {
         //Get google url, make sure there are no newlines, and connect to it
-        String searchingUrl = ScraperHelper.getGoogleUrl(ScraperConstants.GOODREADS);
+        List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.GOODREADS, query);
+        String searchingUrl = ScraperHelper.getTopResultUrl(results);
         searchingUrl.replaceAll("[\\n]", "");
-        Document document = Jsoup.connect(searchingUrl).get();
+        Document bookDocument = Jsoup.connect(searchingUrl).get();
         System.out.println(searchingUrl);
 
-        //go to first search result link
-        Element link = (Element) document.select("div.g").first()
-                .childNode(1).childNode(0).childNode(0).childNode(0);
-        String bookUrl = link.attr("abs:href");
-        Document bookDocument = Jsoup.connect(bookUrl).get();
-
-        Map<String, String> toReturn = new HashMap<String, String>();
-
         //get rating value
-        Element ratingValue = bookDocument.selectFirst("[itemprop=ratingValue]");
-        toReturn.put(ScraperConstants.GOODREADS_RATING_KEY ,
-                ((TextNode) ratingValue.childNode(0)).getWholeText());
+        Element ratingElement = bookDocument.selectFirst("[itemprop=ratingValue]");
+        Double rating = null;
+        String reviewString;
+        String author;
+        String title;
+        URL coverUrl = null;
+
+        try {
+            rating = Double.parseDouble(((TextNode) ratingElement.childNode(0)).getWholeText());
+        } catch (Exception ex) {
+            rating = 0.0;
+        }
 
         //get review text
-        Element reviewValue = bookDocument.selectFirst("div#description").selectFirst("span");
-        toReturn.put(ScraperConstants.GOODREADS_REVIEW_KEY,
-                Jsoup.clean(reviewValue.childNode(0).toString(), Whitelist.none()));
+        try {
+            Element reviewElement = bookDocument.selectFirst("div#description").selectFirst("span");
+            reviewString = Jsoup.clean(reviewElement.childNode(0).toString(), Whitelist.none());
+        } catch (Exception ex) {
+            reviewString = "";
+        }
 
-        CurrentBook instance = CurrentBook.getInstance();
+        Review review = new Review(null, reviewString, null);
 
         //get author of book from Goodreads
-        Element authorValue = bookDocument.selectFirst("div#bookAuthors");
-        instance.setAuthor(authorValue
-                .childNode(3).childNode(1).childNode(1).childNode(0).childNode(0).toString());
+        try {
+            Element authorElement = bookDocument.selectFirst("div#bookAuthors");
+            author = authorElement.childNode(3).childNode(1).childNode(1).childNode(0).childNode(0).toString();
+        } catch (Exception ex) {
+            author = "";
+        }
 
         //get title of book from Goodreads
-        Element titleValue = bookDocument.selectFirst("h1#bookTitle");
-        instance.setTitle(titleValue.childNode(0).toString());
+        try {
+            Element titleElement = bookDocument.selectFirst("h1#bookTitle");
+            title = titleElement.childNode(0).toString();
+        } catch (Exception ex) {
+            title = "";
+        }
 
         //get picture url
-        Element coverUrl = (Element) bookDocument.selectFirst("div.bookCoverPrimary")
-                .childNode(1).childNode(0);
-        instance.setBookCoverUrl(coverUrl.absUrl("src"));
+        try {
+            Element coverUrlElement = (Element) bookDocument.selectFirst("div.bookCoverPrimary")
+                    .childNode(1).childNode(0);
+            coverUrl = new URL(coverUrlElement.absUrl("src"));
+        } catch (Exception ex) {
 
-        return toReturn;
+        }
+
+        List<Review> reviews = new ArrayList<Review>();
+        reviews.add(review);
+
+        BookListing listing = new BookListing(new URL(ScraperHelper.getTopResultUrl(results)),
+                ScraperConstants.GOODREADS,
+                new Book(title, author, null, null),
+                rating,
+                null,
+                reviews,
+                coverUrl);
+
+        List<BookListing> listings = new ArrayList<BookListing>();
+        listings.add(listing);
+        return listings;
     }
 }
-
-
