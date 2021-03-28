@@ -33,9 +33,10 @@ public class StorygraphScraper implements Scraper {
     }
 
     /**
-     * Standard get info method. Gets the rating and review value from Amazon for the book
+     * Standard get info method. Gets the rating and review value from Storygraph for the book
      *
-     * @return map of the keys and strings for the info gotten from Amazon
+     * @param query Information about the book being searched for
+     * @return information from the app/website about the book searched for
      * @throws IOException
      */
     public List<BookListing> scrape(Query query) throws IOException {
@@ -105,6 +106,15 @@ public class StorygraphScraper implements Scraper {
         return listings;
     }
 
+    /**
+     * This method is used to get the first link that is a website containing information about a
+     * single book. If not done, sometimes the author's page or a series page can be chosen rather
+     * than one for a single book, which is hopefully the book the user is searching for
+     *
+     * @param links List of all of the elements seen by Google, usually the first 10
+     * @return string of the first link that contains "/book" in the URL which is how Storygraph
+     * designates that the link is about a book
+     */
     private static String getTopBookLink(List<Element> links) {
         String currentLink;
         for (Element link : links) {
