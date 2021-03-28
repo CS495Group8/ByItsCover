@@ -83,4 +83,41 @@ public class ScraperHelper {
 
         return toSearch + " " + site;
     }
+
+    /**
+     * Scrape Google and access it directly to search rather than using the API. Sometimes
+     * produces better results for certain websites
+     *
+     * @param site the site being searched (ScraperConstants.x)
+     * @return the url of the top result
+     */
+    public static String getGoogleUrlNoAPI(String site, Query query) {
+        String[] titleWords = query.getTitle().split(" ");
+        String[] authorWords = query.getAuthor().split(" ");
+        String[] siteWords = site.split(" ");
+        String toAppendUrl = new String();
+        for (String word : titleWords) {
+            toAppendUrl = toAppendUrl + word + "+";
+        }
+        for (String word : authorWords) {
+            toAppendUrl = toAppendUrl + word + "+";
+        }
+        if (siteWords.length > 1) {
+            for (String word : siteWords) {
+                if (word == siteWords[siteWords.length - 1]) {
+                    toAppendUrl = toAppendUrl + word;
+                } else {
+                    toAppendUrl = toAppendUrl + word + "+";
+                }
+            }
+        }
+        else {
+            toAppendUrl = toAppendUrl + site;
+        }
+
+        //search goodreads for book
+        String searchingUrl =  "https://www.google.com/search?q=" + toAppendUrl;
+        return searchingUrl;
+    }
+
 }

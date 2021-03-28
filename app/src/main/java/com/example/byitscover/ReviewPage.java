@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.byitscover.helpers.AggregateScraper;
 import com.example.byitscover.helpers.AsynchronousOperation;
@@ -21,11 +20,13 @@ import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.scrapers.BarnesAndNobleScraper;
 import com.example.byitscover.scrapers.GoodreadsScraper;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.byitscover.scrapers.GoogleScraper;
+import com.example.byitscover.scrapers.StorygraphScraper;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -85,12 +86,18 @@ public class ReviewPage extends Fragment {
                     setAuthorAndTitle(view, listing.getBook());
                     setCoverImage(view, listing);
                     setGoodreadsInfo(view, listing);
-                    setAverageRatingValue(view);
                 }
                 else if (listing.getWebsite().equals(ScraperConstants.BARNES_AND_NOBLE)) {
                     setBarnesAndNobleInfo(view, listing);
                 }
+                else if (listing.getWebsite().equals(ScraperConstants.GOOGLE_BOOKS)) {
+                    setGoogleBooksInfo(view, listing);
+                }
+                else if (listing.getWebsite().equals(ScraperConstants.STORYGRAPH)) {
+                    setStorygraphInfo(view, listing);
+                }
             }
+            setAverageRatingValue(view);
         } catch (ExecutionException ex) {
             ex.printStackTrace();
             throw (RuntimeException)ex.getCause();
@@ -145,6 +152,8 @@ public class ReviewPage extends Fragment {
 
                         scrapers.add(new BarnesAndNobleScraper());
                         scrapers.add(new GoodreadsScraper());
+                        scrapers.add(new GoogleScraper());
+                        scrapers.add(new StorygraphScraper());
                         Scraper aggregate = new AggregateScraper(scrapers);
 
                         return aggregate.scrape(query);
@@ -232,14 +241,14 @@ public class ReviewPage extends Fragment {
     /**
      * Sets the rating and review information from the Barnes and Noble website. The review is taken to be
      * the paragraph in bold just underneath the rating. The rating taken is the average across all
-     * Goodreads users.
+     * BaN users.
      *
      * @param view is the UI with all of the connecting logic
-     * @param listing is the listing from Goodreads
+     * @param listing is the listing from Barnes and Noble
      */
     private void setBarnesAndNobleInfo(View view, BookListing listing) {
         // TODO: Fix this, possibly unify with Goodreads
-        //set goodreads rating
+        //set BaN rating
         TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
         try {
             banResultRating.setText(listing.getAggregateRating().toString());
@@ -247,7 +256,7 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
-        //set goodreads review
+        //set BaN review
         TextView banResultReview = (TextView) view.findViewById(R.id.banReview);
         try {
             banResultReview.setText(listing.getReviews().get(0).getComment());
@@ -258,25 +267,82 @@ public class ReviewPage extends Fragment {
     }
 
     /**
+     * Sets the rating and review information from the Google Books website. The review is taken to be
+     * the paragraph in bold just underneath the rating.
+     *
+     * @param view is the UI with all of the connecting logic
+     * @param listing is the listing from Google Books
+     */
+    private void setGoogleBooksInfo(View view, BookListing listing) {
+        //set Google rating
+        TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
+        try {
+            googleResultRating.setText(listing.getAggregateRating().toString());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        //set Google review
+        TextView googleResultReview = (TextView) view.findViewById(R.id.googleReview);
+        try {
+            googleResultReview.setText(listing.getReviews().get(0).getComment());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
+     * Sets the rating and review information from the Storygraph website. The review is taken to be
+     * the paragraph in bold just underneath the rating.
+     *
+     * @param view is the UI with all of the connecting logic
+     * @param listing is the listing from Storygraph
+     */
+    private void setStorygraphInfo(View view, BookListing listing) {
+        //set Google rating
+        TextView storygraphResultRating = (TextView) view.findViewById(R.id.storygraphRating);
+        try {
+            storygraphResultRating.setText(listing.getAggregateRating().toString());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        //set Google review
+        TextView storygraphResultReview = (TextView) view.findViewById(R.id.storyGraphReview);
+        try {
+            storygraphResultReview.setText(listing.getReviews().get(0).getComment());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+
+    /**
      * Takes the four ratings from the different sites and then averages them. Once calculated,
      * it sets the value to be displayed just under the Title and Author.
      * @param view is the view created with the UI and logic
      */
     private void setAverageRatingValue(View view) {
         TextView goodReadsResultRating = (TextView) view.findViewById(R.id.goodreadsRating);
+        TextView banResultRating = (TextView) view.findViewById(R.id.banRating);
+        TextView googleResultRating = (TextView) view.findViewById(R.id.googleRating);
+        TextView sgResultRating = (TextView) view.findViewById(R.id.storygraphRating);
         TextView averageRating = (TextView) view.findViewById(R.id.averageRatingText);
 
         //Update these once other scrapers in place
         Double average = 0.0;
         try {
             average = (Double.valueOf(goodReadsResultRating.getText().toString())
-                    + Double.valueOf(goodReadsResultRating.getText().toString())
-                    + Double.valueOf(goodReadsResultRating.getText().toString())
-                    + Double.valueOf(goodReadsResultRating.getText().toString())) / 4.0;
+                    + Double.valueOf(banResultRating.getText().toString())
+                    + Double.valueOf(googleResultRating.getText().toString())
+                    + Double.valueOf(sgResultRating.getText().toString())) / 4.0;
         } catch (Exception E) {
             System.out.println(E.toString());
         }
-
-        averageRating.setText(average.toString());
+        
+        DecimalFormat df = new DecimalFormat("#.##");
+        averageRating.setText(Double.valueOf(df.format(average)).toString());
     }
 }

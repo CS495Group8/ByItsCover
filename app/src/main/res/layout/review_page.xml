@@ -150,11 +150,11 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/cover"
                 app:layout_constraintTop_toBottomOf="@id/goodreadsReview"
-                app:srcCompat="@drawable/amazonicon"
+                app:srcCompat="@drawable/storygraphicon"
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/textview_eighth"
+                android:id="@+id/storygraphRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Rating2"
@@ -166,7 +166,7 @@
                 app:layout_constraintVertical_bias="0.029" />
 
             <TextView
-                android:id="@+id/textview_ninth"
+                android:id="@+id/storyGraphReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="25dp"
@@ -186,7 +186,7 @@
                 app:layout_constraintEnd_toEndOf="@id/titleText"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/cover"
-                app:layout_constraintTop_toBottomOf="@id/textview_ninth"
+                app:layout_constraintTop_toBottomOf="@id/storyGraphReview"
                 app:srcCompat="@drawable/barnesandnobleicon"
                 tools:src="@tools:sample/avatars" />
 
@@ -228,7 +228,7 @@
                 tools:src="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/textview_twelve"
+                android:id="@+id/googleRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Rating4"
@@ -240,7 +240,7 @@
                 app:layout_constraintVertical_bias="0.029" />
 
             <TextView
-                android:id="@+id/textview_thirtheen"
+                android:id="@+id/googleReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="25dp"
