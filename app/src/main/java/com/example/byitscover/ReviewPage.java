@@ -238,6 +238,14 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
+        //set goodreads price
+        TextView goodReadsResultPrice = (TextView) view.findViewById(R.id.goodreadsPrice);
+        try {
+            goodReadsResultPrice.setText(listing.getPrice().toString());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     /**
@@ -262,6 +270,14 @@ public class ReviewPage extends Fragment {
         TextView banResultReview = (TextView) view.findViewById(R.id.banReview);
         try {
             banResultReview.setText(listing.getReviews().get(0).getComment());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        //set BaN price
+        TextView banResultPrice = (TextView) view.findViewById(R.id.banPrice);
+        try {
+            banResultPrice.setText(listing.getPrice().toString());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -292,6 +308,14 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
+        //set google price
+        TextView googleResultPrice = (TextView) view.findViewById(R.id.googlePrice);
+        try {
+            googleResultPrice.setText(listing.getPrice().toString());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     /**
@@ -314,6 +338,14 @@ public class ReviewPage extends Fragment {
         TextView storygraphResultReview = (TextView) view.findViewById(R.id.storyGraphReview);
         try {
             storygraphResultReview.setText(listing.getReviews().get(0).getComment());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        //set storygraph price
+        TextView storygraphResultPrice = (TextView) view.findViewById(R.id.storygraphPrice1);
+        try {
+            storygraphResultPrice.setText(listing.getPrice().toString());
         }
         catch (Exception e) {
             System.out.println(e.toString());
