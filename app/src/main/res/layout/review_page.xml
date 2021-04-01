@@ -113,17 +113,38 @@
                 app:srcCompat="@drawable/goodreadsicon"
                 tools:src="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/goodreadsRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Rating1"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/revImage1"
-                app:layout_constraintTop_toTopOf="@id/revImage1"
-                app:layout_constraintVertical_bias="0.029" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/goodreadsRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Rating1"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/revImage1"
+                    app:layout_constraintTop_toTopOf="@id/revImage1"
+                    app:layout_constraintVertical_bias="0.029" />
+
+                <TextView
+                    android:id="@+id/goodreadsPrice"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/Price1"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/revImage1"
+                    app:layout_constraintTop_toTopOf="@id/revImage1"
+                    app:layout_constraintVertical_bias="0.029" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/goodreadsReview"
@@ -153,17 +174,37 @@
                 app:srcCompat="@drawable/storygraphicon"
                 tools:src="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/storygraphRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Rating2"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/revImage2"
-                app:layout_constraintTop_toTopOf="@id/revImage2"
-                app:layout_constraintVertical_bias="0.029" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/storygraphRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Rating2"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/revImage2"
+                    app:layout_constraintTop_toTopOf="@id/revImage2"
+                    app:layout_constraintVertical_bias="0.029" />
+
+                <TextView
+                    android:id="@+id/storygraphPrice1"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/Price2"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/revImage1"
+                    app:layout_constraintTop_toTopOf="@id/revImage1"
+                    app:layout_constraintVertical_bias="0.029" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/storyGraphReview"
@@ -190,17 +231,37 @@
                 app:srcCompat="@drawable/barnesandnobleicon"
                 tools:src="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/banRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Rating3"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/revImage3"
-                app:layout_constraintTop_toTopOf="@id/revImage3"
-                app:layout_constraintVertical_bias="0.029" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/banRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Rating3"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/revImage3"
+                    app:layout_constraintTop_toTopOf="@id/revImage3"
+                    app:layout_constraintVertical_bias="0.029" />
+
+                <TextView
+                    android:id="@+id/banPrice"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/Price3"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/revImage1"
+                    app:layout_constraintTop_toTopOf="@id/revImage1"
+                    app:layout_constraintVertical_bias="0.029" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/banReview"
@@ -227,17 +288,37 @@
                 app:srcCompat="@drawable/googlebooksicon"
                 tools:src="@tools:sample/avatars" />
 
-            <TextView
-                android:id="@+id/googleRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Rating4"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/revImage4"
-                app:layout_constraintTop_toTopOf="@id/revImage4"
-                app:layout_constraintVertical_bias="0.029" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/googleRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Rating4"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/revImage4"
+                    app:layout_constraintTop_toTopOf="@id/revImage4"
+                    app:layout_constraintVertical_bias="0.029" />
+
+                <TextView
+                    android:id="@+id/googlePrice"
+                    android:layout_width="178dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/Price4"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/revImage1"
+                    app:layout_constraintTop_toTopOf="@id/revImage1"
+                    app:layout_constraintVertical_bias="0.029" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/googleReview"
