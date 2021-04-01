@@ -16,6 +16,7 @@ import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +100,8 @@ public class StorygraphScraper implements Scraper {
                 rating,
                 null,
                 reviews,
-                null);
+                null,
+                getPrice());
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
@@ -126,4 +128,11 @@ public class StorygraphScraper implements Scraper {
         return null;
     }
 
+    /**
+     * This method returns the price found on the website
+     * @return price
+     */
+    private BigDecimal getPrice() {
+        return new BigDecimal("0.00");
+    }
 }

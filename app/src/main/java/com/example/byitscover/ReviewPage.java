@@ -24,6 +24,7 @@ import com.example.byitscover.scrapers.GoogleScraper;
 import com.example.byitscover.scrapers.StorygraphScraper;
 import com.squareup.picasso.Picasso;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -59,7 +60,8 @@ public class ReviewPage extends Fragment {
                     1e10,
                     0,
                     null,
-                    null);
+                    null,
+                    new BigDecimal("0.00"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

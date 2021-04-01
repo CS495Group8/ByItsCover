@@ -14,6 +14,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -109,10 +110,19 @@ public class GoogleScraper implements Scraper {
                 Double.valueOf(df.format(rating)),
                 null,
                 reviews,
-                null);
+                null,
+                getPrice());
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
         return listings;
+    }
+
+    /**
+     * This method returns the price found on the website
+     * @return price
+     */
+    private BigDecimal getPrice() {
+        return new BigDecimal("0.00");
     }
 }

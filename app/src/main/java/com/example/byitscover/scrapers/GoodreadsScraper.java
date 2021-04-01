@@ -16,6 +16,7 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,10 +109,19 @@ public class GoodreadsScraper implements Scraper {
                 rating,
                 null,
                 reviews,
-                coverUrl);
+                coverUrl,
+                getPrice());
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
         return listings;
+    }
+
+    /**
+     * This method returns the price found on the website
+     * @return price
+     */
+    private BigDecimal getPrice() {
+        return new BigDecimal("0.00");
     }
 }
