@@ -57,8 +57,6 @@ public class GoogleScraper implements Scraper {
         System.out.println(bookUrl);
         Document bookDocument = Jsoup.connect(bookUrl).get();
 
-        Map<String, String> toReturn = new HashMap<String, String>();
-
         Double rating;
         String reviewValueString;
 
@@ -111,7 +109,7 @@ public class GoogleScraper implements Scraper {
                 null,
                 reviews,
                 null,
-                getPrice());
+                getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
@@ -122,7 +120,15 @@ public class GoogleScraper implements Scraper {
      * This method returns the price found on the website
      * @return price
      */
-    private BigDecimal getPrice() {
-        return new BigDecimal("0.00");
+    private BigDecimal getPrice(Document bookDocument) {
+        String priceString;
+        try {
+            Element priceElement = bookDocument.getElementById("gb-get-book-container");
+            priceString = priceElement.childNode(0).childNode(0).toString();
+            priceString = priceString.substring(priceString.lastIndexOf("$") + 1);
+        } catch (Exception e) {
+            priceString = "";
+        }
+        return BigDecimal.valueOf(Double.valueOf(priceString));
     }
 }

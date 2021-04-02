@@ -101,7 +101,7 @@ public class StorygraphScraper implements Scraper {
                 null,
                 reviews,
                 null,
-                getPrice());
+                getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
@@ -129,10 +129,12 @@ public class StorygraphScraper implements Scraper {
     }
 
     /**
-     * This method returns the price found on the website
+     * Normally, this returns the price from the website but Storygraph does not provide pricing
+     * information
      * @return price
      */
-    private BigDecimal getPrice() {
-        return new BigDecimal("0.00");
+    private BigDecimal getPrice(Document bookDocument) {
+        String priceString = "0.00";
+        return BigDecimal.valueOf(Double.valueOf(priceString));
     }
 }

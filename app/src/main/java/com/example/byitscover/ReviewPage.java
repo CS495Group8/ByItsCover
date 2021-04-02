@@ -345,7 +345,7 @@ public class ReviewPage extends Fragment {
         //set storygraph price
         TextView storygraphResultPrice = (TextView) view.findViewById(R.id.storygraphPrice1);
         try {
-            storygraphResultPrice.setText("$" + listing.getPrice().toString());
+            storygraphResultPrice.setText("Pricing Info Not Provided");
         }
         catch (Exception e) {
             System.out.println(e.toString());
