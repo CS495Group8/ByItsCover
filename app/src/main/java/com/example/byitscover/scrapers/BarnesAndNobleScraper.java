@@ -83,7 +83,7 @@ public class BarnesAndNobleScraper implements Scraper {
                 null,
                 reviews,
                 null,
-                getPrice());
+                getPrice(document));
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
@@ -94,8 +94,15 @@ public class BarnesAndNobleScraper implements Scraper {
      * This method returns the price found on the website
      * @return price
      */
-    private BigDecimal getPrice() {
-        return new BigDecimal("0.00");
+    private BigDecimal getPrice(Document document) {
+        String priceString;
+        try {
+            Element priceValue = (Element) document.getElementById("pdp-cur-price");
+            priceString = priceValue.childNode(1).toString();
+        } catch (Exception ex) {
+            priceString = "";
+        }
+        return new BigDecimal(priceString);
     }
 
     /**

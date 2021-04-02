@@ -241,7 +241,7 @@ public class ReviewPage extends Fragment {
         //set goodreads price
         TextView goodReadsResultPrice = (TextView) view.findViewById(R.id.goodreadsPrice);
         try {
-            goodReadsResultPrice.setText(listing.getPrice().toString());
+            goodReadsResultPrice.setText("$" + listing.getPrice().toString());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -277,7 +277,7 @@ public class ReviewPage extends Fragment {
         //set BaN price
         TextView banResultPrice = (TextView) view.findViewById(R.id.banPrice);
         try {
-            banResultPrice.setText(listing.getPrice().toString());
+            banResultPrice.setText("$" + listing.getPrice().toString());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -311,7 +311,7 @@ public class ReviewPage extends Fragment {
         //set google price
         TextView googleResultPrice = (TextView) view.findViewById(R.id.googlePrice);
         try {
-            googleResultPrice.setText(listing.getPrice().toString());
+            googleResultPrice.setText("$" + listing.getPrice().toString());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -345,7 +345,7 @@ public class ReviewPage extends Fragment {
         //set storygraph price
         TextView storygraphResultPrice = (TextView) view.findViewById(R.id.storygraphPrice1);
         try {
-            storygraphResultPrice.setText(listing.getPrice().toString());
+            storygraphResultPrice.setText("$" + listing.getPrice().toString());
         }
         catch (Exception e) {
             System.out.println(e.toString());

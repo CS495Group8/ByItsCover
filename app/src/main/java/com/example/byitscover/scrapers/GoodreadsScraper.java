@@ -110,7 +110,7 @@ public class GoodreadsScraper implements Scraper {
                 null,
                 reviews,
                 coverUrl,
-                getPrice());
+                getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
@@ -121,7 +121,20 @@ public class GoodreadsScraper implements Scraper {
      * This method returns the price found on the website
      * @return price
      */
-    private BigDecimal getPrice() {
-        return new BigDecimal("0.00");
+    private BigDecimal getPrice(Document bookDocument) {
+        String priceString;
+        try {
+            Element priceValue = bookDocument.getElementById("buyButtonContainer");
+            priceString = priceValue.childNode(3).childNode(0).childNode(0).childNode(0).toString();
+            priceString = priceString.substring(priceString.lastIndexOf('$') + 1)
+                    .replaceAll("\\s+", "");
+            if (!priceString.contains(".")) {
+                priceString = priceString.substring(0, priceString.length() - 2)
+                        + "." + priceString.substring(priceString.length() - 2);
+            }
+        } catch (Exception ex) {
+            priceString = "0.00";
+        }
+        return BigDecimal.valueOf(Double.valueOf(priceString));
     }
 }
