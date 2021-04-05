@@ -99,10 +99,11 @@ public class BarnesAndNobleScraper implements Scraper {
         try {
             Element priceValue = (Element) document.getElementById("pdp-cur-price");
             priceString = priceValue.childNode(1).toString();
+            return new BigDecimal(priceString);
         } catch (Exception ex) {
-            priceString = "";
+            priceString = null;
         }
-        return new BigDecimal(priceString);
+        return null;
     }
 
     /**

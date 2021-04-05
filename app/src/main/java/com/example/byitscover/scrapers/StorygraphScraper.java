@@ -134,7 +134,7 @@ public class StorygraphScraper implements Scraper {
      * @return price
      */
     private BigDecimal getPrice(Document bookDocument) {
-        String priceString = "0.00";
-        return BigDecimal.valueOf(Double.valueOf(priceString));
+        String priceString = null;
+        return null;
     }
 }

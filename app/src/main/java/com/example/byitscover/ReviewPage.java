@@ -245,6 +245,7 @@ public class ReviewPage extends Fragment {
         }
         catch (Exception e) {
             System.out.println(e.toString());
+            goodReadsResultPrice.setText("$" + listing.getPrice().toString());
         }
     }
 
@@ -281,6 +282,7 @@ public class ReviewPage extends Fragment {
         }
         catch (Exception e) {
             System.out.println(e.toString());
+            banResultPrice.setText("$" + listing.getPrice().toString());
         }
     }
 
@@ -315,6 +317,7 @@ public class ReviewPage extends Fragment {
         }
         catch (Exception e) {
             System.out.println(e.toString());
+            googleResultPrice.setText("Pricing Info Not Provided");
         }
     }
 
@@ -326,7 +329,7 @@ public class ReviewPage extends Fragment {
      * @param listing is the listing from Storygraph
      */
     private void setStorygraphInfo(View view, BookListing listing) {
-        //set Google rating
+        //set storygraph rating
         TextView storygraphResultRating = (TextView) view.findViewById(R.id.storygraphRating);
         try {
             storygraphResultRating.setText(listing.getAggregateRating().toString());
@@ -334,7 +337,7 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
-        //set Google review
+        //set storygraph review
         TextView storygraphResultReview = (TextView) view.findViewById(R.id.storyGraphReview);
         try {
             storygraphResultReview.setText(listing.getReviews().get(0).getComment());

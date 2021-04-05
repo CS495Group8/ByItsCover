@@ -126,9 +126,10 @@ public class GoogleScraper implements Scraper {
             Element priceElement = bookDocument.getElementById("gb-get-book-container");
             priceString = priceElement.childNode(0).childNode(0).toString();
             priceString = priceString.substring(priceString.lastIndexOf("$") + 1);
+            return BigDecimal.valueOf(Double.valueOf(priceString));
         } catch (Exception e) {
-            priceString = "";
+            priceString = null;
         }
-        return BigDecimal.valueOf(Double.valueOf(priceString));
+        return null;
     }
 }
