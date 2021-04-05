@@ -245,7 +245,7 @@ public class ReviewPage extends Fragment {
         }
         catch (Exception e) {
             System.out.println(e.toString());
-            goodReadsResultPrice.setText("$" + listing.getPrice().toString());
+            goodReadsResultPrice.setText("Pricing Info Not Provided");
         }
     }
 
@@ -282,7 +282,7 @@ public class ReviewPage extends Fragment {
         }
         catch (Exception e) {
             System.out.println(e.toString());
-            banResultPrice.setText("$" + listing.getPrice().toString());
+            banResultPrice.setText("Pricing Info Not Provided");
         }
     }
 
@@ -352,6 +352,7 @@ public class ReviewPage extends Fragment {
         }
         catch (Exception e) {
             System.out.println(e.toString());
+            storygraphResultPrice.setText("Pricing Info Not Provided");
         }
     }
 
