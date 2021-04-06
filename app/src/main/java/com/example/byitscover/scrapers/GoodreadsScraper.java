@@ -16,6 +16,7 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,10 +109,33 @@ public class GoodreadsScraper implements Scraper {
                 rating,
                 null,
                 reviews,
-                coverUrl);
+                coverUrl,
+                getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
         return listings;
+    }
+
+    /**
+     * This method returns the price found on the website
+     * @return price
+     */
+    private BigDecimal getPrice(Document bookDocument) {
+        String priceString;
+        try {
+            Element priceValue = bookDocument.getElementById("buyButtonContainer");
+            priceString = priceValue.childNode(3).childNode(0).childNode(0).childNode(0).toString();
+            priceString = priceString.substring(priceString.lastIndexOf('$') + 1)
+                    .replaceAll("\\s+", "");
+            if (!priceString.contains(".")) {
+                priceString = priceString.substring(0, priceString.length() - 2)
+                        + "." + priceString.substring(priceString.length() - 2);
+            }
+            return new BigDecimal(priceString);
+            //return BigDecimal.valueOf(Double.valueOf(priceString));
+        } catch (Exception ex) {
+        }
+        return null;
     }
 }

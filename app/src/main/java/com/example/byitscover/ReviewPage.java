@@ -24,6 +24,7 @@ import com.example.byitscover.scrapers.GoogleScraper;
 import com.example.byitscover.scrapers.StorygraphScraper;
 import com.squareup.picasso.Picasso;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -59,7 +60,8 @@ public class ReviewPage extends Fragment {
                     1e10,
                     0,
                     null,
-                    null);
+                    null,
+                    new BigDecimal("0.00"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -236,6 +238,15 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
+        //set goodreads price
+        TextView goodReadsResultPrice = (TextView) view.findViewById(R.id.goodreadsPrice);
+        try {
+            goodReadsResultPrice.setText("$" + listing.getPrice().toString());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+            goodReadsResultPrice.setText("Pricing Info Not Provided");
+        }
     }
 
     /**
@@ -264,6 +275,15 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
+        //set BaN price
+        TextView banResultPrice = (TextView) view.findViewById(R.id.banPrice);
+        try {
+            banResultPrice.setText("$" + listing.getPrice().toString());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+            banResultPrice.setText("Pricing Info Not Provided");
+        }
     }
 
     /**
@@ -290,6 +310,15 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
+        //set google price
+        TextView googleResultPrice = (TextView) view.findViewById(R.id.googlePrice);
+        try {
+            googleResultPrice.setText("$" + listing.getPrice().toString());
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+            googleResultPrice.setText("Pricing Info Not Provided");
+        }
     }
 
     /**
@@ -300,7 +329,7 @@ public class ReviewPage extends Fragment {
      * @param listing is the listing from Storygraph
      */
     private void setStorygraphInfo(View view, BookListing listing) {
-        //set Google rating
+        //set storygraph rating
         TextView storygraphResultRating = (TextView) view.findViewById(R.id.storygraphRating);
         try {
             storygraphResultRating.setText(listing.getAggregateRating().toString());
@@ -308,13 +337,22 @@ public class ReviewPage extends Fragment {
         catch (Exception e) {
             System.out.println(e.toString());
         }
-        //set Google review
+        //set storygraph review
         TextView storygraphResultReview = (TextView) view.findViewById(R.id.storyGraphReview);
         try {
             storygraphResultReview.setText(listing.getReviews().get(0).getComment());
         }
         catch (Exception e) {
             System.out.println(e.toString());
+        }
+        //set storygraph price
+        TextView storygraphResultPrice = (TextView) view.findViewById(R.id.storygraphPrice1);
+        try {
+            storygraphResultPrice.setText("Pricing Info Not Provided");
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+            storygraphResultPrice.setText("Pricing Info Not Provided");
         }
     }
 

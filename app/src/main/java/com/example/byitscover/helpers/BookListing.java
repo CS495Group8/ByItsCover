@@ -1,5 +1,6 @@
 package com.example.byitscover.helpers;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 
@@ -20,9 +21,10 @@ public class BookListing {
     private final Integer ratingCount;
     private final List<Review> reviews;
     private final URL coverUrl;
+    private final BigDecimal price;
 
     public BookListing(URL url, String website, Book book, Double aggregateRating,
-                       Integer ratingCount, List<Review> reviews, URL coverUrl) {
+                       Integer ratingCount, List<Review> reviews, URL coverUrl, BigDecimal price) {
         if (url == null || website == null || book == null)
             throw new IllegalArgumentException("BookListing requires non-null URL, website, and Book for initialization");
 
@@ -33,6 +35,7 @@ public class BookListing {
         this.ratingCount = ratingCount;
         this.reviews = reviews;
         this.coverUrl = coverUrl;
+        this.price = price;
     }
 
     /**
@@ -91,7 +94,13 @@ public class BookListing {
         return coverUrl;
     }
 
+    /**
+     * Getter for price
+     * @return price
+     */
+    public BigDecimal getPrice() { return price; }
+
     public BookListing clone() {
-        return new BookListing(url, website, book, aggregateRating, ratingCount, reviews, coverUrl);
+        return new BookListing(url, website, book, aggregateRating, ratingCount, reviews, coverUrl, price);
     }
 }
