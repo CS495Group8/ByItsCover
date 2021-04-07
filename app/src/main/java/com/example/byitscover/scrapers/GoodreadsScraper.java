@@ -133,7 +133,6 @@ public class GoodreadsScraper implements Scraper {
                         + "." + priceString.substring(priceString.length() - 2);
             }
             return new BigDecimal(priceString);
-            //return BigDecimal.valueOf(Double.valueOf(priceString));
         } catch (Exception ex) {
         }
         return null;
