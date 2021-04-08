@@ -7,9 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="brown">"#FF4F2914"</color>
-    <color name="midBrown">"#FF6E3C21"</color>
-    <color name="lightBrown">"#FF84543A"</color>
-    <color name="lightOrange">"#FFEDB79A"</color>
-    <color name = "orange">"#FFE6956A"</color>
+    <color name="brown">#FF4F2914</color>
+    <color name="midBrown">#FF6E3C21</color>
+    <color name="lightBrown">#FF84543A</color>
+    <color name="lightOrange">#FFEDB79A</color>
+    <color name = "orange">#FFE6956A</color>
 </resources>
