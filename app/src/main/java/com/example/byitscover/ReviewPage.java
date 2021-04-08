@@ -102,6 +102,7 @@ public class ReviewPage extends Fragment {
                 }
             }
             setAverageRatingValue(view);
+            spinner.setVisibility(View.GONE);
         } catch (ExecutionException ex) {
             ex.printStackTrace();
             throw (RuntimeException)ex.getCause();
@@ -110,6 +111,7 @@ public class ReviewPage extends Fragment {
         } catch (InterruptedException ex) {
             throw new AssertionError("The current thread should never be interrupted while getting the result from the scraper");
         }
+
     }
 
     /**
@@ -126,6 +128,7 @@ public class ReviewPage extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        view = inflater.inflate(R.layout.review_page, container, false);
         spinner = (ProgressBar)(view.findViewById(R.id.progressBar));
         spinner.setVisibility(View.VISIBLE);
 
@@ -150,7 +153,7 @@ public class ReviewPage extends Fragment {
         final Query query = new Query(title, author, null);
 
         //Create view and call scrapers
-        view = inflater.inflate(R.layout.review_page, container, false);
+
         scraperOperation = new AsynchronousOperation<List<BookListing>>(
                 new Callable<List<BookListing>>() {
                     @Override
@@ -167,7 +170,7 @@ public class ReviewPage extends Fragment {
                     }
                 },
                 this::onScraperCompletion);
-        spinner.setVisibility(View.GONE);
+
 
         setAuthorAndTitle(view, defaultListing.getBook());
         setGoodreadsInfo(view, defaultListing);
