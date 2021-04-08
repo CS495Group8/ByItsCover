@@ -47,14 +47,19 @@ public class BarnesAndNobleScraper implements Scraper {
         Document document = Jsoup.connect(url).get();
         Elements bookLinks = document.getElementsByClass("pImageLink ");
 
-        BookListing firstListing = getListingFromElement(bookLinks, 0, query);
-        BookListing secondListing = getListingFromElement(bookLinks, 1, query);
-        BookListing thirdListing = getListingFromElement(bookLinks, 2, query);
-
         List<BookListing> listings = new ArrayList<BookListing>();
+
+        BookListing firstListing = getListingFromElement(bookLinks, 0, query);
         listings.add(firstListing);
-        listings.add(secondListing);
-        listings.add(thirdListing);
+
+        if (listings.size() > 1) {
+            BookListing secondListing = getListingFromElement(bookLinks, 1, query);
+            listings.add(secondListing);
+        }
+        if (listings.size() > 1) {
+            BookListing thirdListing = getListingFromElement(bookLinks, 2, query);
+            listings.add(thirdListing);
+        }
 
         return listings;
     }

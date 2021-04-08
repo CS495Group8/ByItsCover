@@ -52,13 +52,17 @@ public class GoodreadsScraper implements Scraper {
         Elements bookLinks = document.getElementsByClass("bookTitle");
 
         BookListing firstListing = getListingFromElement(bookLinks, 0, query);
-        BookListing secondListing = getListingFromElement(bookLinks, 1, query);
-        BookListing thirdListing = getListingFromElement(bookLinks, 2, query);
-
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(firstListing);
-        listings.add(secondListing);
-        listings.add(thirdListing);
+
+        if (listings.size() > 1) {
+            BookListing secondListing = getListingFromElement(bookLinks, 1, query);
+            listings.add(secondListing);
+        }
+        if (listings.size() > 2) {
+            BookListing thirdListing = getListingFromElement(bookLinks, 2, query);
+            listings.add(thirdListing);
+        }
 
         return listings;
     }
