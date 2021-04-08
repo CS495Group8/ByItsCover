@@ -50,4 +50,8 @@ public class Query {
     public Query clone() {
         return new Query(title, author, isbn);
     }
+
+    public String getQuery() {
+        return title + " " + author;
+    }
 }

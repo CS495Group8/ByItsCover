@@ -12,9 +12,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.safety.Whitelist;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -50,12 +52,41 @@ public class GoogleScraper implements Scraper {
         searchingUrl.replaceAll("[\\n]", "");
         Document document = Jsoup.connect(searchingUrl).get();
 
-        //go to first search result link
-        Element link = (Element) document.select("div.g").first().childNode(1)
-                .childNode(0).childNode(0);
-        String bookUrl = link.attr("abs:href");
+        Elements links = (Elements) document.select("div.g");
+
+        List<BookListing> listings = new ArrayList<BookListing>();
+        BookListing firstListing = getListingFromElement(links, 0, query);
+        listings.add(firstListing);
+
+        if (links.size() > 1) {
+            BookListing secondListing = getListingFromElement(links, 1, query);
+            listings.add(secondListing);
+        }
+        if (links.size() > 2) {
+            BookListing thirdListing = getListingFromElement(links, 2, query);
+            listings.add(thirdListing);
+        }
+
+        return listings;
+    }
+
+    private BookListing getListingFromElement(Elements links, int i, Query query) throws MalformedURLException {
+        Element linkElement;
+        if (i == 0) {
+            linkElement = (Element) links.get(i).childNode(1).childNode(0).childNode(0);
+        }
+        else {
+            linkElement = (Element) links.get(i).childNode(0).childNode(0).childNode(0);
+        }
+
+        String bookUrl = linkElement.attr("abs:href");
         System.out.println(bookUrl);
-        Document bookDocument = Jsoup.connect(bookUrl).get();
+        Document bookDocument = new Document(null);
+        try {
+            bookDocument = Jsoup.connect(bookUrl).get();
+        } catch (Exception e) {
+            System.out.println("Book number " + (i+1) + " is not available");
+        }
 
         Double rating;
         String reviewValueString;
@@ -102,18 +133,38 @@ public class GoogleScraper implements Scraper {
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 
+        String title = "";
+        String author = "";
+        //get title value
+        try {
+            //get title
+            Element titleElement = (Element) bookDocument.getElementById("bookinfo")
+                    .childNode(0).childNode(0).childNode(0);
+            title = Jsoup.clean(titleElement.toString(), Whitelist.none());
+        } catch (Exception ex) {
+            title = "";
+        }
+
+        //get author value
+        try {
+            //get author
+            Element authorElement = (Element) bookDocument.getElementById("bookinfo")
+                    .childNode(2).childNode(0).childNode(0).childNode(0);
+            author = Jsoup.clean(authorElement.toString(), Whitelist.none());
+        } catch (Exception ex) {
+            author = "";
+        }
+
         BookListing listing = new BookListing(new URL(bookUrl),
                 ScraperConstants.GOOGLE_BOOKS,
-                new Book(query.getTitle(), query.getAuthor(), null, null),
+                new Book(title, author, null, null),
                 Double.valueOf(df.format(rating)),
                 null,
                 reviews,
                 null,
                 getPrice(bookDocument));
 
-        List<BookListing> listings = new ArrayList<BookListing>();
-        listings.add(listing);
-        return listings;
+        return listing;
     }
 
     /**
@@ -127,7 +178,6 @@ public class GoogleScraper implements Scraper {
             priceString = priceElement.childNode(0).childNode(0).toString();
             priceString = priceString.substring(priceString.lastIndexOf("$") + 1);
             return new BigDecimal(priceString);
-            //return BigDecimal.valueOf(Double.valueOf(priceString));
         } catch (Exception e) {
             priceString = null;
         }
