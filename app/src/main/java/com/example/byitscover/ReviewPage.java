@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ import java.util.concurrent.ExecutionException;
 public class ReviewPage extends Fragment {
     private View view;
     private AsynchronousOperation<List<BookListing>> scraperOperation;
+    private ProgressBar spinner;
 
     static BookListing defaultListing;
 
@@ -124,6 +126,9 @@ public class ReviewPage extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        spinner = (ProgressBar)(view.findViewById(R.id.progressBar));
+        spinner.setVisibility(View.VISIBLE);
+
         Bundle arguments = getArguments();
 
         String title = null;
@@ -162,6 +167,7 @@ public class ReviewPage extends Fragment {
                     }
                 },
                 this::onScraperCompletion);
+        spinner.setVisibility(View.GONE);
 
         setAuthorAndTitle(view, defaultListing.getBook());
         setGoodreadsInfo(view, defaultListing);

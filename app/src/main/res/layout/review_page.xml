@@ -21,12 +21,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" /> -->
 
+
     <LinearLayout
         android:id="@+id/topMainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/vertReviewScroller">
+
+
+
 
         <LinearLayout
             android:layout_width="118dp"
@@ -87,6 +91,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="50dp"
         android:scrollbars="vertical"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topMainLayout">
@@ -333,9 +338,20 @@
                 app:layout_constraintTop_toBottomOf="@id/revImage4" />
 
 
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        app:layout_constraitTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- <Button
          android:id="@+id/button_second"
