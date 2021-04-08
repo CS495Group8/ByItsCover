@@ -16,6 +16,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,16 @@ public class StorygraphScraper implements Scraper {
         return listings;
     }
 
+    /**
+     * This method grabs the information for the specified book and returns a BookListing object
+     * based on the information found on the specific website
+     *
+     * @param bookLinks this is a list of all of the books found on the website search
+     * @param i specifies which listing you want to get the information of
+     * @param query
+     * @return Book listing based off of the information found on the website
+     * @throws MalformedURLException Raised if the new URL() call produces an error due to bad input
+     */
     private BookListing getListingFromElement(Elements bookLinks, int i, Query query) throws IOException {
         Double rating;
         String reviewValueString;
@@ -124,30 +135,16 @@ public class StorygraphScraper implements Scraper {
         return listing;
     }
 
+    /**
+     * This method forms the url based on the base Url that is hardcoded and the title and
+     * author values that are inputted and a part of the query
+     * @param query
+     * @return the url as a String
+     */
     private String getUrlWithQuery(Query query) {
         String url = "https://app.thestorygraph.com/browse?utf8=%E2%9C%93&button=&search_term=";
         String toSearch = query.getTitle() + query.getAuthor();
         return url + toSearch.replaceAll(" ", "+");
-    }
-
-    /**
-     * This method is used to get the first link that is a website containing information about a
-     * single book. If not done, sometimes the author's page or a series page can be chosen rather
-     * than one for a single book, which is hopefully the book the user is searching for
-     *
-     * @param links List of all of the elements seen by Google, usually the first 10
-     * @return string of the first link that contains "/book" in the URL which is how Storygraph
-     * designates that the link is about a book
-     */
-    private static String getTopBookLink(List<Element> links) {
-        String currentLink;
-        for (Element link : links) {
-            currentLink = link.attr("abs:href");
-            if (currentLink.contains("/book")) {
-                return currentLink;
-            }
-        }
-        return null;
     }
 
     /**

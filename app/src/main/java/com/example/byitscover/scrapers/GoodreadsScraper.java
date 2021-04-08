@@ -6,8 +6,6 @@ import com.example.byitscover.helpers.Query;
 import com.example.byitscover.helpers.Review;
 import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
-import com.example.byitscover.helpers.ScraperHelper;
-import com.google.api.services.customsearch.model.Result;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -67,6 +65,16 @@ public class GoodreadsScraper implements Scraper {
         return listings;
     }
 
+    /**
+     * This method grabs the information for the specified book and returns a BookListing object
+     * based on the information found on the specific website
+     *
+     * @param bookLinks this is a list of all of the books found on the website search
+     * @param i specifies which listing you want to get the information of
+     * @param query
+     * @return Book listing based off of the information found on the website
+     * @throws MalformedURLException Raised if the new URL() call produces an error due to bad input
+     */
     private BookListing getListingFromElement(Elements bookLinks, int i, Query query) throws MalformedURLException {
         Document document = new Document(null);
         String url = "";
@@ -141,6 +149,12 @@ public class GoodreadsScraper implements Scraper {
         return listing;
     }
 
+    /**
+     * This method forms the url based on the base Url that is hardcoded and the title and
+     * author values that are inputted and a part of the query
+     * @param query
+     * @return the url as a String
+     */
     private String getUrlWithQuery(Query query) {
         String url = "https://www.goodreads.com/search?q="
                 + query.getQuery().replaceAll(" ", "+");

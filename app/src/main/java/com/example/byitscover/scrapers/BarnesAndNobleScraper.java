@@ -101,12 +101,28 @@ public class BarnesAndNobleScraper implements Scraper {
         return toReturn;
     }
 
+    /**
+     * This method forms the url based on the base Url that is hardcoded and the title and
+     * author values that are inputted and a part of the query
+     * @param query
+     * @return the url as a String
+     */
     private String getUrlWithQuery(Query query) {
         String url = "https://www.barnesandnoble.com/s/"
                 + query.getQuery().replaceAll(" ", "%20");
         return url;
     }
 
+    /**
+     * This method grabs the information for the specified book and returns a BookListing object
+     * based on the information found on the specific website
+     *
+     * @param elements this is a list of all of the books found on the website search
+     * @param i specifies which listing you want to get the information of
+     * @param query
+     * @return Book listing based off of the information found on the website
+     * @throws MalformedURLException Raised if the new URL() call produces an error due to bad input
+     */
     private BookListing getListingFromElement(Elements elements, int i, Query query) throws MalformedURLException {
         Document document = new Document(null);
         String url = "";
