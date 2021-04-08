@@ -141,9 +141,9 @@ public class StorygraphScraper implements Scraper {
      * @param query
      * @return the url as a String
      */
-    private String getUrlWithQuery(Query query) {
+    String getUrlWithQuery(Query query) {
         String url = "https://app.thestorygraph.com/browse?utf8=%E2%9C%93&button=&search_term=";
-        String toSearch = query.getTitle() + query.getAuthor();
+        String toSearch = query.getQuery();
         return url + toSearch.replaceAll(" ", "+");
     }
 

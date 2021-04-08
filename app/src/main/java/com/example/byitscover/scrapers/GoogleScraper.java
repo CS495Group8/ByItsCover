@@ -181,7 +181,7 @@ public class GoogleScraper implements Scraper {
      * This method returns the price found on the website
      * @return price
      */
-    private BigDecimal getPrice(Document bookDocument) {
+    BigDecimal getPrice(Document bookDocument) {
         String priceString;
         try {
             Element priceElement = bookDocument.getElementById("gb-get-book-container");

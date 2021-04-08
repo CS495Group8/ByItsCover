@@ -68,7 +68,7 @@ public class BarnesAndNobleScraper implements Scraper {
      * This method returns the price found on the website
      * @return price
      */
-    private BigDecimal getPrice(Document document) {
+    BigDecimal getPrice(Document document) {
         String priceString;
         try {
             Element priceValue = (Element) document.getElementById("pdp-cur-price");
@@ -107,7 +107,7 @@ public class BarnesAndNobleScraper implements Scraper {
      * @param query
      * @return the url as a String
      */
-    private String getUrlWithQuery(Query query) {
+    String getUrlWithQuery(Query query) {
         String url = "https://www.barnesandnoble.com/s/"
                 + query.getQuery().replaceAll(" ", "%20");
         return url;

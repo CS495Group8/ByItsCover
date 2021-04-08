@@ -155,7 +155,7 @@ public class GoodreadsScraper implements Scraper {
      * @param query
      * @return the url as a String
      */
-    private String getUrlWithQuery(Query query) {
+    String getUrlWithQuery(Query query) {
         String url = "https://www.goodreads.com/search?q="
                 + query.getQuery().replaceAll(" ", "+");
         return url;
