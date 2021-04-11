@@ -54,8 +54,10 @@ public class StorygraphScraper implements Scraper {
         Elements bookLinks = bookDocument.select("div.ml-4");
 
         List<BookListing> listings = new ArrayList<BookListing>();
-        BookListing firstListing = getListingFromElement(bookLinks, 0, query);
-        listings.add(firstListing);
+        if (bookLinks.size() > 0) {
+            BookListing firstListing = getListingFromElement(bookLinks, 0, query);
+            listings.add(firstListing);
+        }
 
         if (bookLinks.size() > 1) {
             BookListing secondListing = getListingFromElement(bookLinks, 1, query);

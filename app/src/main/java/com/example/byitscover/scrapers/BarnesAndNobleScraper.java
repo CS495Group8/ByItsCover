@@ -49,14 +49,16 @@ public class BarnesAndNobleScraper implements Scraper {
 
         List<BookListing> listings = new ArrayList<BookListing>();
 
-        BookListing firstListing = getListingFromElement(bookLinks, 0, query);
-        listings.add(firstListing);
+        if (bookLinks.size() > 0) {
+            BookListing firstListing = getListingFromElement(bookLinks, 0, query);
+            listings.add(firstListing);
+        }
 
-        if (listings.size() > 1) {
+        if (bookLinks.size() > 1) {
             BookListing secondListing = getListingFromElement(bookLinks, 1, query);
             listings.add(secondListing);
         }
-        if (listings.size() > 1) {
+        if (bookLinks.size() > 2) {
             BookListing thirdListing = getListingFromElement(bookLinks, 2, query);
             listings.add(thirdListing);
         }

@@ -55,8 +55,10 @@ public class GoogleScraper implements Scraper {
         Elements links = (Elements) document.select("div.g");
 
         List<BookListing> listings = new ArrayList<BookListing>();
-        BookListing firstListing = getListingFromElement(links, 0, query);
-        listings.add(firstListing);
+        if (links.size() > 0) {
+            BookListing firstListing = getListingFromElement(links, 0, query);
+            listings.add(firstListing);
+        }
 
         if (links.size() > 1) {
             BookListing secondListing = getListingFromElement(links, 1, query);

@@ -49,15 +49,17 @@ public class GoodreadsScraper implements Scraper {
         Document document = Jsoup.connect(url).get();
         Elements bookLinks = document.getElementsByClass("bookTitle");
 
-        BookListing firstListing = getListingFromElement(bookLinks, 0, query);
         List<BookListing> listings = new ArrayList<BookListing>();
-        listings.add(firstListing);
-
-        if (listings.size() > 1) {
+        if (bookLinks.size() > 1) {
             BookListing secondListing = getListingFromElement(bookLinks, 1, query);
             listings.add(secondListing);
         }
-        if (listings.size() > 2) {
+
+        if (bookLinks.size() > 1) {
+            BookListing secondListing = getListingFromElement(bookLinks, 1, query);
+            listings.add(secondListing);
+        }
+        if (bookLinks.size() > 2) {
             BookListing thirdListing = getListingFromElement(bookLinks, 2, query);
             listings.add(thirdListing);
         }
