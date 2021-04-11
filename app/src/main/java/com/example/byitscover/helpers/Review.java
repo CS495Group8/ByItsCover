@@ -1,5 +1,7 @@
 package com.example.byitscover.helpers;
 
+import java.io.Serializable;
+
 /**
  * This class represents a review.
  * If a field is null, the corresponding property of the review is unknown.
@@ -8,7 +10,7 @@ package com.example.byitscover.helpers;
  * @version 1.0
  */
 
-public class Review {
+public class Review implements Serializable {
     // TODO: Discuss group preferences on immutability
     private final String reviewer;
     private final String comment;
