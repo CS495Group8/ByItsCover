@@ -73,6 +73,7 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:1.0.0-alpha22"
     implementation "androidx.camera:camera-extensions:1.0.0-alpha22"
+    implementation 'com.rmtheis:tess-two:9.1.0'
 
     def fragment_version = "1.2.5"
 
