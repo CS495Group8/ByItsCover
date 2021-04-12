@@ -10,10 +10,13 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.byitscover.R;
 import com.example.byitscover.helpers.Book;
 import com.example.byitscover.helpers.BookListing;
+import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -79,8 +82,15 @@ public class ReviewListPage extends AppCompatActivity {
 
 class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private View view;
+
         public ViewHolder(View view) {
             super(view);
+            this.view = view;
+        }
+
+        public View getView() {
+            return view;
         }
     }
 
@@ -100,7 +110,36 @@ class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        BookListing listing = listings.get(position);
+        View view = viewHolder.getView();
 
+        TextView titleView = view.findViewById(R.id.title);
+        TextView authorView = view.findViewById(R.id.author);
+        TextView priceView = view.findViewById(R.id.price);
+        TextView ratingView = view.findViewById(R.id.rating);
+        TextView websiteView = view.findViewById(R.id.website);
+        ImageView coverView = view.findViewById(R.id.cover);
+
+        String title = listing.getBook().getTitle();
+        String author = listing.getBook().getAuthor();
+        BigDecimal price = listing.getPrice();
+        Double aggregateRating = listing.getAggregateRating();
+        Integer numRatings = listing.getRatingCount();
+        String website = listing.getWebsite();
+        URL cover = listing.getCoverUrl();
+
+        titleView.setText("Title: " + (title != null ? title : ""));
+        authorView.setText("Author: " + (author != null ? author : ""));
+        priceView.setText("Price: " + (price != null ? "$" + price.toString() : ""));
+        ratingView.setText("Rating: " + (aggregateRating != null ? aggregateRating.toString() : "")
+            + " " + (numRatings != null ? "(" + numRatings.toString() + " ratings)" : ""));
+        websiteView.setText("Website: " + (website != null ? website  : ""));
+
+        if (cover != null) {
+            Picasso.get().load(listing.getCoverUrl().toString()).into(coverView);
+        } else {
+            coverView.setImageResource(R.drawable.the_glass_hotel);
+        }
     }
 
     @Override
