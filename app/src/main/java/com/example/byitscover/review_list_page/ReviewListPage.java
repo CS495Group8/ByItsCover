@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -20,6 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,7 @@ public class ReviewListPage extends AppCompatActivity {
         setContentView(R.layout.activity_review_list_page);
         recyclerView = findViewById(R.id.rvReviewList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new ReviewListAdapter(books));
+        recyclerView.setAdapter(new ReviewListAdapter(this, books));
     }
 
     private List<BookListing> readBooks() {
@@ -45,7 +49,7 @@ public class ReviewListPage extends AppCompatActivity {
         List<BookListing> listings = new ArrayList<BookListing>();
 
         try {
-            listings.add(new BookListing(new URL("http://www.google.com"),
+            listings.add(new BookListing(new URL("http://www.google.com/"),
                     "something.com",
                     new Book("A Modest Proposal", "Jonathan Swift", "Someone", null),
                     null,
@@ -54,7 +58,7 @@ public class ReviewListPage extends AppCompatActivity {
                     null,
                     BigDecimal.TEN));
 
-            listings.add(new BookListing(new URL("http://www.google.com"),
+            listings.add(new BookListing(new URL("http://www.google.com/"),
                     "b.com",
                     new Book("Generic Book", "Generic Author", "Someone", null),
                     null,
@@ -94,9 +98,11 @@ class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolde
         }
     }
 
+    private Activity activity;
     private List<BookListing> listings;
 
-    public ReviewListAdapter(List<BookListing> listings) {
+    public ReviewListAdapter(Activity activity, List<BookListing> listings) {
+        this.activity = activity;
         this.listings = listings;
     }
 
@@ -140,6 +146,20 @@ class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolde
         } else {
             coverView.setImageResource(R.drawable.the_glass_hotel);
         }
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent browserLaunch = new Intent(Intent.ACTION_VIEW);
+                    browserLaunch.setData(Uri.parse(listing.getUrl().toURI().toString()));
+                    activity.startActivity(browserLaunch);
+                } catch (URISyntaxException ex) {
+                    // TODO: notify user in event of failure
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
