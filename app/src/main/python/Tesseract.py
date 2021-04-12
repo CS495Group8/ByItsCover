@@ -24,7 +24,6 @@ def Tesseract(imgPath):
     suggestedQuery = ""
     for token in doc:
         if token.pos_ != 'X' and token.is_alpha and token.text != '\n' and len(token.text) > 3:
-            # print(token.text, token.pos_)
             if token.pos_ == 'PROPN':
                 suggestedQuery += (token.text + " ")
             else:
