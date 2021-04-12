@@ -118,6 +118,7 @@ class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolde
         String website = listing.getWebsite();
         URL cover = listing.getCoverUrl();
 
+        // TODO: Make string constants resources
         titleView.setText("Title: " + (title != null ? title : ""));
         authorView.setText("Author: " + (author != null ? author : ""));
         priceView.setText("Price: " + (price != null ? "$" + price.toString() : ""));
