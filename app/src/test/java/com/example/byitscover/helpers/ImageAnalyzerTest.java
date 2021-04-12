@@ -15,8 +15,8 @@ public class ImageAnalyzerTest {
     public void testAnalyze(){
         ImageAnalyzer testAnalyzer = new ImageAnalyzer();
         String picturePath = "C:/Users/Ripley Ryan/OneDrive/Documents/College Year Four/CS495/TesseractTest/image_test/gunslinger.jpg";
-        Bitmap img = BitmapFactory.decodeFile(picturePath);
-        Query response = testAnalyzer.analyze(img);
+        // Bitmap img = BitmapFactory.decodeFile(picturePath);
+        Query response = testAnalyzer.analyze(picturePath);
         System.out.println(response.getTitle());
         assertEquals(response.getTitle(), "Gunslinger");
     }
