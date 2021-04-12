@@ -140,6 +140,7 @@ public class FirstActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
 
@@ -156,6 +157,16 @@ public class FirstActivity extends AppCompatActivity {
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_camera);
+
+            Button prev = findViewById(R.id.previous);
+            prev.setOnClickListener(new View.OnClickListener(){
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
             executor = Executors.newSingleThreadExecutor();
             captureImage = findViewById(R.id.captureImg);
             previewView = findViewById(R.id.camera);

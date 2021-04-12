@@ -1,14 +1,17 @@
 package com.example.byitscover;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -122,6 +125,15 @@ public class ReviewPage extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_page);
+
+        Button prev = findViewById(R.id.previous);
+        prev.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //Bundle arguments = getArguments();
         Intent prevIntent = getIntent();
 
@@ -166,6 +178,8 @@ public class ReviewPage extends AppCompatActivity {
         setAuthorAndTitle(defaultListing.getBook());
         setGoodreadsInfo(defaultListing);
         setAverageRatingValue();
+
+
 
         // Inflate the layout for this fragment
         //return view;

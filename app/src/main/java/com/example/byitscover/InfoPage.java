@@ -48,6 +48,14 @@ public class InfoPage extends AppCompatActivity {
                 //finish();
             }
         });
+        Button prev = findViewById(R.id.previous);
+        prev.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //return view;
     }
 
