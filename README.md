@@ -28,3 +28,6 @@
 * [marc/amzScraper](https://github.com/CS495Group8/ByItsCover/tree/marc/amzScraper) - Same as the BaN scraper except that Amazon was left out of allScrapers purposefully as they make it pretty much impossible to scrape and the only way to get access to their API is through a paid account so the decision was made to switch sites for the fourth scraper. Will eventually be deleted.
 * [tempRefactorBranch](https://github.com/CS495Group8/ByItsCover/tree/tempRefactorBranch) - This was another one of Marc's branches where he branched off of the refactoring branch and changed the code to get off the Google Search API in order to test some things as it was giving some errors. Will be deleted eventually once the issues are nailed down.
 * [scrapersTestsAndComments](https://github.com/CS495Group8/ByItsCover/tree/scrapersTestsAndComments) - This was another Marc branch where he added unit tests for each of the scrapers and added some missing comments. Also was merged by Demo time.
+
+## Credits
+* Book icon from [Zlatko Najdenovski](https://www.flaticon.com/authors/zlatko-najdenovski)

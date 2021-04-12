@@ -184,7 +184,7 @@ public class ReviewPage extends Fragment {
         }
         else {
             //if no internet link to get book cover image
-            bookCover.setImageResource(R.drawable.the_glass_hotel);
+            bookCover.setImageResource(R.drawable.unknown_book);
         }
     }
 

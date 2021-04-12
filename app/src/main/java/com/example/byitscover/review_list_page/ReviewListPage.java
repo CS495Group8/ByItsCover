@@ -5,11 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.byitscover.R;
-import com.example.byitscover.helpers.Book;
 import com.example.byitscover.helpers.BookListing;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,14 +38,12 @@ import java.util.List;
 
 public class ReviewListPage extends AppCompatActivity {
     public static final String KEY_BOOK_LISTINGS = "BOOK_LISTINGS";
-    private static final String KEY_BOOKS = "BOOKS";
-
-    private List<BookListing> books;
-    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        List<BookListing> books;
 
         try {
             books = readBooks();
@@ -59,7 +53,7 @@ public class ReviewListPage extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_review_list_page);
-        recyclerView = findViewById(R.id.rvReviewList);
+        RecyclerView recyclerView = findViewById(R.id.rvReviewList);
         // Display the list of results as a vertically scrolling list
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ReviewListAdapter(this, books));
@@ -69,19 +63,13 @@ public class ReviewListPage extends AppCompatActivity {
         Intent intent = getIntent();
         return (List<BookListing>)intent.getSerializableExtra(KEY_BOOK_LISTINGS);
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putSerializable(KEY_BOOKS, new ArrayList<BookListing>(books));
-        super.onSaveInstanceState(savedInstanceState);
-    }
 }
 
 // This class is used to communicate which search results are at which list position to the RecyclerView
 class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolder> {
     // This class is used to hold each view corresponding to a search result
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private View view;
+        private final View view;
 
         public ViewHolder(View view) {
             super(view);
@@ -93,14 +81,15 @@ class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolde
         }
     }
 
-    private Activity activity;
-    private List<BookListing> listings;
+    private final Activity activity;
+    private final List<BookListing> listings;
 
     public ReviewListAdapter(Activity activity, List<BookListing> listings) {
         this.activity = activity;
         this.listings = listings;
     }
 
+    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
@@ -139,20 +128,17 @@ class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolde
         if (cover != null) {
             Picasso.get().load(listing.getCoverUrl().toString()).into(coverView);
         } else {
-            coverView.setImageResource(R.drawable.the_glass_hotel);
+            coverView.setImageResource(R.drawable.unknown_book);
         }
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent browserLaunch = new Intent(Intent.ACTION_VIEW);
-                    browserLaunch.setData(Uri.parse(listing.getUrl().toURI().toString()));
-                    activity.startActivity(browserLaunch);
-                } catch (URISyntaxException ex) {
-                    // TODO: notify user in event of failure
-                    ex.printStackTrace();
-                }
+        view.setOnClickListener(v -> {
+            try {
+                Intent browserLaunch = new Intent(Intent.ACTION_VIEW);
+                browserLaunch.setData(Uri.parse(listing.getUrl().toURI().toString()));
+                activity.startActivity(browserLaunch);
+            } catch (URISyntaxException ex) {
+                // TODO: notify user in event of failure
+                ex.printStackTrace();
             }
         });
     }
