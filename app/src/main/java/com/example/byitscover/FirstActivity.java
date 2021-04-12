@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,11 +42,9 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
- * Main Activity behind the entire app. This creates the app on startup and calls the first page
- * to be created. There is also an accompanying .xml in src/res/layout which can be used to apply
- * layouts or elements to all fragments.
+ * Activity behind the first/main page. Contains the buttons for search by cover and search by title.
  *
- * @author Auto-Generated
+ * @author Emily Schroeder
  * @version 1.0
  */
 public class FirstActivity extends AppCompatActivity {
@@ -58,12 +53,20 @@ public class FirstActivity extends AppCompatActivity {
 
     Button enableCamera;
 
+    /**
+     * Checks to see if the application has permission to use the camera and to write to external storage
+     *
+     * @return results of permission check for camera and external storage write
+     */
     private boolean hasCameraPermission() {
         int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
         return result1==PackageManager.PERMISSION_GRANTED && result2==PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Requests permission from the phone to use the camera and write to external storage
+     */
     private void requestPermission() {
         Toast.makeText(FirstActivity.this, "Requesting Permission", Toast.LENGTH_SHORT).show();
         ActivityCompat.requestPermissions(this, REQUIRED_PERMISSION, REQUEST_CODE_PERMISSIONS);
@@ -71,6 +74,15 @@ public class FirstActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Runs after the permissions have been checked.
+     * If it has the necessary permissions, it will start the camera.
+     * If it does not have the necessary permissions, it will request them.
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults){
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (grantResults.length > 0) {
@@ -92,6 +104,9 @@ public class FirstActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This will start the camera activity
+     */
     private void enableCamera() {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
@@ -100,15 +115,14 @@ public class FirstActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when app is opened. Starts the entire process.
+     * Called when app is opened. Displays the main page and sets listeners for the buttons to go to camera or info enter page.
+     *
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_first);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         enableCamera = findViewById(R.id.searchByCoverButton);
         enableCamera.setOnClickListener(new View.OnClickListener() {
@@ -118,8 +132,6 @@ public class FirstActivity extends AppCompatActivity {
                 if (hasCameraPermission()) {
                     Toast.makeText(FirstActivity.this, "Has Permission", Toast.LENGTH_SHORT).show();
                     enableCamera();
-                    //enableCamera.setVisibility(View.GONE);
-                    //enableCamera.setClickable(false);
                 } else if (shouldShowRequestPermissionRationale("Need Access to Camera to move forward.")) {
                     Toast.makeText(FirstActivity.this, "Need Access to Camera to move forward.", Toast.LENGTH_SHORT).show();
                 }else {
@@ -136,7 +148,6 @@ public class FirstActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(FirstActivity.this, InfoPage.class);
                 startActivity(intent);
-                //finish();
             }
         });
 
@@ -144,7 +155,9 @@ public class FirstActivity extends AppCompatActivity {
     }
 
 
-    //trying something below here
+    /**
+     * Activity for the camera to work. Opens the camera and saves the image to local files, then moves to review page.
+     */
     public static class CameraActivity extends AppCompatActivity {
         PreviewView previewView;
         Button captureImage;
@@ -153,6 +166,12 @@ public class FirstActivity extends AppCompatActivity {
         private Executor executor;
 
 
+        /**
+         * Will create the camera page
+         * Set listener for previous button to return to home page
+         * Set listener to capture the image and move to review page
+         * @param savedInstanceState
+         */
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -184,10 +203,14 @@ public class FirstActivity extends AppCompatActivity {
             }, ContextCompat.getMainExecutor(this));
         }
 
+        /**
+         * Gets path to directory to save the image to
+         *
+         * @return directory to save image to
+         */
         public String getBatchDirectoryName() {
 
             String app_folder_path = "";
-            //app_folder_path = Environment.getExternalStorageDirectory().toString() + "/images";
             app_folder_path = this.getFilesDir().getAbsolutePath() + "/images";
             Log.d("MYAPP", "Path: " + app_folder_path);
             File dir = new File(app_folder_path);
@@ -198,6 +221,11 @@ public class FirstActivity extends AppCompatActivity {
             return app_folder_path;
         }
 
+        /**
+         * Binds the preview to the page so the user can see through the camera
+         *
+         * @param cameraProvider
+         */
         void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
 
             Preview preview = new Preview.Builder()
@@ -240,15 +268,9 @@ public class FirstActivity extends AppCompatActivity {
                     imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback () {
                         @Override
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                            /*new Handler().post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(CameraActivity.this, "ImageSaved", Toast.LENGTH_SHORT).show();
-                                }
-                            });*/
+
                             Intent intent = new Intent(CameraActivity.this, ReviewPage.class);
                             startActivity(intent);
-                            //finish();
                         }
                         @Override
                         public void onError(@NonNull ImageCaptureException error) {

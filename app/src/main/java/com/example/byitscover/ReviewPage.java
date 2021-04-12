@@ -3,17 +3,13 @@ package com.example.byitscover;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.example.byitscover.helpers.AggregateScraper;
 import com.example.byitscover.helpers.AsynchronousOperation;
@@ -49,7 +45,6 @@ import java.util.concurrent.ExecutionException;
  * @version 1.0
  */
 public class ReviewPage extends AppCompatActivity {
-    //private View view;
     private AsynchronousOperation<List<BookListing>> scraperOperation;
 
     static BookListing defaultListing;
@@ -134,7 +129,6 @@ public class ReviewPage extends AppCompatActivity {
                 finish();
             }
         });
-        //Bundle arguments = getArguments();
         Intent prevIntent = getIntent();
 
         String title = null;
@@ -145,8 +139,6 @@ public class ReviewPage extends AppCompatActivity {
             author = ScraperConstants.TEMP_HARDCODED_AUTHOR;
         }
         else {
-            //title = arguments.getString("title");
-            //author = arguments.getString("author");
             title = prevIntent.getStringExtra("book_title");
             author = prevIntent.getStringExtra("book_author");
 
@@ -156,8 +148,6 @@ public class ReviewPage extends AppCompatActivity {
 
         final Query query = new Query(title, author, null);
 
-        //Create view and call scrapers
-        //view = inflater.inflate(R.layout.review_page, container, false);
         scraperOperation = new AsynchronousOperation<List<BookListing>>(
                 new Callable<List<BookListing>>() {
                     @Override
@@ -179,10 +169,6 @@ public class ReviewPage extends AppCompatActivity {
         setGoodreadsInfo(defaultListing);
         setAverageRatingValue();
 
-
-
-        // Inflate the layout for this fragment
-        //return view;
     }
 
     /**
@@ -200,15 +186,6 @@ public class ReviewPage extends AppCompatActivity {
             bookCover.setImageResource(R.drawable.the_glass_hotel);
         }
     }
-
-    /**
-     * Called after the view is created in <code>onCreateView()</code>. Handles last minute set up
-     * things such as defining click event action.
-     * @param savedInstanceState saved state from between screens
-     */
-    /*public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }*/
 
     /**
      * Sets the title and author text at the top of the UI.

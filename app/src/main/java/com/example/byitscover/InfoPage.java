@@ -3,26 +3,31 @@ package com.example.byitscover;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
-
-import java.util.ArrayList;
-
+/**
+ * This page is where the user can enter the title and author for the book they are looking for.
+ * Once information is entered, it can be sent to the review page
+ *
+ * @author Emily Schroeder
+ * @version 1.0
+ */
 public class InfoPage extends AppCompatActivity {
     private EditText eTitle;
     private EditText eAuthor;
 
+    /**
+     * Runs when page is started.
+     * Creates text fields to enter title and author information
+     * Sets listener for previous button to return to home page
+     * Sets listener for next button to send title and author information to review page
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +43,10 @@ public class InfoPage extends AppCompatActivity {
             public void onClick(View v) {
                 String title = eTitle.getText().toString();
                 String author = eAuthor.getText().toString();
-                /*Bundle bundle = new Bundle();
-                bundle.putString("title", title);
-                bundle.putString("author", author);*/
                 Intent intent = new Intent(InfoPage.this, ReviewPage.class);
                 intent.putExtra("book_title", title);
                 intent.putExtra("book_author", author);
                 startActivity(intent);
-                //finish();
             }
         });
         Button prev = findViewById(R.id.previous);
@@ -56,25 +57,5 @@ public class InfoPage extends AppCompatActivity {
                 finish();
             }
         });
-        //return view;
     }
-
-    /*public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        view.findViewById(R.id.Search).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String title = eTitle.getText().toString();
-                String author = eAuthor.getText().toString();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("title", title);
-                bundle.putString("author", author);
-
-                NavHostFragment.findNavController(InfoPage.this)
-                        .navigate(R.id.action_from_info_to_review, bundle);
-            }
-        });
-    }*/
 }
