@@ -1,3 +1,8 @@
+# The python logic that performs the actual OCR
+#
+# Author: Ripley
+# Version: 1.0
+
 # adds image processing capabilities
 from PIL import Image
 # will convert the image to text string
@@ -6,7 +11,9 @@ import spacy
 import re
 
 def Tesseract(imgPath):
+    print("hello, the img path is " + imgPath)
     img = Image.open(imgPath)
+    print(img)
     # converts the image to result and saves it into result variable
     result = ocr.image_to_string(img, lang='eng', config = "--psm 11")
     result = result.replace("\n\n","\n")

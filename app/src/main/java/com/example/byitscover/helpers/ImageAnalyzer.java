@@ -22,30 +22,26 @@ import java.nio.ByteBuffer;
  * This class produces a suggested search query based on an image of a book.
  *
  *
- * @author: Jack, Ripley
+ * @author: Ripley
  * @version: 1.0
  */
 public class ImageAnalyzer {
 
-    // Constructor initializes the Tesseract OCR object and sets the relevant config values
      public ImageAnalyzer(){
-//      ocr = new TessBaseAPI();
-//      ocr.init(TESSERACT_PATH, "eng");
-//      ocr.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SPARSE_TEXT);
-
      }
 
  /**
   *
-  * @param bitmapImage The image (in bitmap format) to perform OCR on
+  * @param imgName The image to perform OCR on, should be in the .../files/images/ directory
   * @return result string from OCR execution on the image at the specified location
   */
- public Query analyze(String ImagePath){
+ public Query analyze(String imgName){
         Python py = Python.getInstance();
         PyObject module = py.getModule("Tesseract");
+        String imgPath = "/data/data/com.example.byitscover/files/images/" + imgName;
         String query = "";
         try{
-            query = module.callAttr("Tesseract", ImagePath).toString();
+            query = module.callAttr("Tesseract", imgPath).toString();
         }
         catch (PyException e){
             e.printStackTrace();
