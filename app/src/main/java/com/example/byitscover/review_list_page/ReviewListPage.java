@@ -21,6 +21,7 @@ import com.example.byitscover.helpers.Book;
 import com.example.byitscover.helpers.BookListing;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewListPage extends AppCompatActivity {
+    public static final String KEY_BOOK_LISTINGS = "BOOK_LISTINGS";
     private static final String KEY_BOOKS = "BOOKS";
 
     private List<BookListing> books;
@@ -37,7 +39,13 @@ public class ReviewListPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        books = readBooks();
+        try {
+            books = readBooks();
+        } catch (NullPointerException | ClassCastException ex) {
+            throw new IllegalArgumentException(
+                    "ReviewListPage requires a non-null List<BookListing> to be passed with intent key" + KEY_BOOK_LISTINGS);
+        }
+
         setContentView(R.layout.activity_review_list_page);
         recyclerView = findViewById(R.id.rvReviewList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -45,36 +53,8 @@ public class ReviewListPage extends AppCompatActivity {
     }
 
     private List<BookListing> readBooks() {
-        // TODO: replace with parameters from intent
-        List<BookListing> listings = new ArrayList<BookListing>();
-
-        try {
-            listings.add(new BookListing(new URL("http://www.google.com/"),
-                    "something.com",
-                    new Book("A Modest Proposal", "Jonathan Swift", "Someone", null),
-                    null,
-                    null,
-                    null,
-                    null,
-                    BigDecimal.TEN));
-
-            listings.add(new BookListing(new URL("http://www.google.com/"),
-                    "b.com",
-                    new Book("Generic Book", "Generic Author", "Someone", null),
-                    null,
-                    null,
-                    null,
-                    null,
-                    BigDecimal.ONE));
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        }
-
-        for (int i = 0; i < 10; i++) {
-            listings.add(listings.get(i % 2));
-        }
-
-        return listings;
+        Intent intent = getIntent();
+        return (List<BookListing>)intent.getSerializableExtra(KEY_BOOK_LISTINGS);
     }
 
     @Override
