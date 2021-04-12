@@ -29,6 +29,17 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This activity is used to display a list of search results.
+ * It may be launched with an Intent in which the the key `ReviewListPage.KEY_BOOK_LISTINGS`
+ * is a serialized value of type `List<BookListing>`.
+ *
+ * A list of search results is displayed, and clicking a search result opens it in the user's browser.
+ *
+ * @author Jack
+ * @version 1.0
+ */
+
 public class ReviewListPage extends AppCompatActivity {
     public static final String KEY_BOOK_LISTINGS = "BOOK_LISTINGS";
     private static final String KEY_BOOKS = "BOOKS";
@@ -39,6 +50,7 @@ public class ReviewListPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         try {
             books = readBooks();
         } catch (NullPointerException | ClassCastException ex) {
@@ -48,6 +60,7 @@ public class ReviewListPage extends AppCompatActivity {
 
         setContentView(R.layout.activity_review_list_page);
         recyclerView = findViewById(R.id.rvReviewList);
+        // Display the list of results as a vertically scrolling list
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ReviewListAdapter(this, books));
     }
@@ -64,7 +77,9 @@ public class ReviewListPage extends AppCompatActivity {
     }
 }
 
+// This class is used to communicate which search results are at which list position to the RecyclerView
 class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolder> {
+    // This class is used to hold each view corresponding to a search result
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
 
