@@ -2,6 +2,8 @@ package com.example.byitscover.helpers;
 
 import com.example.byitscover.helpers.Isbn;
 
+import java.io.Serializable;
+
 /**
  * This class represents a book.
  * If a field is null, then the corresponding property of the book is unknown
@@ -10,7 +12,7 @@ import com.example.byitscover.helpers.Isbn;
  * @author Jack
  * @version 1.1
  */
-public class Book {
+public class Book implements Serializable {
     private final String title;
     private final String author;
     private final String publisher;

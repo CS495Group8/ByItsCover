@@ -69,7 +69,7 @@ public class StorygraphScraper implements Scraper {
             bookDocument = Jsoup.connect(bookUrl).get();
         } catch (Exception ex) {
             System.out.println("Book not found by Storygraph");
-            bookDocument = Jsoup.connect("google.com").get();
+            bookDocument = Jsoup.connect("https://google.com").get();
         }
 
 
@@ -80,7 +80,7 @@ public class StorygraphScraper implements Scraper {
             Node ratingValue = bookDocument.selectFirst("span.average-star-rating").childNode(0);
             rating = Double.valueOf(ratingValue.toString());
         } catch (Exception e) {
-            rating = 0.0;
+            rating = null;
         }
 
         try {

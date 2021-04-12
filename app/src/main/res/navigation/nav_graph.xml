@@ -11,9 +11,6 @@
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
         <action
-            android:id="@+id/action_from_first_to_review"
-            app:destination="@id/reviewPage" />
-        <action
             android:id="@+id/action_from_first_to_info"
             app:destination="@id/InfoPage" />
     </fragment>
@@ -21,28 +18,5 @@
         android:id="@+id/InfoPage"
         android:name="com.example.byitscover.InfoPage"
         android:label="InfoPage" >
-        <action
-            android:id="@+id/action_from_info_to_first"
-            app:destination="@id/FirstFragment" />
-        <action
-            android:id="@+id/action_from_info_to_review"
-            app:destination="@id/reviewPage" />
-    </fragment>
-    <fragment
-        android:id="@+id/reviewPage"
-        android:name="com.example.byitscover.ReviewPage"
-        android:label="ReviewPage" >
-        <action
-            android:id="@+id/action_from_review_to_first"
-            app:destination="@id/FirstFragment">
-            <argument
-                android:name="title"
-                app:argType="string"
-                app:nullable="true" />
-            <argument
-                android:name="author"
-                app:argType="string"
-                app:nullable="true" />
-        </action>
     </fragment>
 </navigation>
