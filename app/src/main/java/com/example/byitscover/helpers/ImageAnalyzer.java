@@ -1,12 +1,5 @@
 package com.example.byitscover.helpers;
 
-
-
-import android.app.Application;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-
 import com.chaquo.python.PyException;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
@@ -16,11 +9,8 @@ import com.example.byitscover.MainActivity;
 import java.io.File;
 import java.nio.ByteBuffer;
 
-
-
 /**
  * This class produces a suggested search query based on an image of a book.
- *
  *
  * @author: Ripley
  * @version: 1.0
@@ -32,7 +22,7 @@ public class ImageAnalyzer {
 
  /**
   *
-  * @param imgName The image to perform OCR on, should be in the .../files/images/ directory
+  * @param imgName The image file name to perform OCR on, should be in the .../files/images/ directory
   * @return result string from OCR execution on the image at the specified location
   */
  public Query analyze(String imgName){
