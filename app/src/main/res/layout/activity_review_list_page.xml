@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReviewListPage">
+    tools:context=".review_list_page.ReviewListPage">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvReviewList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
