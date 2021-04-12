@@ -35,6 +35,12 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Fragment which is used to search for reviews by text input
+ *
+ * @author ???
+ * @version 1.1
+ */
 public class InfoPage extends Fragment {
     private EditText eTitle;
     private EditText eAuthor;
@@ -46,13 +52,13 @@ public class InfoPage extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.enter_book_info, container, false);
         eTitle = (EditText) view.findViewById(R.id.enter_title); //text field to enter title
         eAuthor = (EditText) view.findViewById(R.id.enter_author); //text field to enter author
         return view;
     }
 
+    // Display scraper results once scraper completes task
     private void onScraperCompletion() {
         if (scraperOperation.isCancelled())
             return;
@@ -114,7 +120,7 @@ public class InfoPage extends Fragment {
                 if (scraperOperation != null) {
                     scraperOperation.cancel();
 
-                    // Check if operation completed before we cancelled it
+                    // If operation has already completed, then display the previous results
                     if (!scraperOperation.isCancelled()) {
                         return;
                     }
@@ -145,6 +151,7 @@ public class InfoPage extends Fragment {
         });
     }
 
+    // Clean up resources created by fragment
     @Override
     public void onDestroy() {
         super.onDestroy();
