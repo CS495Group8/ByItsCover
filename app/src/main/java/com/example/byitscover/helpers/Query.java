@@ -50,4 +50,13 @@ public class Query {
     public Query clone() {
         return new Query(title, author, isbn);
     }
+
+    /**
+     * This method just is an easy way to get the search query information that can be inputted
+     * into a search bar
+     * @return the query in string form
+     */
+    public String getQuery() {
+        return title + " " + author;
+    }
 }

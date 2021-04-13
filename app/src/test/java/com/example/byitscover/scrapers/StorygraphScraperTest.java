@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class StorygraphScraperTest {
-    private StorygraphScraper googleScraper = new StorygraphScraper();
+    private StorygraphScraper storygraphScraper = new StorygraphScraper();
     private static String title = "The Sellout";
     private static String author = "Paul Beatty";
     private static Double rating = 3.81;
@@ -56,11 +56,18 @@ public class StorygraphScraperTest {
     @Test
     public void testScrapeTitleAndAuthor() throws IOException {
         Query testQuery = new Query(title, author, null);
-        List<BookListing> results = googleScraper.scrape(testQuery);
+        List<BookListing> results = storygraphScraper.scrape(testQuery);
 
         assertTrue(results.get(0).getBook().getTitle().contains(title));
         assertEquals(author, results.get(0).getBook().getAuthor());
         assertEquals(rating, results.get(0).getAggregateRating());
         assertEquals(review, results.get(0).getReviews().get(0).getComment());
+    }
+
+    @Test
+    public void testGetUrlWithQuery() {
+        Query testQuery = new Query(title, author, null);
+        assertEquals("https://app.thestorygraph.com/browse?utf8=%E2%9C%93&button=&search_term=The+Sellout+Paul+Beatty",
+                storygraphScraper.getUrlWithQuery(testQuery));
     }
 }

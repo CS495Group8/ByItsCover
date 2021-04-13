@@ -9,10 +9,13 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.customsearch.Customsearch;
 import com.google.api.services.customsearch.model.Result;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,11 @@ public class BarnesAndNobleScraperTest {
             "York Times BestsellerLos Angeles Times Bestseller Named One of the 10 Best Books of " +
             "the Year by The New York Times Book ReviewNamed a Best Book of the Year by Newsweek, " +
             "The Denver Post, BuzzFeed, Kirkus Reviews, and Publishers Weekly";
+    private static Document priceDoc = Jsoup.parse("<span id=\"pdp-cur-price\" class=\"price current-price ml-0\">" +
+            "<sup>$</sup>15.50</span> <s class=\"old-price\">$17.00</s> " +
+            "<span class=\"saved-percent discount-amount\">Save 9%</span> " +
+            "<span id=\"adaLabel\" class=\"sr-only\">Current price is $15.5, " +
+            "Original price is $17. You Save 9%.</span> ");
 
     @Before
     public void setup() throws GeneralSecurityException, IOException {
@@ -41,7 +49,7 @@ public class BarnesAndNobleScraperTest {
     }
 
     @Test
-    public void testScrapeTitleAndAuthor() throws IOException {
+    public void testScrapeTitleAndAuthorBook1() throws IOException {
         Query testQuery = new Query(title, author, null);
         List<BookListing> results = barnesAndNobleScraper.scrape(testQuery);
 
@@ -69,5 +77,17 @@ public class BarnesAndNobleScraperTest {
         String returned = barnesAndNobleScraper.getActualBookResult(results);
 
         assertEquals("https://www.barnesandnoble.com/w/4-hour-workweek-expanded-and-updated-timothy-ferriss/1100290322", returned);
+    }
+
+    @Test
+    public void testGetPrice() {
+        assertEquals(new BigDecimal("15.50"), barnesAndNobleScraper.getPrice(priceDoc));
+    }
+
+    @Test
+    public void testGetUrlWithQuery() {
+        Query testQuery = new Query(title, author, null);
+        assertEquals("https://www.barnesandnoble.com/s/The%20Sellout%20Paul%20Beatty",
+                barnesAndNobleScraper.getUrlWithQuery(testQuery));
     }
 }

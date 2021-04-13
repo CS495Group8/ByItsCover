@@ -6,7 +6,6 @@ import com.example.byitscover.helpers.Query;
 import com.example.byitscover.helpers.Review;
 import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
-import com.example.byitscover.helpers.ScraperHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,6 +16,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,27 +41,7 @@ public class StorygraphScraper implements Scraper {
      * @throws IOException
      */
     public List<BookListing> scrape(Query query) throws IOException {
-        String url = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.STORYGRAPH, query);
-        Document googlePage = Jsoup.connect(url).get();
-
-        //go to first search result link
-        Elements searchResults = googlePage.select("div.g");
-        List<Element> links = new ArrayList<Element>();
-        for (int i = 0; i < searchResults.size(); i++) {
-            if (i == 0) {
-                links.add((Element) searchResults.get(i).childNode(1).childNode(0).childNode(0));
-            }
-            else {
-                try {
-                    links.add((Element) searchResults.get(i).childNode(0).childNode(0).childNode(0));
-                } catch (Exception e) {
-                    System.out.println("Not found one search result");
-                }
-
-            }
-        }
-
-        String bookUrl = getTopBookLink(links);
+        String bookUrl = getUrlWithQuery(query);
         System.out.println(bookUrl);
 
         Document bookDocument = null;
@@ -69,12 +49,36 @@ public class StorygraphScraper implements Scraper {
             bookDocument = Jsoup.connect(bookUrl).get();
         } catch (Exception ex) {
             System.out.println("Book not found by Storygraph");
-            bookDocument = Jsoup.connect("google.com").get();
         }
 
+        Elements bookLinks = bookDocument.select("div.ml-4");
 
+        List<BookListing> listings = new ArrayList<BookListing>();
+        for (int i = 0; i < Math.min(3, bookLinks.size()); i++) {
+            listings.add(getListingFromElement(bookLinks, i, query));
+        }
+
+        return listings;
+    }
+
+    /**
+     * This method grabs the information for the specified book and returns a BookListing object
+     * based on the information found on the specific website
+     *
+     * @param bookLinks this is a list of all of the books found on the website search
+     * @param i specifies which listing you want to get the information of
+     * @param query
+     * @return Book listing based off of the information found on the website
+     * @throws MalformedURLException Raised if the new URL() call produces an error due to bad input
+     */
+    private BookListing getListingFromElement(Elements bookLinks, int i, Query query) throws IOException {
         Double rating;
         String reviewValueString;
+        String author = null, title = null;
+
+        String bookUrl = "https://app.thestorygraph.com/" +
+                bookLinks.get(i).childNode(1).childNode(0).attr("href");
+        Document bookDocument = Jsoup.connect(bookUrl).get();
 
         try {
             Node ratingValue = bookDocument.selectFirst("span.average-star-rating").childNode(0);
@@ -94,38 +98,45 @@ public class StorygraphScraper implements Scraper {
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 
+        Element titleAuthor = bookDocument.getElementsByClass("book-title-and-author").first();
+
+        //get title and author
+        try {
+            Node titleValue = titleAuthor.childNode(1).childNode(0);
+            title = Jsoup.clean(Jsoup.parse(titleValue.toString()).text(), Whitelist.simpleText());
+        } catch (Exception e) {
+            title = "";
+        }
+
+        try {
+            Node authorValue = bookDocument.childNode(3).childNode(1);
+            author = Jsoup.clean(Jsoup.parse(authorValue.toString()).text(), Whitelist.simpleText());
+        } catch (Exception e) {
+            author = "";
+        }
+
         BookListing listing = new BookListing(new URL(bookUrl),
                 ScraperConstants.STORYGRAPH,
-                new Book(query.getTitle(), query.getAuthor(), null, null),
+                new Book(title, author, null, null),
                 rating,
                 null,
                 reviews,
                 null,
                 getPrice(bookDocument));
 
-        List<BookListing> listings = new ArrayList<BookListing>();
-        listings.add(listing);
-        return listings;
+        return listing;
     }
 
     /**
-     * This method is used to get the first link that is a website containing information about a
-     * single book. If not done, sometimes the author's page or a series page can be chosen rather
-     * than one for a single book, which is hopefully the book the user is searching for
-     *
-     * @param links List of all of the elements seen by Google, usually the first 10
-     * @return string of the first link that contains "/book" in the URL which is how Storygraph
-     * designates that the link is about a book
+     * This method forms the url based on the base Url that is hardcoded and the title and
+     * author values that are inputted and a part of the query
+     * @param query
+     * @return the url as a String
      */
-    private static String getTopBookLink(List<Element> links) {
-        String currentLink;
-        for (Element link : links) {
-            currentLink = link.attr("abs:href");
-            if (currentLink.contains("/book")) {
-                return currentLink;
-            }
-        }
-        return null;
+    String getUrlWithQuery(Query query) {
+        String url = "https://app.thestorygraph.com/browse?utf8=%E2%9C%93&button=&search_term=";
+        String toSearch = query.getQuery();
+        return url + toSearch.replaceAll(" ", "+");
     }
 
     /**

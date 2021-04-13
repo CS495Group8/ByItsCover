@@ -76,4 +76,12 @@ public class GoodreadsScraperTest {
         assertEquals(rating, results.get(0).getAggregateRating());
         assertEquals(review, results.get(0).getReviews().get(0).getComment());
     }
+
+    @Test
+    public void testGetUrlWithQuery() {
+        Query testQuery = new Query(title, author, null);
+        assertEquals("https://www.goodreads.com/search?q=The+Giver+Lois+Lowry",
+                goodreadsScraper.getUrlWithQuery(testQuery));
+    }
+
 }
