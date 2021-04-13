@@ -262,7 +262,7 @@ public class FirstActivity extends AppCompatActivity {
                 public void onClick(View v) {
 
                     SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
-                    File file = new File(getBatchDirectoryName(), mDateFormat.format(new Date())+ ".jpg");
+                    File file = new File(getBatchDirectoryName(), "SearchBook.jpg"); //changed to use the same name everytime
 
                     ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(file).build();
                     imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback () {

@@ -28,7 +28,7 @@ public class ImageAnalyzer {
  public Query analyze(String imgName){
         Python py = Python.getInstance();
         PyObject module = py.getModule("Tesseract");
-        String imgPath = "/data/data/com.example.byitscover/files/images/" + imgName;
+        String imgPath = "/data/data/com.example.byitscover/files/images/SearchBook.jpg"; //changed image name to match the one used in the camera
         String query = "";
         try{
             query = module.callAttr("Tesseract", imgPath).toString();

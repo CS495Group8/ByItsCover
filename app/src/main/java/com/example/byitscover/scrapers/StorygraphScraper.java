@@ -69,7 +69,7 @@ public class StorygraphScraper implements Scraper {
             bookDocument = Jsoup.connect(bookUrl).get();
         } catch (Exception ex) {
             System.out.println("Book not found by Storygraph");
-            bookDocument = Jsoup.connect("google.com").get();
+            bookDocument = Jsoup.connect("https://google.com").get();
         }
 
 

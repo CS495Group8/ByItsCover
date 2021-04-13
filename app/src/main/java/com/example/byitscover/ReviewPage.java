@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -46,6 +47,8 @@ import java.util.concurrent.ExecutionException;
  */
 public class ReviewPage extends AppCompatActivity {
     private AsynchronousOperation<List<BookListing>> scraperOperation;
+    private ProgressBar spinner;
+
 
     static BookListing defaultListing;
 
@@ -100,6 +103,7 @@ public class ReviewPage extends AppCompatActivity {
                 }
             }
             setAverageRatingValue();
+            spinner.setVisibility(View.GONE);
         } catch (ExecutionException ex) {
             ex.printStackTrace();
             throw (RuntimeException)ex.getCause();
@@ -120,6 +124,8 @@ public class ReviewPage extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_page);
+
+        spinner = (ProgressBar)findViewById(R.id.progressBar);
 
         Button prev = findViewById(R.id.previous);
         prev.setOnClickListener(new View.OnClickListener(){
@@ -358,7 +364,7 @@ public class ReviewPage extends AppCompatActivity {
         } catch (Exception E) {
             System.out.println(E.toString());
         }
-        
+
         DecimalFormat df = new DecimalFormat("#.##");
         averageRating.setText(Double.valueOf(df.format(average)).toString());
     }
