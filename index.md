@@ -34,11 +34,9 @@ For choosing what to read next. A common struggle for avid book readers is conqu
 ### Tools
 * Java
 * Android Studio
-* Selenium
 
 ### APIs
 * Jsoup
-* Selenium WebDriver
 
 ### Framework
 * Standard Android
