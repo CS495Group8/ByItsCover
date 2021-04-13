@@ -90,6 +90,14 @@ public class StorygraphScraper implements Scraper {
             reviewValueString = "";
         }
 
+        URL coverUrl;
+        try {
+            Node bookCoverValue = bookDocument.selectFirst("div.book-cover");
+            coverUrl = new URL(bookCoverValue.childNode(1).childNode(1).absUrl("src"));
+        } catch (Exception e) {
+            coverUrl = null;
+        }
+
         Review review = new Review(null, reviewValueString, null);
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
@@ -100,7 +108,7 @@ public class StorygraphScraper implements Scraper {
                 rating,
                 null,
                 reviews,
-                null,
+                coverUrl,
                 getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();

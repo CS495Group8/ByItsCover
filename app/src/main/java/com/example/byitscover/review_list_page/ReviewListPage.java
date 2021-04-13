@@ -121,7 +121,7 @@ class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.ViewHolde
         // TODO: Make string constants resources
         titleView.setText("Title: " + (title != null ? title : ""));
         authorView.setText("Author: " + (author != null ? author : ""));
-        priceView.setText("Price: " + (price != null ? "$" + price.toString() : ""));
+        priceView.setText("Price: " + (price != null ? "$" + price.toString() : "Pricing Information Not Available"));
         ratingView.setText("Rating: " + (aggregateRating != null ? aggregateRating.toString() : "")
             + " " + (numRatings != null ? "(" + numRatings.toString() + " ratings)" : ""));
         websiteView.setText("Website: " + (website != null ? website  : ""));

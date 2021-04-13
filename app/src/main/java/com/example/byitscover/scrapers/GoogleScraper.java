@@ -11,6 +11,7 @@ import com.example.byitscover.helpers.ScraperHelper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
@@ -98,6 +99,14 @@ public class GoogleScraper implements Scraper {
             reviewValueString = "";
         }
 
+        URL coverUrl;
+        try {
+            Node bookCoverValue = bookDocument.selectFirst("div.bookcover");
+            coverUrl = new URL(bookCoverValue.childNode(0).childNode(0).absUrl("src"));
+        } catch (Exception e) {
+            coverUrl = null;
+        }
+
         Review review = new Review(null, reviewValueString, null);
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
@@ -108,7 +117,7 @@ public class GoogleScraper implements Scraper {
                 Double.valueOf(df.format(rating)),
                 null,
                 reviews,
-                null,
+                coverUrl,
                 getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();

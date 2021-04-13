@@ -13,6 +13,7 @@ import com.google.common.annotations.VisibleForTesting;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
@@ -62,6 +63,14 @@ public class BarnesAndNobleScraper implements Scraper {
             rating = 0.0;
         }
 
+        URL coverUrl;
+        try {
+            Node bookCoverValue = document.getElementById("pdpMainImage");
+            coverUrl = new URL(bookCoverValue.absUrl("src"));
+        } catch (Exception e) {
+            coverUrl = null;
+        }
+
 
         try {
             //get review
@@ -82,7 +91,7 @@ public class BarnesAndNobleScraper implements Scraper {
                 rating,
                 null,
                 reviews,
-                null,
+                coverUrl,
                 getPrice(document));
 
         List<BookListing> listings = new ArrayList<BookListing>();
