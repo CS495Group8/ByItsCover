@@ -49,6 +49,7 @@ public class ReviewPage extends AppCompatActivity {
     private AsynchronousOperation<List<BookListing>> scraperOperation;
     private ProgressBar spinner;
 
+
     static BookListing defaultListing;
 
     static {
@@ -101,9 +102,8 @@ public class ReviewPage extends AppCompatActivity {
                     setStorygraphInfo(listing);
                 }
             }
-            setAverageRatingValue(view);
-            spinner.setVisibility(View.GONE);
             setAverageRatingValue();
+            spinner.setVisibility(View.GONE);
         } catch (ExecutionException ex) {
             ex.printStackTrace();
             throw (RuntimeException)ex.getCause();
@@ -112,7 +112,6 @@ public class ReviewPage extends AppCompatActivity {
         } catch (InterruptedException ex) {
             throw new AssertionError("The current thread should never be interrupted while getting the result from the scraper");
         }
-
     }
 
     /**
@@ -125,6 +124,8 @@ public class ReviewPage extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_page);
+
+        spinner = (ProgressBar)findViewById(R.id.progressBar);
 
         Button prev = findViewById(R.id.previous);
         prev.setOnClickListener(new View.OnClickListener(){
@@ -363,7 +364,7 @@ public class ReviewPage extends AppCompatActivity {
         } catch (Exception E) {
             System.out.println(E.toString());
         }
-        
+
         DecimalFormat df = new DecimalFormat("#.##");
         averageRating.setText(Double.valueOf(df.format(average)).toString());
     }
