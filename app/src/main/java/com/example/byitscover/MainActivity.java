@@ -1,6 +1,7 @@
 package com.example.byitscover;
 
 import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.byitscover.helpers.AsynchronousOperation;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Intent intent = new Intent(this, FirstActivity.class);
+        startActivity(intent);
     }
 
     /**

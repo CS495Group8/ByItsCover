@@ -7,7 +7,7 @@
     <string name="next">Next</string>
     <string name="go_to_camera">Search by Cover</string>
     <string name="enter_text">Search by Title</string>
-    <string name="previous">Previous</string>
+    <string name="back">Back</string>
 
     <string name="Title">Insert Book Title Here</string>
     <string name="Author">Insert Author Here</string>
