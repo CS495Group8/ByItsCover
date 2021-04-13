@@ -1,10 +1,10 @@
 package com.example.byitscover.helpers;
 
-import com.chaquo.python.PyException;
+/*import com.chaquo.python.PyException;
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
-import com.example.byitscover.MainActivity;
+import com.example.byitscover.MainActivity;*/
 
 import java.io.File;
 import java.nio.ByteBuffer;
@@ -28,7 +28,7 @@ public class ImageAnalyzer {
  public Query analyze(String imgName){
         Python py = Python.getInstance();
         PyObject module = py.getModule("Tesseract");
-        String imgPath = "/data/data/com.example.byitscover/files/images/" + imgName;
+        String imgPath = "/data/data/com.example.byitscover/files/images/SearchBook.jpg"; //changed image name to match the one used in the camera
         String query = "";
         try{
             query = module.callAttr("Tesseract", imgPath).toString();
