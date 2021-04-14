@@ -2,11 +2,13 @@
 
 ### What does it do?
 
-1. User Takes a Picture of the Cover
+1a. User Takes a Picture of the Cover
+1b. User Types in Title and Author
 
-2. Application Analyzes Cover to Find Relevant Information
+2a. Application Analyzes Cover to Find Relevant Information
+2b. Application Uses Inputted Title and Author to Find Relevant Information
 
-3. Application Displays Reviews on Book from Multiple Sources, including GoodReads, Amazon, Barnes & Noble, and GoogleBooks
+3. Application Displays Reviews on Book from Multiple Sources, including Goodreads, Storygraph, Barnes & Noble, and Google Books
 
 ### Why is this important?
 
