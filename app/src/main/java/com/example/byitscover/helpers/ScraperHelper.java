@@ -61,6 +61,8 @@ public class ScraperHelper {
         catch (  Exception e) {
             e.printStackTrace();
         }
+        String url = resultList.get(0).getLink();
+        System.out.println(url);
 
         return resultList;
 
@@ -72,7 +74,7 @@ public class ScraperHelper {
      * @return String of the Url of the first result
      */
     public static String getTopResultUrl(List<Result> results) {
-        return results.get(0).getFormattedUrl();
+        return results.get(0).getLink();
     }
 
     /**

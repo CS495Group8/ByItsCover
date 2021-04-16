@@ -7,6 +7,7 @@ import com.example.byitscover.helpers.Review;
 import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.helpers.ScraperHelper;
+import com.google.api.services.customsearch.model.Result;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -41,28 +42,10 @@ public class StorygraphScraper implements Scraper {
      * @throws IOException
      */
     public List<BookListing> scrape(Query query) throws IOException {
-        String url = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.STORYGRAPH, query);
-        Document googlePage = Jsoup.connect(url).get();
+        List< Result > results = ScraperHelper.googleAPISearch(ScraperConstants.STORYGRAPH, query);
 
-        //go to first search result link
-        Elements searchResults = googlePage.select("div.g");
-        List<Element> links = new ArrayList<Element>();
-        for (int i = 0; i < searchResults.size(); i++) {
-            if (i == 0) {
-                links.add((Element) searchResults.get(i).childNode(1).childNode(0).childNode(0));
-            }
-            else {
-                try {
-                    links.add((Element) searchResults.get(i).childNode(0).childNode(0).childNode(0));
-                } catch (Exception e) {
-                    System.out.println("Not found one search result");
-                }
-
-            }
-        }
-
-        String bookUrl = getTopBookLink(links);
-        System.out.println(bookUrl);
+        String bookUrl = results.get(0).getLink();
+        System.out.println("Storygraph- " + bookUrl);
 
         Document bookDocument = null;
         try {
@@ -117,12 +100,10 @@ public class StorygraphScraper implements Scraper {
      * @return string of the first link that contains "/book" in the URL which is how Storygraph
      * designates that the link is about a book
      */
-    private static String getTopBookLink(List<Element> links) {
-        String currentLink;
-        for (Element link : links) {
-            currentLink = link.attr("abs:href");
-            if (currentLink.contains("/book")) {
-                return currentLink;
+    private static String getTopBookLink(List<Result> links) {
+        for (Result link : links) {
+            if (link.getFormattedUrl().contains("/book")) {
+                return link.getFormattedUrl();
             }
         }
         return null;

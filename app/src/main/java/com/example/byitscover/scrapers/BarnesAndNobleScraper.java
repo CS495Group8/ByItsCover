@@ -46,9 +46,7 @@ public class BarnesAndNobleScraper implements Scraper {
         List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.BARNES_AND_NOBLE, query);
         String searchingUrl = getActualBookResult(results);
         Document document = Jsoup.connect(searchingUrl).get();
-        System.out.println(searchingUrl);
-
-        Map<String, String> toReturn = new HashMap<String, String>();
+        System.out.println("B&N- " + searchingUrl);
 
         //get rating by parsing json js var
         String htmlString = document.html();
@@ -119,8 +117,8 @@ public class BarnesAndNobleScraper implements Scraper {
     static String getActualBookResult(List<Result> results) {
         String toReturn = "";
         for (int i = 0; i < results.size(); i++) {
-            if (results.get(i).getFormattedUrl().contains("/w/")) {
-                toReturn = results.get(i).getFormattedUrl();
+            if (results.get(i).getLink().contains("/w/")) {
+                toReturn = results.get(i).getLink();
                 break;
             }
         }

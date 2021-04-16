@@ -7,11 +7,13 @@ import com.example.byitscover.helpers.Review;
 import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.helpers.ScraperConstants;
 import com.example.byitscover.helpers.ScraperHelper;
+import com.google.api.services.customsearch.model.Result;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.safety.Whitelist;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -46,21 +48,17 @@ public class GoogleScraper implements Scraper {
      * @throws IOException
      */
     public List<BookListing> scrape(Query query) throws IOException {
-        String searchingUrl = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.GOOGLE_BOOKS, query);
-        searchingUrl.replaceAll("[\\n]", "");
-        Document document;
-        try {
-            document = Jsoup.connect(searchingUrl).get();
-        } catch (Exception e) {
-            document = Jsoup.connect("https://google.com").get();
-        }
+        List<Result> results = ScraperHelper.googleAPISearch(ScraperConstants.GOOGLE_BOOKS, query);
+        String searchingUrl = ScraperHelper.getTopResultUrl(results);
 
-        //go to first search result link
-        Element link = (Element) document.select("div.g").first().childNode(1)
-                .childNode(0).childNode(0);
-        String bookUrl = link.attr("abs:href");
-        System.out.println(bookUrl);
-        Document bookDocument = Jsoup.connect(bookUrl).get();
+        System.out.println("Google- " + searchingUrl);
+
+        Document bookDocument;
+        try {
+            bookDocument = Jsoup.connect(searchingUrl).get();
+        } catch (Exception e) {
+            bookDocument = Jsoup.connect("https://google.com").get();
+        }
 
         Double rating;
         String reviewValueString;
@@ -107,7 +105,7 @@ public class GoogleScraper implements Scraper {
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 
-        BookListing listing = new BookListing(new URL(bookUrl),
+        BookListing listing = new BookListing(new URL(searchingUrl),
                 ScraperConstants.GOOGLE_BOOKS,
                 new Book(query.getTitle(), query.getAuthor(), null, null),
                 Double.valueOf(df.format(rating)),
