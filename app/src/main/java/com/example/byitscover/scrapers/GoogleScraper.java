@@ -48,7 +48,12 @@ public class GoogleScraper implements Scraper {
     public List<BookListing> scrape(Query query) throws IOException {
         String searchingUrl = ScraperHelper.getGoogleUrlNoAPI(ScraperConstants.GOOGLE_BOOKS, query);
         searchingUrl.replaceAll("[\\n]", "");
-        Document document = Jsoup.connect(searchingUrl).get();
+        Document document;
+        try {
+            document = Jsoup.connect(searchingUrl).get();
+        } catch (Exception e) {
+            document = Jsoup.connect("https://google.com").get();
+        }
 
         //go to first search result link
         Element link = (Element) document.select("div.g").first().childNode(1)
