@@ -31,7 +31,7 @@ public class InfoPage extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.enter_book_info);
+        setContentView(R.layout.activity_infopage);
 
         eTitle = (EditText) findViewById(R.id.enter_title);
         eAuthor = (EditText) findViewById(R.id.enter_author);
@@ -43,7 +43,7 @@ public class InfoPage extends AppCompatActivity {
             public void onClick(View v) {
                 String title = eTitle.getText().toString();
                 String author = eAuthor.getText().toString();
-                Intent intent = new Intent(InfoPage.this, ReviewPage.class);
+                Intent intent = new Intent(InfoPage.this, LoadingActivity.class);
                 intent.putExtra("book_title", title);
                 intent.putExtra("book_author", author);
                 startActivity(intent);
