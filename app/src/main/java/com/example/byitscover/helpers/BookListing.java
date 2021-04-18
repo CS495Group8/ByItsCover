@@ -1,5 +1,6 @@
 package com.example.byitscover.helpers;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * @version 1.0
  */
 
-public class BookListing {
+public class BookListing implements Serializable {
     private final URL url;
     private final String website; // TODO: find something to use a substitute for enum instead of strings
     private final Book book;

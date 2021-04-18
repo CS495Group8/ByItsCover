@@ -11,6 +11,7 @@ import com.example.byitscover.helpers.AsynchronousOperation;
 import com.example.byitscover.helpers.BookListing;
 import com.example.byitscover.helpers.Query;
 import com.example.byitscover.helpers.Scraper;
+import com.example.byitscover.review_list_page.ReviewListPage;
 import com.example.byitscover.scrapers.BarnesAndNobleScraper;
 import com.example.byitscover.scrapers.GoodreadsScraper;
 import com.example.byitscover.scrapers.GoogleScraper;
@@ -42,10 +43,10 @@ public class LoadingActivity extends AppCompatActivity {
             throw new AssertionError("The current thread should never be interrupted while getting the result from the scraper");
         }
 
-        //Intent showReviewPage = new Intent(this, ReviewListPage.class);
-        //showReviewPage.putExtra(ReviewListPage.KEY_BOOK_LISTINGS, (Serializable)listings);
-        //finish();
-        //startActivity(showReviewPage);
+        Intent showReviewPage = new Intent(this, ReviewListPage.class);
+        showReviewPage.putExtra(ReviewListPage.KEY_BOOK_LISTINGS, (Serializable)listings);
+        finish();
+        startActivity(showReviewPage);
     }
 
     @Override
