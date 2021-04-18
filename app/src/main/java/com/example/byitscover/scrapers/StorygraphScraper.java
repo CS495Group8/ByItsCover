@@ -77,9 +77,28 @@ public class StorygraphScraper implements Scraper {
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 
+        Element titleAuthor = bookDocument.getElementsByClass("book-title-and-author").first();
+
+        String author = null, title = null;
+
+        //get title and author
+        try {
+            Node titleValue = titleAuthor.childNode(1).childNode(0);
+            title = Jsoup.clean(Jsoup.parse(titleValue.toString()).text(), Whitelist.simpleText());
+        } catch (Exception e) {
+            title = "";
+        }
+
+        try {
+            Node authorValue = bookDocument.childNode(3).childNode(1);
+            author = Jsoup.clean(Jsoup.parse(authorValue.toString()).text(), Whitelist.simpleText());
+        } catch (Exception e) {
+            author = "";
+        }
+
         BookListing listing = new BookListing(new URL(bookUrl),
                 ScraperConstants.STORYGRAPH,
-                new Book(query.getTitle(), query.getAuthor(), null, null),
+                new Book(title, author, null, null),
                 rating,
                 null,
                 reviews,

@@ -43,15 +43,39 @@ public class ImageAnalyzer {
      TextRecognizer recognizer = TextRecognition.getClient();
 
      Task<Text> result = recognizer.process(image);
-     String resultText = "";
      Tasks.await(result);
-     resultText = result.getResult().getText();
-     System.out.println("OCR FINISHED:" + '\n' + resultText);
+
+     String resultText = "";
+
+     for (Text.TextBlock block : result.getResult().getTextBlocks()) {
+         String blockText = block.getText();
+         for (Text.Line line : block.getLines()) {
+             String lineText = line.getText();
+             for (Text.Element element : line.getElements()) {
+                 String elementText = element.getText(); //each word
+                 if (isAllUpper(elementText)) {
+                     resultText += elementText + " ";
+                 }
+             }
+         }
+     }
+
+     System.out.println("OCR FINISHED:" + '\n' + result.getResult().getText());
+     System.out.println("Query: " + resultText);
 
      return new Query(resultText,"",null);
  }
 
      //Releases all resources associated with current instance
      public void release(){
+     }
+
+     private static boolean isAllUpper(String s) {
+         for(char c : s.toCharArray()) {
+             if(Character.isLetter(c) && Character.isLowerCase(c)) {
+                 return false;
+             }
+         }
+         return true;
      }
 }

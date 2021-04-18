@@ -69,18 +69,26 @@ public class BarnesAndNobleScraper implements Scraper {
             reviewValueString = "";
         }
 
+        //get title and author
+        Element titleElement = document.getElementsByClass("pdp-header-title ").get(0);
+        Element authorElement = document.getElementById("key-contributors");
+
+        String titleString = titleElement.childNode(0).toString();
+        String authorString = authorElement.childNode(1).childNode(0).toString();
+
         Review review = new Review(null, reviewValueString, null);
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 
-        BookListing listing = new BookListing(new URL(ScraperHelper.getTopResultUrl(results)),
+        BookListing listing = new BookListing(new URL(searchingUrl),
                 ScraperConstants.BARNES_AND_NOBLE,
-                new Book(query.getTitle(), query.getAuthor(), null, null),
+                new Book(titleString, authorString, null, null),
                 rating,
                 null,
                 reviews,
                 null,
                 getPrice(document));
+
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
