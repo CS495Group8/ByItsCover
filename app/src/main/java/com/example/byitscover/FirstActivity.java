@@ -250,8 +250,6 @@ public class FirstActivity extends AppCompatActivity {
             preview.setSurfaceProvider(previewView.getSurfaceProvider());
             Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview, imageAnalysis, imageCapture);
 
-
-
             captureImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -264,6 +262,8 @@ public class FirstActivity extends AppCompatActivity {
                         @Override
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                             Intent intent = new Intent(CameraActivity.this, LoadingActivity.class);
+                            intent.putExtra("image_path", file.getAbsolutePath());
+                            finish();
                             startActivity(intent);
                         }
                         @Override

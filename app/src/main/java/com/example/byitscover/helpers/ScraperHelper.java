@@ -58,14 +58,11 @@ public class ScraperHelper {
             Search results=list.execute();
             resultList=results.getItems();
         }
-        catch (  Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
-        String url = resultList.get(0).getLink();
-        System.out.println(url);
 
         return resultList;
-
     }
 
     /**

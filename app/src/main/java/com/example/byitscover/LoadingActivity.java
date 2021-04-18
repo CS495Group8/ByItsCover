@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import com.example.byitscover.helpers.AggregateScraper;
 import com.example.byitscover.helpers.AsynchronousOperation;
 import com.example.byitscover.helpers.BookListing;
+import com.example.byitscover.helpers.ImageAnalyzer;
 import com.example.byitscover.helpers.Query;
 import com.example.byitscover.helpers.Scraper;
 import com.example.byitscover.review_list_page.ReviewListPage;
@@ -25,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 public class LoadingActivity extends AppCompatActivity {
     private AsynchronousOperation<List<BookListing>> scraperOperation;
+    private AsynchronousOperation<Query> imageAnalysisOperation;
 
     private void onScraperCompletion() {
         if (scraperOperation.isCancelled())
@@ -38,7 +40,7 @@ public class LoadingActivity extends AppCompatActivity {
             ex.printStackTrace();
             throw (RuntimeException)ex.getCause();
         } catch (CancellationException ex) {
-            throw new AssertionError("onScraperComplete should never be called if the operation is cancelled");
+            throw new AssertionError("onScraperCompletion should never be called if the operation is cancelled");
         } catch (InterruptedException ex) {
             throw new AssertionError("The current thread should never be interrupted while getting the result from the scraper");
         }
@@ -49,22 +51,24 @@ public class LoadingActivity extends AppCompatActivity {
         startActivity(showReviewPage);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loading);
+    private void onImageAnalysisCompletion() {
+        Query query;
 
-        ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
+        try {
+            query = imageAnalysisOperation.get();
+        } catch (ExecutionException ex) {
+            ex.printStackTrace();
+            throw (RuntimeException)ex.getCause();
+        } catch (CancellationException ex) {
+            throw new AssertionError("onImageAnalysisCompletion should never be called if the operation is cancelled");
+        } catch (InterruptedException ex) {
+            throw new AssertionError("The current thread should never be interrupted while getting the result from the image analysis");
+        }
 
-        Intent prevIntent = getIntent();
+        sendQuery(query);
+    }
 
-        String title = prevIntent.getStringExtra("book_title");
-        String author = prevIntent.getStringExtra("book_author");
-        title = title == null ? "" : title;
-        author =  author == null ? "" : author;
-
-        final Query query = new Query(title, author, null);
-
+    private void sendQuery(Query query) {
         scraperOperation = new AsynchronousOperation<>(
                 () -> {
                     List<Scraper> scrapers = new ArrayList<>();
@@ -78,6 +82,38 @@ public class LoadingActivity extends AppCompatActivity {
                     return aggregate.scrape(query);
                 },
                 this::onScraperCompletion);
+    }
+
+    private void analyzeImage(String path) {
+        imageAnalysisOperation = new AsynchronousOperation<>(
+                () -> {
+                    return new ImageAnalyzer().analyze(path);
+                },
+                this::onImageAnalysisCompletion);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_loading);
+
+        ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
+
+        Intent prevIntent = getIntent();
+
+        if (prevIntent.hasExtra("book_title") && prevIntent.hasExtra("book_author")) {
+            String title = prevIntent.getStringExtra("book_title");
+            String author = prevIntent.getStringExtra("book_author");
+
+            title = title == null ? "" : title;
+            author = author == null ? "" : author;
+            final Query query = new Query(title, author, null);
+            sendQuery(query);
+        }
+
+        else {
+            analyzeImage(prevIntent.getStringExtra("image_path"));
+        }
     }
 
     // Clean up resources created by activity

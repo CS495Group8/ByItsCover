@@ -60,7 +60,6 @@ public class BarnesAndNobleScraper implements Scraper {
             rating = 0.0;
         }
 
-
         try {
             //get review
             Element reviewValue = (Element) document.getElementById("overviewSection").childNode(1).childNode(1)
