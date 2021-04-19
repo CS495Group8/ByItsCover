@@ -12,6 +12,7 @@ import com.google.api.services.customsearch.model.Result;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
@@ -127,13 +128,21 @@ public class GoogleScraper implements Scraper {
             author = "";
         }
 
+        URL coverUrl;
+        try {
+            Node bookCoverValue = bookDocument.selectFirst("div.bookcover");
+            coverUrl = new URL(bookCoverValue.childNode(0).childNode(0).absUrl("src"));
+        } catch (Exception e) {
+            coverUrl = null;
+        }
+
         BookListing listing = new BookListing(new URL(searchingUrl),
                 ScraperConstants.GOOGLE_BOOKS,
                 new Book(title, author, null, null),
                 Double.valueOf(df.format(rating)),
                 null,
                 reviews,
-                null,
+                coverUrl,
                 getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();

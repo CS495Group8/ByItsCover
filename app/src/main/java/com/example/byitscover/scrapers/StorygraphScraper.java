@@ -96,13 +96,21 @@ public class StorygraphScraper implements Scraper {
             author = "";
         }
 
+        URL coverUrl;
+        try {
+            Node bookCoverValue = bookDocument.selectFirst("div.book-cover");
+            coverUrl = new URL(bookCoverValue.childNode(1).childNode(1).absUrl("src"));
+        } catch (Exception e) {
+            coverUrl = null;
+        }
+
         BookListing listing = new BookListing(new URL(bookUrl),
                 ScraperConstants.STORYGRAPH,
                 new Book(title, author, null, null),
                 rating,
                 null,
                 reviews,
-                null,
+                coverUrl,
                 getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();

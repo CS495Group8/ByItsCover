@@ -96,8 +96,10 @@ public class ScraperHelper {
         for (String word : titleWords) {
             toSearch = toSearch + word + " ";
         }
-        for (String word : authorWords) {
-            toSearch = toSearch + word + " ";
+        if (query.getAuthor().length() > 2) {
+            for (String word : authorWords) {
+                toSearch = toSearch + word + " ";
+            }
         }
 
         return toSearch + " " + site;

@@ -53,7 +53,7 @@ public class ImageAnalyzer {
              String lineText = line.getText();
              for (Text.Element element : line.getElements()) {
                  String elementText = element.getText(); //each word
-                 if (isAllUpper(elementText)) {
+                 if (isAllUpper(elementText) && !elementText.contains("BO") && !elementText.contains("FI")) {
                      resultText += elementText + " ";
                  }
              }
@@ -62,6 +62,9 @@ public class ImageAnalyzer {
 
      System.out.println("OCR FINISHED:" + '\n' + result.getResult().getText());
      System.out.println("Query: " + resultText);
+     resultText = resultText.substring(0, resultText.lastIndexOf("DEMICK")+6);
+     System.out.println("Query post: " + resultText);
+
 
      return new Query(resultText,"",null);
  }
