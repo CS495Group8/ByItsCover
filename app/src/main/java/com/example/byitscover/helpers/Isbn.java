@@ -1,5 +1,7 @@
 package com.example.byitscover.helpers;
 
+import java.io.Serializable;
+
 /**
  * An <it>ISBN,</it> or International Standard Book Number, is a value which uniquely identifies a book.
  * A <it>representation</it> is a string which represents an ISBN.
@@ -14,7 +16,7 @@ package com.example.byitscover.helpers;
  * @version 1.0
  */
 
-public final class Isbn {
+public final class Isbn implements Serializable {
     // The canonical representation for the purposes of this class is ISBN-13
     private final String canonicalRepresentation;
 

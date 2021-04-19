@@ -58,14 +58,11 @@ public class ScraperHelper {
             Search results=list.execute();
             resultList=results.getItems();
         }
-        catch (  Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
-        String url = resultList.get(0).getLink();
-        System.out.println(url);
 
         return resultList;
-
     }
 
     /**
@@ -99,8 +96,10 @@ public class ScraperHelper {
         for (String word : titleWords) {
             toSearch = toSearch + word + " ";
         }
-        for (String word : authorWords) {
-            toSearch = toSearch + word + " ";
+        if (query.getAuthor().length() > 2) {
+            for (String word : authorWords) {
+                toSearch = toSearch + word + " ";
+            }
         }
 
         return toSearch + " " + site;

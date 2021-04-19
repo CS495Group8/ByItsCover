@@ -12,6 +12,7 @@ import com.google.api.services.customsearch.model.Result;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
@@ -105,13 +106,43 @@ public class GoogleScraper implements Scraper {
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 
+        String title = "";
+        String author = "";
+        //get title value
+        try {
+            //get title
+            Element titleElement = (Element) bookDocument.getElementById("bookinfo")
+                    .childNode(0).childNode(0).childNode(0);
+            title = Jsoup.clean(titleElement.toString(), Whitelist.none());
+        } catch (Exception ex) {
+            title = "";
+        }
+
+        //get author value
+        try {
+            //get author
+            Element authorElement = (Element) bookDocument.getElementById("bookinfo")
+                    .childNode(2).childNode(0).childNode(0).childNode(0);
+            author = Jsoup.clean(authorElement.toString(), Whitelist.none());
+        } catch (Exception ex) {
+            author = "";
+        }
+
+        URL coverUrl;
+        try {
+            Node bookCoverValue = bookDocument.selectFirst("div.bookcover");
+            coverUrl = new URL(bookCoverValue.childNode(0).childNode(0).absUrl("src"));
+        } catch (Exception e) {
+            coverUrl = null;
+        }
+
         BookListing listing = new BookListing(new URL(searchingUrl),
                 ScraperConstants.GOOGLE_BOOKS,
-                new Book(query.getTitle(), query.getAuthor(), null, null),
+                new Book(title, author, null, null),
                 Double.valueOf(df.format(rating)),
                 null,
                 reviews,
-                null,
+                coverUrl,
                 getPrice(bookDocument));
 
         List<BookListing> listings = new ArrayList<BookListing>();

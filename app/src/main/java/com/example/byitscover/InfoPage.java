@@ -1,13 +1,10 @@
 package com.example.byitscover;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -31,31 +28,19 @@ public class InfoPage extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.enter_book_info);
+        setContentView(R.layout.activity_info_page);
 
-        eTitle = (EditText) findViewById(R.id.enter_title);
-        eAuthor = (EditText) findViewById(R.id.enter_author);
+        eTitle = findViewById(R.id.enter_title);
+        eAuthor = findViewById(R.id.enter_author);
 
         Button next = findViewById(R.id.Search);
-        next.setOnClickListener(new View.OnClickListener(){
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                String title = eTitle.getText().toString();
-                String author = eAuthor.getText().toString();
-                Intent intent = new Intent(InfoPage.this, ReviewPage.class);
-                intent.putExtra("book_title", title);
-                intent.putExtra("book_author", author);
-                startActivity(intent);
-            }
-        });
-        Button prev = findViewById(R.id.previous);
-        prev.setOnClickListener(new View.OnClickListener(){
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        next.setOnClickListener(v -> {
+            String title = eTitle.getText().toString();
+            String author = eAuthor.getText().toString();
+            Intent intent = new Intent(InfoPage.this, LoadingActivity.class);
+            intent.putExtra("book_title", title);
+            intent.putExtra("book_author", author);
+            startActivity(intent);
         });
     }
 }

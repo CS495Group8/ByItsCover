@@ -4,21 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment"
     android:background="@drawable/mainbackground">
-
-    <!-- <TextView
-        android:id="@+id/mainTitleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="#000000"
-        android:textSize="45sp"
-        app:layout_constraintBottom_toTopOf="@id/searchByCoverButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" /> -->
 
     <Button
         android:id="@+id/searchByCoverButton"

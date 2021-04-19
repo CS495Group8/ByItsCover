@@ -1,13 +1,25 @@
 package com.example.byitscover.helpers;
 
-import com.chaquo.python.PyException;
-import com.chaquo.python.PyObject;
-import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
-import com.example.byitscover.MainActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
 
 import java.io.File;
-import java.nio.ByteBuffer;
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * This class produces a suggested search query based on an image of a book.
@@ -25,23 +37,48 @@ public class ImageAnalyzer {
   * @param imgName The image file name to perform OCR on, should be in the .../files/images/ directory
   * @return result string from OCR execution on the image at the specified location
   */
- public Query analyze(String imgName){
-        Python py = Python.getInstance();
-        PyObject module = py.getModule("Tesseract");
-        String imgPath = "/data/data/com.example.byitscover/files/images/SearchBook.jpg"; //changed image name to match the one used in the camera
-        String query = "";
-        try{
-            query = module.callAttr("Tesseract", imgPath).toString();
-        }
-        catch (PyException e){
-            e.printStackTrace();
-        }
-      Query q = new Query(query,"",null);
+ public Query analyze(String imgName) throws ExecutionException, InterruptedException, TimeoutException {
+     Bitmap bitmap = BitmapFactory.decodeFile(imgName);
+     InputImage image = InputImage.fromBitmap(bitmap, 0);
+     TextRecognizer recognizer = TextRecognition.getClient();
 
-      return q;
+     Task<Text> result = recognizer.process(image);
+     Tasks.await(result);
+
+     String resultText = "";
+
+     for (Text.TextBlock block : result.getResult().getTextBlocks()) {
+         String blockText = block.getText();
+         for (Text.Line line : block.getLines()) {
+             String lineText = line.getText();
+             for (Text.Element element : line.getElements()) {
+                 String elementText = element.getText(); //each word
+                 if (isAllUpper(elementText) && !elementText.contains("BO") && !elementText.contains("FI")) {
+                     resultText += elementText + " ";
+                 }
+             }
+         }
      }
+
+     System.out.println("OCR FINISHED:" + '\n' + result.getResult().getText());
+     System.out.println("Query: " + resultText);
+     resultText = resultText.substring(0, resultText.lastIndexOf("DEMICK")+6);
+     System.out.println("Query post: " + resultText);
+
+
+     return new Query(resultText,"",null);
+ }
 
      //Releases all resources associated with current instance
      public void release(){
+     }
+
+     private static boolean isAllUpper(String s) {
+         for(char c : s.toCharArray()) {
+             if(Character.isLetter(c) && Character.isLowerCase(c)) {
+                 return false;
+             }
+         }
+         return true;
      }
 }

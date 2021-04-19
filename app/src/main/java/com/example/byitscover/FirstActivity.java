@@ -32,7 +32,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -110,8 +109,6 @@ public class FirstActivity extends AppCompatActivity {
     private void enableCamera() {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
-        //Intent intent2 = new Intent(this, ReviewPage.class);
-        //finish();
     }
 
     /**
@@ -122,7 +119,7 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_first);
+        setContentView(R.layout.activity_firstactivity);
 
         enableCamera = findViewById(R.id.searchByCoverButton);
         enableCamera.setOnClickListener(new View.OnClickListener() {
@@ -150,8 +147,6 @@ public class FirstActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 
 
@@ -255,8 +250,6 @@ public class FirstActivity extends AppCompatActivity {
             preview.setSurfaceProvider(previewView.getSurfaceProvider());
             Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview, imageAnalysis, imageCapture);
 
-
-
             captureImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -268,8 +261,9 @@ public class FirstActivity extends AppCompatActivity {
                     imageCapture.takePicture(outputFileOptions, executor, new ImageCapture.OnImageSavedCallback () {
                         @Override
                         public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-
-                            Intent intent = new Intent(CameraActivity.this, ReviewPage.class);
+                            Intent intent = new Intent(CameraActivity.this, LoadingActivity.class);
+                            intent.putExtra("image_path", file.getAbsolutePath());
+                            finish();
                             startActivity(intent);
                         }
                         @Override

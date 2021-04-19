@@ -13,6 +13,7 @@ import com.google.common.annotations.VisibleForTesting;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
@@ -60,7 +61,6 @@ public class BarnesAndNobleScraper implements Scraper {
             rating = 0.0;
         }
 
-
         try {
             //get review
             Element reviewValue = (Element) document.getElementById("overviewSection").childNode(1).childNode(1)
@@ -70,18 +70,35 @@ public class BarnesAndNobleScraper implements Scraper {
             reviewValueString = "";
         }
 
+        //get title and author
+        Element titleElement = document.getElementsByClass("pdp-header-title ").get(0);
+        Element authorElement = document.getElementById("key-contributors");
+
+        String titleString = titleElement.childNode(0).toString();
+        String authorString = authorElement.childNode(1).childNode(0).toString();
+
         Review review = new Review(null, reviewValueString, null);
         List<Review> reviews = new ArrayList<Review>();
         reviews.add(review);
 
-        BookListing listing = new BookListing(new URL(ScraperHelper.getTopResultUrl(results)),
+        URL coverUrl;
+        try {
+            Node bookCoverValue = document.getElementById("pdpMainImage");
+            coverUrl = new URL(bookCoverValue.absUrl("src"));
+        } catch (Exception e) {
+            coverUrl = null;
+        }
+
+
+        BookListing listing = new BookListing(new URL(searchingUrl),
                 ScraperConstants.BARNES_AND_NOBLE,
-                new Book(query.getTitle(), query.getAuthor(), null, null),
+                new Book(titleString, authorString, null, null),
                 rating,
                 null,
                 reviews,
-                null,
+                coverUrl,
                 getPrice(document));
+
 
         List<BookListing> listings = new ArrayList<BookListing>();
         listings.add(listing);
