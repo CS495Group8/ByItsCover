@@ -39,6 +39,8 @@ For choosing what to read next. A common struggle for avid book readers is conqu
 
 ### APIs
 * Jsoup
+* Google Programmable Search
+* Google ML Kit
 
 ### Framework
 * Standard Android
